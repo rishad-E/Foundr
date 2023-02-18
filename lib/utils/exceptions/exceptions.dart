@@ -8,9 +8,9 @@ class DioException {
   void dioError(Object e, BuildContext context) {
     if (e is DioError) {
       if (e.response?.statusCode == 404) {
-        SnackbarPopUps.popUp("Invalid Email", context);
+        SnackbarPopUps.popUpB("Invalid Email", context);
       } else if (e.response?.statusCode == 401) {
-        SnackbarPopUps.popUp("Invalid Password", context);
+        SnackbarPopUps.popUpB("Invalid Password", context);
       }
     }
   }

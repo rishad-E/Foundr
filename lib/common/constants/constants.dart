@@ -11,6 +11,7 @@ const hBox = SizedBox(height: 20);
 
 const wBox = SizedBox(width: 20);
 const textStyle = TextStyle(color: Color.fromARGB(255, 105, 153, 189));
+const iconcolor =  Color.fromARGB(255, 50, 103, 137);
 
 decorSignup(Color colr) {
   return BoxDecoration(
@@ -19,25 +20,25 @@ decorSignup(Color colr) {
   );
 }
 
-InputDecoration decorTextfield([String? text1]){
+InputDecoration decorTextfield([String? text1]) {
   return InputDecoration(
-  hintText: text1,hintStyle:textStyle,
-  focusedErrorBorder: OutlineInputBorder(
-    borderRadius: BorderRadius.circular(10),
-    borderSide: const BorderSide(color: Color.fromARGB(255, 105, 153, 189)),
-  ),
-  errorBorder: OutlineInputBorder(
-    borderRadius: BorderRadius.circular(10),
-    borderSide: const BorderSide(color: Color.fromARGB(255, 105, 153, 189)),
-  ),
-  focusedBorder: OutlineInputBorder(
-    borderRadius: BorderRadius.circular(10),
-    borderSide: const BorderSide(color: Color.fromARGB(255, 105, 153, 189)),
-  ),
-  enabledBorder: OutlineInputBorder(
-    borderRadius: BorderRadius.circular(10),
-    borderSide: const BorderSide(color: Color.fromARGB(255, 105, 153, 189)),
-  ),
-);
+    hintText: text1,
+    hintStyle: textStyle,
+    focusedErrorBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10),
+      borderSide: const BorderSide(color: Color.fromARGB(255, 105, 153, 189)),
+    ),
+    errorBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10),
+      borderSide: const BorderSide(color: Color.fromARGB(255, 105, 153, 189)),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10),
+      borderSide: const BorderSide(color: Color.fromARGB(255, 105, 153, 189)),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10),
+      borderSide: const BorderSide(color: Color.fromARGB(255, 105, 153, 189)),
+    ),
+  );
 }
-

@@ -1,16 +1,10 @@
-
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:founder_app/view/Article/article_home.dart';
-import 'package:founder_app/view/home/welcomescreen.dart';
+import 'package:founder_app/view/Article/arclewelcome/article_welcome.dart';
+import 'package:founder_app/view/home/welcome_screen/welcomescreen.dart';
 import 'package:founder_app/view/sign_in_screen/sign_in_screen.dart';
 import 'package:founder_app/view/sign_up_screen/sign_up_screen.dart';
-
-//frst one =rgba(255, 50, 103, 137)    headings
-//scnd one =rgba(255, 105, 153, 189)   light text
-//third one =rgba(255,233,238,242)  normal bg
-//fourth one =rgba(255,230,92,79)   red color
 
 Widget appBarLogo(BuildContext context, size) {
   return SizedBox(
@@ -41,17 +35,19 @@ Widget textNormalHeading(text1) {
   );
 }
 
-Widget descriptionText(text) {
+Widget descriptionText(text,[overflowtwxt]) {
   return Text(
     text,
-    style: const TextStyle(
-        color: Color.fromARGB(255, 105, 153, 189),
-        fontSize: 16,
-        fontWeight: FontWeight.w400),
+    style:  TextStyle(
+      overflow: overflowtwxt,
+      color:const Color.fromARGB(255, 105, 153, 189),
+      fontSize: 16,
+      fontWeight: FontWeight.w400,
+    ),
   );
 }
 
-Widget signupBox(BuildContext context,{double? height1,double? width1}) {
+Widget signupBox(BuildContext context, {double? height1, double? width1}) {
   return Container(
     height: height1,
     width: width1,
@@ -63,7 +59,9 @@ Widget signupBox(BuildContext context,{double? height1,double? width1}) {
     child: TextButton(
       onPressed: () {
         log("sign up textbutton pressed");
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) =>SignUpScreen(),));
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => SignUpScreen(),
+        ));
       },
       child: const Center(
         child: Text(
@@ -75,7 +73,7 @@ Widget signupBox(BuildContext context,{double? height1,double? width1}) {
   );
 }
 
-Widget signInBox(BuildContext context,{double? height1,double? width1}) {
+Widget signInBox(BuildContext context, {double? height1, double? width1}) {
   return Container(
     height: height1,
     width: width1,
@@ -86,7 +84,9 @@ Widget signInBox(BuildContext context,{double? height1,double? width1}) {
     child: TextButton(
       onPressed: () {
         log("sign in textbutton pressed");
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => SignInScreen(),));
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => SignInScreen(),
+        ));
       },
       child: const Center(
         child: Text(
@@ -108,31 +108,50 @@ Widget homeImage(BuildContext context) {
   );
 }
 
-Widget homeContainer({childwidget}) {
+Widget welcomeContainer({childwidget, Color? color}) {
   return Padding(
     padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
     child: Container(
-      padding: const EdgeInsets.all(15),
-      height: 200,
-      width: 300,
-      decoration: const BoxDecoration(
-        color: Colors.white60,
-        // border: Border.all(),
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-      ),
-      child: childwidget
-    ),
+        padding: const EdgeInsets.all(15),
+        height: 200,
+        width: 300,
+        decoration: BoxDecoration(
+          color: color,
+          // border: Border.all(),
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+        ),
+        child: childwidget),
   );
 }
 
-Widget appBarHome(BuildContext context){
- return TextButton(onPressed: () {
-  Navigator.of(context).push(MaterialPageRoute(builder: (context) =>const WelcomeScreen(),));
- }, child: const Text("Home "));
+Widget appBarWelcome(BuildContext context) {
+  return TextButton(
+      onPressed: () {
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const WelcomeScreen(),
+        ));
+      },
+      child: const Text("Home "));
 }
 
-Widget appBarArticle(BuildContext context){
- return TextButton(onPressed: () {
-  Navigator.of(context).push(MaterialPageRoute(builder: (context) =>const ArticleHome(),));
- }, child: const Text("Article "));
+Widget appBarArticleWelcome(BuildContext context) {
+  return TextButton(
+      onPressed: () {
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const ArticleWelcome(),
+        ));
+      },
+      child: const Text("Article "));
+}
+
+Widget circlevatar({required String numb}) {
+  return CircleAvatar(
+    backgroundColor: const Color.fromARGB(255, 50, 103, 137),
+    radius: 12,
+    child: Center(
+        child: Text(
+      numb,
+      style: const TextStyle(color: Colors.white),
+    )),
+  );
 }

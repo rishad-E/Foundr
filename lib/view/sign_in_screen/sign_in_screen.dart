@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:founder_app/common/constants/constants.dart';
 import 'package:founder_app/common/widgets/widgetswelcome.dart';
-import 'package:founder_app/controller/provider/sign_in_provider/sign_provider.dart';
+import 'package:founder_app/controller/provider/sign_in_provider/sign_in_provider.dart';
 import 'package:founder_app/view/sign_up_screen/sign_up_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +21,7 @@ class SignInScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         title: appBarLogo(context, 0.3),
-        actions: [appBarHome(context), appBarArticle(context), wBox],
+        actions: [appBarWelcome(context), appBarArticleWelcome(context), wBox],
       ),
       body: Center(
         child: Column(

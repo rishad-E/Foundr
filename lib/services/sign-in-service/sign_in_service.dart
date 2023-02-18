@@ -16,7 +16,7 @@ class ApiServiceSignIn {
     try {
       Response response =
           await dio.post(path, data: jsonEncode(model.toJson()));
-      log("message");
+      log("after response from the sign in");
       if (response.statusCode == 200 || response.statusCode == 201) {
         log(response.data.toString());
         final SigninRespModel signinmodel1 =

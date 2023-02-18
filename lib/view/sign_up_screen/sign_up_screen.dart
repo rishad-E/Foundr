@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:founder_app/common/constants/constants.dart';
 import 'package:founder_app/common/widgets/widgetswelcome.dart';
@@ -9,8 +8,6 @@ import 'package:provider/provider.dart';
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({super.key});
 
-  final usernameController = TextEditingController();
-  final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey();
 
@@ -24,7 +21,7 @@ class SignUpScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         title: appBarLogo(context, 0.3),
-        actions: [appBarHome(context), appBarArticle(context), wBox],
+        actions: [appBarWelcome(context), appBarArticleWelcome(context), wBox],
       ),
       body: Center(
         child: Column(
@@ -45,7 +42,7 @@ class SignUpScreen extends StatelessWidget {
                     const Text(" User Name", style: textStyle),
                     TextFormField(
                       decoration: decorTextfield(),
-                      controller: usernameController,
+                      controller: providerWOL.usernameController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "Username field is empty";
@@ -58,7 +55,7 @@ class SignUpScreen extends StatelessWidget {
                     const Text(" Email", style: textStyle),
                     TextFormField(
                       decoration: decorTextfield(),
-                      controller:providerWOL.emailController,
+                      controller: providerWOL.emailController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "Email field is empty";
@@ -93,9 +90,7 @@ class SignUpScreen extends StatelessWidget {
                           child: TextButton(
                             onPressed: () {
                               if (formKey.currentState!.validate()) {
-                                // log("sign up validator");
-                                    Provider.of<SignupProvider>(context,listen: false).verifyUserProvider(context);
-                                // providerWOL.verifyUserProvider(context);
+                                providerWOL.verifyUserProvider(context);
                               }
                             },
                             child: const Text("SIGN UP",

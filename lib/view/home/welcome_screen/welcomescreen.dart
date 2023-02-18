@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:founder_app/common/constants/constants.dart';
 import 'package:founder_app/common/widgets/widgetswelcome.dart';
-import 'package:founder_app/view/Article/article_home.dart';
-import 'package:founder_app/view/home/welcomescreen_workignbtn.dart';
+import 'package:founder_app/view/Article/arclewelcome/article_welcome.dart';
+import 'package:founder_app/view/home/homescreen/homescreen.dart';
+import 'package:founder_app/view/home/welcome_screen/welcomescreen_workignbtn.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -13,6 +14,7 @@ class WelcomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: backgroundColorConst,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         systemOverlayStyle: const SystemUiOverlayStyle(
             // statusBarColor: Color.fromARGB(233,238,242,255),
             statusBarColor: Colors.white),
@@ -20,20 +22,23 @@ class WelcomeScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         title: appBarLogo(context, 0.3),
         actions: [
-          TextButton(onPressed: () {}, child: const Text("Home ")),
           TextButton(onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ArticleHome()));
+            // Navigator.of(context).push(MaterialPageRoute(builder: (context) =>const HomeScreen(),));
+          }, child: const Text("Home ")),
+          TextButton(onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ArticleWelcome()));
           }, child: const Text("Articles ")),
           wBox
         ],
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+          padding: const EdgeInsets.fromLTRB(15, 0, 5, 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 20),
+              hBox,
+              // Center(child: textHeading("Connecting Better.")),
               textHeading("Connecting Better."),
               const SizedBox(height: 20),
               descriptionText(
@@ -48,7 +53,8 @@ class WelcomeScreen extends StatelessWidget {
                 ],
               ),
               homeImage(context),
-              homeContainer(
+              welcomeContainer(
+                color: Colors.white60,
                 childwidget: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -65,7 +71,8 @@ class WelcomeScreen extends StatelessWidget {
                 ),
               ),
               hBox,
-              homeContainer(
+              welcomeContainer(
+                 color: Colors.white60,
                 childwidget: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -82,7 +89,8 @@ class WelcomeScreen extends StatelessWidget {
                 ),
               ),
               hBox,
-              homeContainer(
+              welcomeContainer(
+                 color: Colors.white60,
                 childwidget: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -114,7 +122,7 @@ class WelcomeScreen extends StatelessWidget {
                   child: TextButton(
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const SecondWelcomeScreen(),
+                        builder: (context) =>const HomeScreen(),
                       ));
                     },
                     child: const Text("How does it work?"),
