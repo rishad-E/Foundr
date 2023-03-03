@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:founder_app/common/constants/constants.dart';
+import 'package:founder_app/common/widgets/widget_event.dart';
+import 'package:founder_app/common/widgets/widget_matching-profile.dart';
 import 'package:founder_app/common/widgets/widgethomescreen.dart';
 import 'package:founder_app/common/widgets/widgetswelcome.dart';
-import 'package:founder_app/view/Article/articlehome/article_home.dart';
-import 'package:founder_app/view/Drawer/drawer_home.dart';
-import 'package:founder_app/view/Events/event_sceen.dart';
+import 'package:founder_app/model/event/event_model.dart';
+import 'package:founder_app/model/matching-profile/matching_profiles_model.dart';
+import 'package:founder_app/services/event/event_service.dart';
+import 'package:founder_app/services/matching-profile/matching_profile_service.dart';
+import 'package:founder_app/view/article/articlehome/article_home.dart';
+import 'package:founder_app/view/drawer/drawer_home.dart';
+import 'package:founder_app/view/events/event_sceen.dart';
 import 'package:founder_app/view/Notification_screen/notification_screen.dart';
-import 'package:founder_app/view/home/welcome_screen/welcomescreen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -52,7 +57,7 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(15, 0, 5, 0),
+        padding: const EdgeInsets.fromLTRB(15, 0, 5, 10),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -143,16 +148,27 @@ class HomeScreen extends StatelessWidget {
               ),
               hBox,
               SizedBox(
+                // color: Colors.green,
                 height: MediaQuery.of(context).size.height * 0.24,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      child: matchingProfile(context),
-                    );
+                child: FutureBuilder<List<MatchingProfile>?>(
+                  future: MatchingProfilesService().getAllMatchingProfile(context),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Center(child:Text("no data"));
+                    } else {
+                      return ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return SizedBox(
+                            // color: Colors.yellow,
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            child: MatchingProfilesHome(name: snapshot.data![index].userName!,),
+                          );
+                        },
+                        itemCount: snapshot.data!.length,
+                      );
+                    }
                   },
-                  itemCount: 5,
                 ),
               ),
               hBox,
@@ -163,9 +179,24 @@ class HomeScreen extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [eventCard(context), wBox, eventCard(context)],
+                  FutureBuilder<List<Event>?>(
+                    future: EventService().getEventService(context),
+                    builder: ((context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            EventCard(
+                                mentorImage: snapshot.data![0].mentorImage!),
+                            wBox,
+                            EventCard(
+                                mentorImage: snapshot.data![1].mentorImage!),
+                          ],
+                        );
+                      }
+                    }),
                   ),
                   TextButton(
                     onPressed: () {

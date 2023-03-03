@@ -3,10 +3,19 @@ import 'package:flutter/services.dart';
 import 'package:founder_app/common/constants/constants.dart';
 import 'package:founder_app/common/widgets/widgethomescreen.dart';
 import 'package:founder_app/common/widgets/widgetswelcome.dart';
+import 'package:founder_app/view/home/homescreen/homescreen.dart';
 
 class ArticleHomeScreen extends StatelessWidget {
-  const ArticleHomeScreen({super.key});
-
+  const ArticleHomeScreen(
+      {super.key,
+      required this.name,
+      required this.content,
+      required this.date,
+      required this.image});
+  final String name;
+  final String content;
+  final String image;
+  final String date;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +27,19 @@ class ArticleHomeScreen extends StatelessWidget {
         toolbarHeight: 70,
         backgroundColor: Colors.white,
         title: appBarLogo(context, 0.3),
-        actions: [appBarHome(context), appBarArticleHome(context), wBox],
+        actions: [
+          TextButton(
+              onPressed: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                      builder: (context) => const HomeScreen(),
+                    ),
+                    (route) => false);
+              },
+              child: const Text("Home ")),
+          appBarArticleHome(context),
+          wBox
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -27,23 +48,22 @@ class ArticleHomeScreen extends StatelessWidget {
             // mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               hBox,
-              textHeading("Article Heading"),
+              textHeading(name),
               hBox,
-              Container(
-                height: 200,
-                width: 250,
-                color: Colors.grey,
-                child: const Center(child: Text("img")),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.25,
+                width: MediaQuery.of(context).size.height * 0.3,
+                // color: Colors.grey,
+                child: Center(child: Image.network(image)),
               ),
               hBox,
               hBox,
-              descriptionText(
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum......."),
+              descriptionText(content),
               hBox,
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  descriptionText("12/10/2032"),
+                  descriptionText(date),
                 ],
               )
             ],

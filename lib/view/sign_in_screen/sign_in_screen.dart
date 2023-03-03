@@ -13,7 +13,6 @@ class SignInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final providerWOL = Provider.of<SigninProvider>(context, listen: false);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: backgroundColorConst,
@@ -41,31 +40,34 @@ class SignInScreen extends StatelessWidget {
                   children: [
                     const Spacer(),
                     const Text(" Email", style: textStyle),
-                    TextFormField(
-                      
-                      decoration: decorTextfield(),
-                      controller: providerWOL.emailController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Email is empty";
-                        } else {
-                          return null;
-                        }
+                    Consumer<SigninProvider>(
+                      builder: (context, data, child) {
+                        return TextFormField(
+                          decoration: decorTextfield(),
+                          controller: data.emailController,
+                          validator: (value) => data.emailValdation(value),
+                          keyboardType: TextInputType.emailAddress,
+                        );
                       },
                     ),
                     const Spacer(),
                     const Text(" Password", style: textStyle),
-                    TextFormField(
-                      // keyboardType: TextInputType.phone,
-                      obscureText: true,
-                      decoration: decorTextfield(),
-                      controller: providerWOL.passwordController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "password is empty";
-                        } else {
-                          return null;
-                        }
+                    Consumer<SigninProvider>(
+                      builder: (context, value, child) {
+                        return TextFormField(
+                          decoration: decorTextfield(
+                              "",
+                              IconButton(
+                                  onPressed: () {
+                                    value.visibility();
+                                  },
+                                  icon: value.icon)),
+                          obscureText: value.obscureText,
+                          controller: value.passwordController,
+                          validator: (passwordData) =>
+                              value.passwordValdation(passwordData),
+                          keyboardType: TextInputType.visiblePassword,
+                        );
                       },
                     ),
                     const Spacer(),
@@ -78,15 +80,21 @@ class SignInScreen extends StatelessWidget {
                           decoration: decorSignup(
                             const Color.fromARGB(255, 50, 103, 137),
                           ),
-                          child: TextButton(
-                            onPressed: () {
-                              log("sign in button in sign in page pressed");
-                              if (formkey.currentState!.validate()) {
-                                providerWOL.signinCheck(context);
-                              }
+                          child: Consumer<SigninProvider>(
+                            builder: (context, value, child) {
+                              return TextButton(
+                                onPressed: () {
+                                  log("sign in button in sign in page pressed");
+                                  if (formkey.currentState!.validate()) {
+                                    value.signinCheck(context);
+                                   
+                                  }
+                                  
+                                },
+                                child: const Text("SIGN IN",
+                                    style: TextStyle(color: Colors.white)),
+                              );
                             },
-                            child: const Text("SIGN IN",
-                                style: TextStyle(color: Colors.white)),
                           ),
                         )
                       ],

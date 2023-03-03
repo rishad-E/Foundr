@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:founder_app/common/constants/constants.dart';
 import 'package:founder_app/common/widgets/widgetswelcome.dart';
-// import 'package:founder_app/controller/provider/otp_provider/otp_provider.dart';
-import 'package:founder_app/controller/provider/sign_up_provider/sign_up_provider.dart';
+import 'package:founder_app/controller/provider/otp_provider/otp_provider.dart';
 import 'package:provider/provider.dart';
 
 class OtpScreen extends StatelessWidget {
@@ -10,7 +9,7 @@ class OtpScreen extends StatelessWidget {
   final GlobalKey<FormState> formKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
-    final providerWOL = Provider.of<SignupProvider>(context, listen: false);
+    final providerWOL = Provider.of<OtpProvider>(context, listen: false);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: backgroundColorConst,
@@ -41,6 +40,7 @@ class OtpScreen extends StatelessWidget {
                     height: MediaQuery.of(context).size.height * 0.1,
                     width: MediaQuery.of(context).size.width * 0.6,
                     child: TextFormField(
+                      keyboardType: TextInputType.number,
                       controller: providerWOL.otpController,
                       decoration: decorTextfield("Enter OTP here"),
                     ),
@@ -60,6 +60,7 @@ class OtpScreen extends StatelessWidget {
                           if (formKey.currentState!.validate()) {
                             providerWOL.verifyotpProvider(context);
                           }
+                          
                         },
                         child: const Text(
                           "OK",

@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:founder_app/view/Article/arclewelcome/article_welcome.dart';
+import 'package:founder_app/view/article/arclewelcome/article_welcome.dart';
 import 'package:founder_app/view/home/welcome_screen/welcomescreen.dart';
 import 'package:founder_app/view/sign_in_screen/sign_in_screen.dart';
 import 'package:founder_app/view/sign_up_screen/sign_up_screen.dart';
@@ -35,12 +35,12 @@ Widget textNormalHeading(text1) {
   );
 }
 
-Widget descriptionText(text,[overflowtwxt]) {
+Widget descriptionText(text, [overflowtwxt]) {
   return Text(
     text,
-    style:  TextStyle(
+    style: TextStyle(
       overflow: overflowtwxt,
-      color:const Color.fromARGB(255, 105, 153, 189),
+      color: const Color.fromARGB(255, 105, 153, 189),
       fontSize: 16,
       fontWeight: FontWeight.w400,
     ),

@@ -18,7 +18,7 @@ class SnackbarPopUps {
       SnackBar(
         content: Text(
           text,
-          style:const TextStyle(color: Colors.red),
+          style:const TextStyle(color: Colors.green),
         ),
         backgroundColor: Colors.black,
         behavior: SnackBarBehavior.floating,

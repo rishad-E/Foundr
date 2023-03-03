@@ -11,7 +11,8 @@ class ApiServiceSignIn {
   var dio = Dio();
 
   //sign in service
-  Future<SigninRespModel?>  signIn(SigninreqModel model, BuildContext context) async {
+  Future<SigninRespModel?> signIn(
+      SigninreqModel model, BuildContext context) async {
     String path = ApiConfig().baseUrl + ApiConfig().signInapi;
     try {
       Response response =
@@ -19,17 +20,15 @@ class ApiServiceSignIn {
       log("after response from the sign in");
       if (response.statusCode == 200 || response.statusCode == 201) {
         log(response.data.toString());
+
         final SigninRespModel signinmodel1 =
             SigninRespModel.fromJson(response.data);
         return signinmodel1;
       }
     } on DioError catch (e) {
       log(e.message.toString());
-      DioException().dioError(e,context);
+      DioException().dioError(e, context);
     }
     return null;
   }
-
-
-
-} 
+}

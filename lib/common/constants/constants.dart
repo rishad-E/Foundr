@@ -8,8 +8,11 @@ import 'package:flutter/material.dart';
 Color backgroundColorConst = const Color.fromARGB(233, 238, 242, 255);
 
 const hBox = SizedBox(height: 20);
+const hBoxS = SizedBox(height: 10);
+Color kWhite = Colors.white60;
 
 const wBox = SizedBox(width: 20);
+const wBoxS = SizedBox(width: 10);
 const textStyle = TextStyle(color: Color.fromARGB(255, 105, 153, 189));
 const iconcolor =  Color.fromARGB(255, 50, 103, 137);
 
@@ -20,10 +23,11 @@ decorSignup(Color colr) {
   );
 }
 
-InputDecoration decorTextfield([String? text1]) {
+InputDecoration decorTextfield([String? text1, IconButton? suffix]) {
   return InputDecoration(
     hintText: text1,
     hintStyle: textStyle,
+    suffixIcon: suffix,
     focusedErrorBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(10),
       borderSide: const BorderSide(color: Color.fromARGB(255, 105, 153, 189)),

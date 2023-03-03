@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:founder_app/common/constants/constants.dart';
 import 'package:founder_app/common/widgets/widgetswelcome.dart';
-import 'package:founder_app/view/Drawer/drawer_home.dart';
+import 'package:founder_app/view/drawer/drawer_home.dart';
 import 'package:founder_app/view/home/homescreen/homescreen.dart';
 
 class NotificationScreen extends StatelessWidget {

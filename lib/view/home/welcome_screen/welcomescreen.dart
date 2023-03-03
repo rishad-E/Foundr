@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:founder_app/common/constants/constants.dart';
 import 'package:founder_app/common/widgets/widgetswelcome.dart';
-import 'package:founder_app/view/Article/arclewelcome/article_welcome.dart';
-import 'package:founder_app/view/home/homescreen/homescreen.dart';
+import 'package:founder_app/services/article/article_service.dart';
+import 'package:founder_app/view/article/arclewelcome/article_welcome.dart';
 import 'package:founder_app/view/home/welcome_screen/welcomescreen_workignbtn.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -22,12 +22,17 @@ class WelcomeScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         title: appBarLogo(context, 0.3),
         actions: [
-          TextButton(onPressed: () {
-            // Navigator.of(context).push(MaterialPageRoute(builder: (context) =>const HomeScreen(),));
-          }, child: const Text("Home ")),
-          TextButton(onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ArticleWelcome()));
-          }, child: const Text("Articles ")),
+          TextButton(
+              onPressed: () {
+                // Navigator.of(context).push(MaterialPageRoute(builder: (context) =>const HomeScreen(),));
+              },
+              child: const Text("Home ")),
+          TextButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const ArticleWelcome()));
+              },
+              child: const Text("Articles ")),
           wBox
         ],
       ),
@@ -47,9 +52,9 @@ class WelcomeScreen extends StatelessWidget {
               const SizedBox(height: 20),
               Row(
                 children: [
-                  signupBox(height1: 50, width1: 100,context),
+                  signupBox(height1: 50, width1: 100, context),
                   const SizedBox(width: 20),
-                  signInBox(height1: 50, width1: 100,context)
+                  signInBox(height1: 50, width1: 100, context)
                 ],
               ),
               homeImage(context),
@@ -72,7 +77,7 @@ class WelcomeScreen extends StatelessWidget {
               ),
               hBox,
               welcomeContainer(
-                 color: Colors.white60,
+                color: Colors.white60,
                 childwidget: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -90,7 +95,7 @@ class WelcomeScreen extends StatelessWidget {
               ),
               hBox,
               welcomeContainer(
-                 color: Colors.white60,
+                color: Colors.white60,
                 childwidget: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -122,8 +127,9 @@ class WelcomeScreen extends StatelessWidget {
                   child: TextButton(
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) =>const HomeScreen(),
+                        builder: (context) => const SecondWelcomeScreen(),
                       ));
+                      ArticleService().getArticleService(context);
                     },
                     child: const Text("How does it work?"),
                   ),

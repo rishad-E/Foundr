@@ -6,9 +6,9 @@ String signupReqModelToJson(SignupReqModel data) => json.encode(data.toJson());
 
 class SignupReqModel {
     SignupReqModel({
-        this.userName,
-        this.email,
-        this.password,
+       required this.userName,
+        required this.email,
+        required this.password,
     });
 
     String? userName;

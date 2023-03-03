@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:founder_app/common/constants/constants.dart';
+import 'package:founder_app/common/widgets/widget_article.dart';
 import 'package:founder_app/common/widgets/widgetswelcome.dart';
-import 'package:founder_app/view/Article/arclewelcome/article_screen.dart';
+import 'package:founder_app/model/article/article_model.dart';
+import 'package:founder_app/services/article/article_service.dart';
+import 'package:founder_app/view/article/arclewelcome/article_screen.dart';
 
 class ArticleWelcome extends StatelessWidget {
   const ArticleWelcome({super.key});
@@ -24,175 +27,63 @@ class ArticleWelcome extends StatelessWidget {
           wBox
         ],
       ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
-            // crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              hBox,
-              const SizedBox(
-                height: 60,
-                child: Image(
-                  image: AssetImage("assets/images/article-lcon.png"),
-                ),
-              ),
-              // const SizedBox(height: 100)
-              hBox,
-              InkWell(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const ArticleScreen(),
-                  ));
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(15),
-                  height: MediaQuery.of(context).size.height * 0.4,
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  decoration: const BoxDecoration(
-                    color: Colors.white60,
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.1,
-                        child: const Image(
-                          image: AssetImage("assets/images/article-lcon.png"),
-                        ),
+      body: Center(
+        child: Column(
+          children: [
+            hBox,
+            textNormalHeading("Articles"),
+            hBox,
+            SizedBox(
+              // color: Colors.yellow,
+                height: MediaQuery.of(context).size.height * 0.78,
+                width: MediaQuery.of(context).size.width * 0.9,
+              child: FutureBuilder<List<Article>?>(
+                future: ArticleService().getArticleService(context),
+                builder: ((context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else {
+                    return GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 5,
+                        mainAxisSpacing: 7,
+                        childAspectRatio: 5.5 / 7,
                       ),
-                      hBox,
-                      textNormalHeading("Article Heading Here"),
-                      hBox,
-                      descriptionText(
-                          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,"),
-                      hBox,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: const [
-                          Text(
-                            "12/03/2023",
-                            style: textStyle,
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => ArticleScreen(
+                                  name: snapshot.data![index].title!,
+                                  content: snapshot.data![index].content!,
+                                  image: snapshot.data![index].coverImage!,
+                                  date: snapshot.data![index].createdAt.toString().substring(0,10),
+                                ),
+                              ),
+                            );
+                          },
+                          child: ArticleWidget(
+                            avatar: snapshot.data![index].coverImage!,
+                            title: snapshot.data![index].title!,
+                            subtitle: snapshot.data![index].content!,
+                            dateTime: snapshot.data![index].createdAt
+                                .toString()
+                                .substring(0, 10),
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
+                        );
+                      },
+                    );
+                  }
+                }),
               ),
-              hBox,
-              InkWell(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const ArticleScreen(),
-                  ));
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(15),
-                  height: MediaQuery.of(context).size.height * 0.4,
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  decoration: const BoxDecoration(
-                    color: Colors.white60,
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.1,
-                        child: const Image(
-                          image: AssetImage("assets/images/article-lcon.png"),
-                        ),
-                      ),
-                      hBox,
-                      textNormalHeading("Article Heading Here"),
-                      hBox,
-                      descriptionText(
-                          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,"),
-                      hBox,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: const [
-                          Text(
-                            "12/03/2023",
-                            style: textStyle,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              hBox
-            ],
-          ),
+            )
+          ],
         ),
       ),
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//  Column(
-//           // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//           children: [
-//             hBox,
-//             const SizedBox(
-//               height: 60,
-//               child: Image(
-//                 image: AssetImage("assets/images/article-lcon.png"),
-//               ),
-//             ),
-//             const SizedBox(height: 100),
-//             Container(
-//               padding: const EdgeInsets.all(15),
-//               height: MediaQuery.of(context).size.height*0.42,
-//               width:  MediaQuery.of(context).size.width*0.8,
-//               decoration: const BoxDecoration(
-//                 color: Colors.white60,
-//                 borderRadius: BorderRadius.all(Radius.circular(10)),
-//               ),
-//               child: Column(
-//                 children: [
-//                   const SizedBox(
-//                     height: 120,
-//                     child: Image(
-//                       image: AssetImage("assets/images/article-lcon.png"),
-//                     ),
-//                   ),
-//                   hBox,
-//                   textHeading("Article Heading Here"),
-//                   hBox,
-//                   descriptionText(
-//                       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,"),
-//                   hBox,
-//                   Row(
-//                     mainAxisAlignment: MainAxisAlignment.end,
-//                     children: const [
-//                       Text("12/03/2023",style: textStyle,),
-//                     ],
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ],
-//         ),
