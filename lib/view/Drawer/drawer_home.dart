@@ -1,6 +1,4 @@
 // ignore_for_file: use_build_context_synchronously
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:founder_app/common/constants/constants.dart';
@@ -94,8 +92,7 @@ class HomeDrawer extends StatelessWidget {
                                         child: const Text('Sign Out')),
                                     TextButton(
                                       onPressed: () {
-                                        // Navigator.of(context).pop();
-                                        log(storage.toString());
+                                        Navigator.of(context).pop();
                                       },
                                       child: const Text('Cancel'),
                                     )

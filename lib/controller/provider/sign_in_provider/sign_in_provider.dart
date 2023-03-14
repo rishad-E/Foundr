@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:founder_app/model/sign-in/sign_in_request.dart';
 import 'package:founder_app/services/sign-in-service/sign_in_service.dart';
@@ -21,7 +23,7 @@ class SigninProvider with ChangeNotifier {
           (value) => {
             if (value?.token != null)
               {
-                storage.write(key: "token", value: value!.token),
+                storage.write(key:'token', value: jsonEncode(value!.token)),
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (context) => const SplashScreen()),
                     (route) => false),

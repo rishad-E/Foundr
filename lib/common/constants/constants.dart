@@ -14,7 +14,7 @@ Color kWhite = Colors.white60;
 const wBox = SizedBox(width: 20);
 const wBoxS = SizedBox(width: 10);
 const textStyle = TextStyle(color: Color.fromARGB(255, 105, 153, 189));
-const iconcolor =  Color.fromARGB(255, 50, 103, 137);
+const iconcolor = Color.fromARGB(255, 50, 103, 137);
 
 decorSignup(Color colr) {
   return BoxDecoration(
@@ -46,3 +46,12 @@ InputDecoration decorTextfield([String? text1, IconButton? suffix]) {
     ),
   );
 }
+
+// final buttonelevated = ButtonStyle(
+//   backgroundColor: MaterialStateProperty.all(
+//     Color.fromARGB(255, 26, 1, 40)
+//   ),
+//   shape: MaterialStateProperty.all(
+//     RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+//   ),
+// );

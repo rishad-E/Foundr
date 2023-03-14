@@ -1,0 +1,54 @@
+import 'package:intl/intl.dart';
+
+String iso8601String = '2023-01-01T15:30:00Z';
+DateTime dateTime = DateTime.parse(iso8601String);
+String formattedDate = DateFormat('dd-MMMM-yyyy', 'en_US').format(dateTime);
+formattedDate = formattedDate.toLowerCase();
+formattedDate = formattedDate.replaceFirst(formattedDate[0], formattedDate[0].toUpperCase());
+print(formattedDate); // Output: 01-January-2023
+
+
+
+
+In the code above, we first import the intl package. Then we create a String variable iso8601String containing the date in ISO 8601 format. We then parse this string to a DateTime object using DateTime.parse.
+
+Next, we create a String variable formattedDate containing the formatted date using the DateFormat class from the intl package. We pass the format string 'dd-MMMM-yyyy' to the DateFormat constructor to format the date in a dd-MMMM-yyyy format, where MMMM represents the full month name.
+
+The second parameter of the DateFormat constructor is the locale, which we set to en_US to use the English language and region format.
+
+Finally, we convert the first character of the month name to uppercase and print the formatted date to the console. The output will be 01-January-2023.
+
+
+
+
+
+//for time
+String timeString = DateFormat('h:mm a').format(time);
+    String formatteddate = DateFormat('dd-MMMM-yyyy', 'en_US').format(dateTime);
+
+
+
+    ///// to convert to base64 and adding formates
+import 'dart:convert';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+
+Future<String> getImageBase64() async {
+  // Get image from gallery
+  final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
+
+  if (pickedFile == null) {
+    return null; // No image selected
+  }
+
+  // Read image data as bytes
+  final bytes = await pickedFile.readAsBytes();
+
+  // Determine image format
+  String format = pickedFile.path.split('.').last == 'png' ? 'png' : 'jpeg';
+
+  // Convert bytes to Base64 string
+  String base64Image = 'data:image/$format;base64,' + base64Encode(bytes);
+
+  return base64Image;
+}

@@ -129,7 +129,7 @@ class SignUpScreen extends StatelessWidget {
               children: [
                 TextButton(
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => SignInScreen()));
                     },
                     child: const Text("Already have an account?..",

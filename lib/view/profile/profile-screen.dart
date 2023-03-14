@@ -2,9 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:founder_app/common/constants/constants.dart';
 import 'package:founder_app/common/widgets/widgetswelcome.dart';
-import 'package:founder_app/controller/provider/splash-provider/splash_provider.dart';
+import 'package:founder_app/controller/provider/profile-provider/profile_provider.dart';
 import 'package:founder_app/view/Notification_screen/notification_screen.dart';
 import 'package:founder_app/view/drawer/drawer_home.dart';
+import 'package:founder_app/view/drawer/messagiing/messaging.dart';
 import 'package:founder_app/view/home/homescreen/homescreen.dart';
 import 'package:founder_app/view/profile/co_foundr_profile.dart';
 import 'package:founder_app/view/profile/foundr-profile.dart';
@@ -51,26 +52,81 @@ class ProfileScreen extends StatelessWidget {
                 color: Colors.white38,
                 borderRadius: BorderRadius.all(Radius.circular(10)),
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  const InkWell(
-                    child: CircleAvatar(
-                      foregroundImage:
-                          AssetImage("assets/images/event-image.png"),
-                      backgroundColor: Colors.transparent,
-                      // backgroundImage:AssetImage("assets/images/event-image.png"),
-                      radius: 80,
-                    ),
-                  ),
-                  Consumer<SplashscreenProvider>(
-                    builder: (context, value, child) {
-                      return textHeading(value.nameUser.toString());
-                    },
-                  ),
-                  descriptionText("malappuram,Kerela,india"),
-                  textNormalHeading("185 connections")
-                ],
+              child: Consumer<ProfileProvider>(
+                builder: (context, value, child) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          value.pickImage(context);
+                        },
+                        child: value.profileDatas!.profilePhoto != null
+                            ? CircleAvatar(
+                                foregroundImage: NetworkImage(
+                                    value.profileDatas!.profilePhoto!),
+                                backgroundColor: Colors.transparent,
+                                radius: 80,
+                              )
+                            : const CircleAvatar(
+                                foregroundImage:
+                                    AssetImage("assets/images/event-image.png"),
+                                backgroundColor: Colors.transparent,
+                                radius: 80,
+                              ),
+                      ),
+                      textHeading(value.profileDatas!.userName),
+                      descriptionText(value.profileDatas!.email),
+                      // textNormalHeading("185 connections")
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Container(
+                            width: 120,
+                            color: Colors.transparent,
+                            height: 45,
+                            child: ElevatedButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                    const Color.fromARGB(255, 50, 103, 137),
+                                  ),
+                                  shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0)),
+                                  ),
+                                ),
+                                onPressed: () {},
+                                child: const Text("Connections")),
+                          ),
+                          Container(
+                            width: 120,
+                            color: Colors.transparent,
+                            height: 45,
+                            child: ElevatedButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                    const Color.fromARGB(255, 50, 103, 137),
+                                  ),
+                                  shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0)),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        const MessagingScreen(),
+                                  ));
+                                },
+                                child: const Text("Messaging")),
+                          ),
+                        ],
+                      )
+                    ],
+                  );
+                },
               ),
             ),
           ),
@@ -82,7 +138,7 @@ class ProfileScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Container(
+                Container( 
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height * 0.08,
                   decoration: const BoxDecoration(

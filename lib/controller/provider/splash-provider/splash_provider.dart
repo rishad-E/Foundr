@@ -3,15 +3,17 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:founder_app/controller/provider/matching-profile-provider/matching_profile_provider.dart';
+import 'package:founder_app/controller/provider/profile-provider/profile_provider.dart';
 import 'package:founder_app/view/home/homescreen/homescreen.dart';
 import 'package:founder_app/view/home/welcome_screen/welcomescreen.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:provider/provider.dart';
 
 class SplashscreenProvider with ChangeNotifier {
   FlutterSecureStorage storage = const FlutterSecureStorage();
   bool? isExpired;
   String? nameUser;
-
 
   splashTimer(BuildContext context) async {
     String? checkLogin = await storage.read(key: "token");
@@ -19,24 +21,15 @@ class SplashscreenProvider with ChangeNotifier {
     if (checkLogin != null) {
       isExpired = JwtDecoder.isExpired(checkLogin.toString());
       notifyListeners();
-      
-    Map<String, dynamic> decodedtoken = JwtDecoder.decode(checkLogin.toString());
-    log(decodedtoken.toString());
-    nameUser = decodedtoken["userName"];
-    notifyListeners();
-    log(nameUser.toString());
+      log(isExpired.toString());
+
+      // Map<String, dynamic> decodedtoken = JwtDecoder.decode(checkLogin.toString());
+      // log(decodedtoken.toString());
+      // // nameUser = decodedtoken["userName"];
+      // notifyListeners();
+      // log(nameUser.toString());
     }
-    log(isExpired.toString());
     // log(checkLogin.toString());
-
-    // Map<String, dynamic> decoded = JwtDecoder.decode(checkLogin.toString());
-    // log(decoded.toString());
-    //  final nameUs =decoded["userName"];
-    //  final emailus = decoded["email"];
-    //  log(nameUs.toString());
-    //  log(emailus.toString());
-
-
 
     Timer(const Duration(seconds: 3), () {
       if (checkLogin == null) {
@@ -48,6 +41,10 @@ class SplashscreenProvider with ChangeNotifier {
       } else if (isExpired == false) {
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const HomeScreen()));
+        Provider.of<MatchingProfileProvider>(context, listen: false)
+            .getAllMatchingProfile();
+        Provider.of<ProfileProvider>(context, listen: false)
+            .getUserDetailesProvider();
       }
     });
   }

@@ -23,7 +23,7 @@ class NotificationScreen extends StatelessWidget {
           TextButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const HomeScreen()));
+                    builder: (context) =>HomeScreen()));
               },
               child: const Text("Home", style: textStyle)),
           IconButton(

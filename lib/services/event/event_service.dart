@@ -13,11 +13,12 @@ class EventService {
   String path = ApiConfig().baseUrl + ApiConfig().getEventapi;
 
   Future<List<Event>?> getEventService(BuildContext context) async {
+    
     try {
       Response response = await dio.get(path);
 
       if (response.statusCode == 200) {
-        log(response.data.toString());
+        log(response.data.toString(),name: 'eventlog');
         List<dynamic> data = response.data['events'];
         final res = data.map((e) => Event.fromJson(e)).toList();
         return res;

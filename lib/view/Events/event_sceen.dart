@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_interpolation_to_compose_strings
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:founder_app/common/constants/constants.dart';
@@ -7,6 +9,7 @@ import 'package:founder_app/services/event/event_service.dart';
 import 'package:founder_app/view/Drawer/drawer_home.dart';
 import 'package:founder_app/view/events/event_join_screen.dart';
 import 'package:founder_app/view/home/homescreen/homescreen.dart';
+import 'package:intl/intl.dart';
 
 class EventScreen extends StatelessWidget {
   const EventScreen({super.key});
@@ -69,27 +72,28 @@ class EventScreen extends StatelessWidget {
                         crossAxisCount: 2,
                         crossAxisSpacing: 3,
                         mainAxisSpacing: 5,
-                        childAspectRatio: 5.5 / 7,
+                        childAspectRatio: 5/6,
                       ),
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
                                 builder: (context) => EventJoin(
-                                      title: snapshot.data![index].title!,
-                                      content:
-                                          snapshot.data![index].description!,
-                                      mentorImage:
-                                          snapshot.data![index].mentorImage!,
-                                      mentorName:
-                                          snapshot.data![index].mentorName!,
-                                      venue: snapshot.data![index].venue!,
-                                      dateAndTime: snapshot
-                                          .data![index].dateAndTime
-                                          .toString()
-                                          .substring(0, 16),
-                                    )));
+                                  title: snapshot.data![index].title!,
+                                  content: snapshot.data![index].description!,
+                                  mentorImage:
+                                      snapshot.data![index].mentorImage!,
+                                  mentorName: snapshot.data![index].mentorName!,
+                                  venue: snapshot.data![index].venue!,
+                                  dateAndTime: dateChange(snapshot
+                                      .data![index].dateAndTime
+                                      .toString()),
+                                  fee: snapshot.data![index].enrollmentFee!,
+                                ),
+                              ),
+                            );
                           },
                           child: SizedBox(
                             height: MediaQuery.of(context).size.height * 0.24,
@@ -99,7 +103,7 @@ class EventScreen extends StatelessWidget {
                               elevation: 4,
                               child: Column(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Container(
                                     height: 100,
@@ -116,6 +120,14 @@ class EventScreen extends StatelessWidget {
                                       fit: BoxFit.cover,
                                     ),
                                   ),
+                                  textNormalHeading(
+                                      snapshot.data![index].mentorName),
+                                  // Text(
+                                  //   dateChange(snapshot.data![index].dateAndTime.toString()),
+                                  //   style: const TextStyle(
+                                  //       color: Color.fromARGB(255, 50, 103, 137),
+                                  //       fontWeight: FontWeight.w600),
+                                  // ),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: const [
@@ -141,5 +153,17 @@ class EventScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  dateChange(String date) {
+    DateTime dateTime = DateTime.parse(date);
+    String formatteddate = DateFormat('dd-MMMM-yyyy', 'en_US').format(dateTime);
+    String time = DateFormat('h:mm a').format(dateTime);
+    formatteddate = formatteddate.toLowerCase();
+    String formattedDate = formatteddate.replaceFirst(
+        formatteddate.substring(3, 4),
+        formatteddate.substring(3, 4).toUpperCase());
+    String timeDate = formattedDate + " " + time;
+    return timeDate;
   }
 }

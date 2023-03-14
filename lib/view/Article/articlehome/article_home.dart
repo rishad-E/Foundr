@@ -7,6 +7,7 @@ import 'package:founder_app/common/widgets/widgetswelcome.dart';
 import 'package:founder_app/model/article/article_model.dart';
 import 'package:founder_app/services/article/article_service.dart';
 import 'package:founder_app/view/article/articlehome/arcle_home_screen.dart';
+import 'package:intl/intl.dart';
 
 class ArticleHome extends StatelessWidget {
   const ArticleHome({super.key});
@@ -65,28 +66,29 @@ class ArticleHome extends StatelessWidget {
                                     name: snapshot.data![index].title!,
                                     content: snapshot.data![index].content!,
                                     image: snapshot.data![index].coverImage!,
-                                    date: snapshot.data![index].createdAt.toString().substring(0, 10),
+                                    date: dateChange(
+                                    snapshot.data![index].createdAt.toString()),
                                   ),
                                 ),
                               );
                             },
                             child: Container(
-                                // padding: const EdgeInsets.all(5),
-                                // height: MediaQuery.of(context).size.height * 0.4,
-                                // width: MediaQuery.of(context).size.width * 0.5,
-                                decoration: const BoxDecoration(
-                                  color: Colors.white60,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                ),
-                                child: ArticleWidget(
-                                  avatar: snapshot.data![index].coverImage!,
-                                  title: snapshot.data![index].title!,
-                                  subtitle: snapshot.data![index].content!,
-                                  dateTime: snapshot.data![index].createdAt
-                                      .toString()
-                                      .substring(0, 10),
-                                )),
+                              // padding: const EdgeInsets.all(5),
+                              // height: MediaQuery.of(context).size.height * 0.4,
+                              // width: MediaQuery.of(context).size.width * 0.5,
+                              decoration: const BoxDecoration(
+                                color: Colors.white60,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                              ),
+                              child: ArticleWidget(
+                                avatar: snapshot.data![index].coverImage!,
+                                title: snapshot.data![index].title!,
+                                subtitle: snapshot.data![index].content!,
+                                dateTime: dateChange(
+                                    snapshot.data![index].createdAt.toString()),
+                              ),
+                            ),
                           );
                         },
                       );
@@ -99,5 +101,15 @@ class ArticleHome extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  dateChange(String date) {
+    DateTime dateTime = DateTime.parse(date);
+    String formatteddate = DateFormat('dd-MMMM-yyyy', 'en_US').format(dateTime);
+    formatteddate = formatteddate.toLowerCase();
+    String formattedDate = formatteddate.replaceFirst(
+        formatteddate.substring(3, 4),
+        formatteddate.substring(3, 4).toUpperCase());
+    return formattedDate;
   }
 }

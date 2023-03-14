@@ -1,4 +1,3 @@
-
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
@@ -6,19 +5,27 @@ import 'package:founder_app/common/constants/constants.dart';
 
 class MatchingProfilesHome extends StatelessWidget {
   final String name;
-
-  const MatchingProfilesHome({super.key, required this.name});
+ final String userImage;
+  const MatchingProfilesHome({
+    super.key,
+    required this.name,
+    required this.userImage,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          const CircleAvatar(
-            radius: 36,
-            backgroundColor: Color.fromARGB(255, 30, 30, 30),
-            backgroundImage: AssetImage('assets/images/user2.png'),
+           CircleAvatar(
+            radius: 50,
+            backgroundColor: Colors.transparent,
+            // child: Icon(Icons.person),
+            backgroundImage: NetworkImage(
+              userImage,
+              // 'assets/images/event-image.png'
+            ),
           ),
           Text(name, style: textStyle),
           ElevatedButton(

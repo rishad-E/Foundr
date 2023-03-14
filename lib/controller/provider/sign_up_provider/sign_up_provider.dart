@@ -29,7 +29,7 @@ class SignupProvider with ChangeNotifier {
                                 builder: (context) => OtpScreen(),
                               ),
                             ),
-                            disposeTextfield(context)
+                            
                           }
                         else
                           {
@@ -43,14 +43,14 @@ class SignupProvider with ChangeNotifier {
         );
   }
 
-  void disposeTextfield(context) {
-    final provider = Provider.of<OtpProvider>(context, listen: false);
+  // void disposeTextfield(context) {
+  //   final provider = Provider.of<OtpProvider>(context, listen: false);
 
-    provider.usernameController.clear();
-    provider.emailController.clear();
-    provider.passwordController.clear();
-    provider.confirmPasswordController.clear();
-  }
+  //   provider.usernameController.clear();
+  //   provider.emailController.clear();
+  //   provider.passwordController.clear();
+  //   provider.confirmPasswordController.clear();
+  // }
 
   String? nameValidation(String? value) {
     if (value == null || value.isEmpty) {
@@ -116,7 +116,6 @@ class SignupProvider with ChangeNotifier {
     if (obscureText == false) {
       icon = const Icon(
         Icons.visibility_off,
-        // color: kBlack,
       );
       obscureText = true;
       notifyListeners();

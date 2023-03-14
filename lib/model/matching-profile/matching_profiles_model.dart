@@ -1,15 +1,15 @@
-// // To parse this JSON data, do
-// //
-// //     final matchingProfileModel = matchingProfileModelFromJson(jsonString);
+// To parse this JSON data, do
+//
+// //     final userProfileModel = userProfileModelFromJson(jsonString);
 
 // import 'dart:convert';
 
-// MatchingProfileModel matchingProfileModelFromJson(String str) => MatchingProfileModel.fromJson(json.decode(str));
+// UserProfileModel userProfileModelFromJson(String str) => UserProfileModel.fromJson(json.decode(str));
 
-// String matchingProfileModelToJson(MatchingProfileModel data) => json.encode(data.toJson());
+// String userProfileModelToJson(UserProfileModel data) => json.encode(data.toJson());
 
-class MatchingProfileModel {
-    MatchingProfileModel({
+class UserProfileModel {
+    UserProfileModel({
         this.matchingProfiles,
         this.page,
         this.totalPages,
@@ -19,7 +19,7 @@ class MatchingProfileModel {
     final String? page;
     final int? totalPages;
 
-    factory MatchingProfileModel.fromJson(Map<String, dynamic> json) => MatchingProfileModel(
+    factory UserProfileModel.fromJson(Map<String, dynamic> json) => UserProfileModel(
         matchingProfiles: json["matchingProfiles"] == null ? [] : List<MatchingProfile>.from(json["matchingProfiles"]!.map((x) => MatchingProfile.fromJson(x))),
         page: json["page"],
         totalPages: json["totalPages"],
@@ -46,6 +46,7 @@ class MatchingProfile {
         this.createdAt,
         this.updatedAt,
         this.v,
+        this.profilePhoto,
     });
 
     final String? id;
@@ -60,6 +61,7 @@ class MatchingProfile {
     final DateTime? createdAt;
     final DateTime? updatedAt;
     final int? v;
+    final String? profilePhoto;
 
     factory MatchingProfile.fromJson(Map<String, dynamic> json) => MatchingProfile(
         id: json["_id"],
@@ -74,6 +76,7 @@ class MatchingProfile {
         createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
         updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
         v: json["__v"],
+        profilePhoto: json["profilePhoto"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -89,5 +92,6 @@ class MatchingProfile {
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
         "__v": v,
+        "profilePhoto": profilePhoto,
     };
 }

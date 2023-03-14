@@ -8,8 +8,7 @@ import 'package:founder_app/model/sign-up/sign_up_response.dart';
 import 'package:founder_app/utils/exceptions/exceptions.dart';
 
 class ApiServiceSignUp {
-  var dio = Dio();
-
+  Dio dio = Dio();
 
   //verify the user ,if not registerd then generating otp
   Future<String?> verifyUserandGenerateService(
@@ -37,9 +36,8 @@ class ApiServiceSignUp {
     }
     return null;
   }
- 
 
- // sending the otp to the given mail
+  // sending the otp to the given mail
   Future<bool?> sendMail(
       String email, BuildContext context, String code, String userName) async {
     String path = ApiConfig().baseUrl + ApiConfig().sendMailapi;
@@ -70,19 +68,22 @@ class ApiServiceSignUp {
     }
     return null;
   }
- 
- // gathering enterd data using model and sign up 
+
+  // gathering enterd data using model and sign up
   Future<SignupRespModel?> signUp(
-      SignupReqModel model, BuildContext context) async {
+      SignupReqModel reqModel, BuildContext context) async {
     String path = ApiConfig().baseUrl + ApiConfig().signUpapi;
 
     try {
-      Response response = await dio.post(path, data: jsonEncode(model.toJson()),
-          options: Options(
-        validateStatus: (status) {
-          return status! < 599;
-        },
-      ));
+      Response response = await dio.post(
+        path,
+        data: jsonEncode(reqModel.toJson()),
+        options: Options(
+          validateStatus: (status) {
+            return status! < 599;
+          },
+        ),
+      );
       log("after response from sign up");
       if (response.statusCode == 201) {
         log(response.statusCode.toString());

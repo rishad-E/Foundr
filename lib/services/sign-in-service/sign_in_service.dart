@@ -11,14 +11,13 @@ class ApiServiceSignIn {
   var dio = Dio();
 
   //sign in service
-  Future<SigninRespModel?> signIn(
-      SigninreqModel model, BuildContext context) async {
+  Future<SigninRespModel?> signIn(SigninreqModel model, BuildContext context) async {
     String path = ApiConfig().baseUrl + ApiConfig().signInapi;
     try {
       Response response =
           await dio.post(path, data: jsonEncode(model.toJson()));
       log("after response from the sign in");
-      if (response.statusCode == 200 || response.statusCode == 201) {
+      if (response.statusCode == 200 ) {
         log(response.data.toString());
 
         final SigninRespModel signinmodel1 =

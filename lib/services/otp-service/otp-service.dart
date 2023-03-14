@@ -12,7 +12,7 @@ class ApiServiceOTP {
     String path = ApiConfig().baseUrl + ApiConfig().verifyOTPapi;
 
     try {
-      Response response = await dio.post(path, queryParameters: {"code": code},
+      Response response = await dio.post(path, data: {"code": code},
           options: Options(
         validateStatus: (status) {
           return status! < 599;

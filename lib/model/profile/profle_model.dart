@@ -1,6 +1,6 @@
-// // To parse this JSON data, do
-// //
-// //     final userProfileModel = userProfileModelFromJson(jsonString);
+// To parse this JSON data, do
+//
+//     final userProfileModel = userProfileModelFromJson(jsonString);
 
 // import 'dart:convert';
 
@@ -38,6 +38,7 @@ class UserDetails {
         this.createdAt,
         this.updatedAt,
         this.v,
+        this.profilePhoto,
     });
 
     final List<dynamic>? responsibilities;
@@ -52,6 +53,7 @@ class UserDetails {
     final DateTime? createdAt;
     final DateTime? updatedAt;
     final int? v;
+    final String? profilePhoto;
 
     factory UserDetails.fromJson(Map<String, dynamic> json) => UserDetails(
         responsibilities: json["responsibilities"] == null ? [] : List<dynamic>.from(json["responsibilities"]!.map((x) => x)),
@@ -66,6 +68,7 @@ class UserDetails {
         createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
         updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
         v: json["__v"],
+        profilePhoto: json["profilePhoto"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -81,5 +84,6 @@ class UserDetails {
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
         "__v": v,
+        "profilePhoto": profilePhoto,
     };
 }

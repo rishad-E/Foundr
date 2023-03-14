@@ -107,7 +107,7 @@ class SignInScreen extends StatelessWidget {
               children: [
                 TextButton(
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => SignUpScreen()));
                     },
                     child: const Text("New Here?...Go To Sign Up",

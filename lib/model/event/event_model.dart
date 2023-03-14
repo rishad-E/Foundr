@@ -1,21 +1,21 @@
-// // To parse this JSON data, do
-// //
-// //     final eventResModel = eventResModelFromJson(jsonString);
+// To parse this JSON data, do
+//
+//     final userProfileModel = userProfileModelFromJson(jsonString);
 
 // import 'dart:convert';
 
-// EventResModel eventResModelFromJson(String str) => EventResModel.fromJson(json.decode(str));
+// UserProfileModel userProfileModelFromJson(String str) => UserProfileModel.fromJson(json.decode(str));
 
-// String eventResModelToJson(EventResModel data) => json.encode(data.toJson());
+// String userProfileModelToJson(UserProfileModel data) => json.encode(data.toJson());
 
-// class EventResModel {
-//     EventResModel({
+// class UserProfileModel {
+//     UserProfileModel({
 //         this.events,
 //     });
 
 //     final List<Event>? events;
 
-//     factory EventResModel.fromJson(Map<String, dynamic> json) => EventResModel(
+//     factory UserProfileModel.fromJson(Map<String, dynamic> json) => UserProfileModel(
 //         events: json["events"] == null ? [] : List<Event>.from(json["events"]!.map((x) => Event.fromJson(x))),
 //     );
 
@@ -38,6 +38,8 @@ class Event {
         this.createdAt,
         this.updatedAt,
         this.v,
+        this.joinLink,
+        this.enrollmentFee,
     });
 
     final String? id;
@@ -48,10 +50,12 @@ class Event {
     final String? venue;
     final String? mentorImage;
     final List<dynamic>? attendees;
-    final List<dynamic>? feedback;
+    final List<String>? feedback;
     final DateTime? createdAt;
     final DateTime? updatedAt;
     final int? v;
+    final String? joinLink;
+    final int? enrollmentFee;
 
     factory Event.fromJson(Map<String, dynamic> json) => Event(
         id: json["_id"],
@@ -62,10 +66,12 @@ class Event {
         venue: json["venue"],
         mentorImage: json["mentorImage"],
         attendees: json["attendees"] == null ? [] : List<dynamic>.from(json["attendees"]!.map((x) => x)),
-        feedback: json["feedback"] == null ? [] : List<dynamic>.from(json["feedback"]!.map((x) => x)),
+        feedback: json["feedback"] == null ? [] : List<String>.from(json["feedback"]!.map((x) => x)),
         createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
         updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
         v: json["__v"],
+        joinLink: json["joinLink"],
+        enrollmentFee: json["enrollmentFee"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -81,5 +87,7 @@ class Event {
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
         "__v": v,
+        "joinLink": joinLink,
+        "enrollmentFee": enrollmentFee,
     };
 }

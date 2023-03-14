@@ -6,6 +6,7 @@ import 'package:founder_app/common/widgets/widgetswelcome.dart';
 import 'package:founder_app/model/article/article_model.dart';
 import 'package:founder_app/services/article/article_service.dart';
 import 'package:founder_app/view/article/arclewelcome/article_screen.dart';
+import 'package:intl/intl.dart';
 
 class ArticleWelcome extends StatelessWidget {
   const ArticleWelcome({super.key});
@@ -35,8 +36,8 @@ class ArticleWelcome extends StatelessWidget {
             hBox,
             SizedBox(
               // color: Colors.yellow,
-                height: MediaQuery.of(context).size.height * 0.78,
-                width: MediaQuery.of(context).size.width * 0.9,
+              height: MediaQuery.of(context).size.height * 0.78,
+              width: MediaQuery.of(context).size.width * 0.9,
               child: FutureBuilder<List<Article>?>(
                 future: ArticleService().getArticleService(context),
                 builder: ((context, snapshot) {
@@ -58,22 +59,23 @@ class ArticleWelcome extends StatelessWidget {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) => ArticleScreen(
-                                  name: snapshot.data![index].title!,
-                                  content: snapshot.data![index].content!,
-                                  image: snapshot.data![index].coverImage!,
-                                  date: snapshot.data![index].createdAt.toString().substring(0,10),
-                                ),
+                                    name: snapshot.data![index].title!,
+                                    content: snapshot.data![index].content!,
+                                    image: snapshot.data![index].coverImage!,
+                                    date: dateChange(snapshot
+                                        .data![index].createdAt
+                                        .toString())),
                               ),
                             );
                           },
                           child: ArticleWidget(
-                            avatar: snapshot.data![index].coverImage!,
-                            title: snapshot.data![index].title!,
-                            subtitle: snapshot.data![index].content!,
-                            dateTime: snapshot.data![index].createdAt
-                                .toString()
-                                .substring(0, 10),
-                          ),
+                              avatar: snapshot.data![index].coverImage!,
+                              title: snapshot.data![index].title!,
+                              subtitle: snapshot.data![index].content!,
+                              dateTime: dateChange(
+                                  snapshot.data![index].createdAt.toString())
+                              // snapshot.data![index].createdAt.toString(),
+                              ),
                         );
                       },
                     );
@@ -85,5 +87,15 @@ class ArticleWelcome extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  dateChange(String date) {
+    DateTime dateTime = DateTime.parse(date);
+    String formatteddate = DateFormat('dd-MMMM-yyyy', 'en_US').format(dateTime);
+    formatteddate = formatteddate.toLowerCase();
+    String formattedDate = formatteddate.replaceFirst(
+        formatteddate.substring(3, 4),
+        formatteddate.substring(3, 4).toUpperCase());
+    return formattedDate;
   }
 }

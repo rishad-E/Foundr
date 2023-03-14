@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:founder_app/controller/provider/matching-profile-provider/matching_profile_provider.dart';
 import 'package:founder_app/controller/provider/otp_provider/otp_provider.dart';
 import 'package:founder_app/controller/provider/profile-provider/profile_provider.dart';
 import 'package:founder_app/controller/provider/sign_in_provider/sign_in_provider.dart';
@@ -22,7 +23,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => SignupProvider()),
         ChangeNotifierProvider(create: (context) => SplashscreenProvider()),
         ChangeNotifierProvider(create: (context) => OtpProvider()),
-        ChangeNotifierProvider(create: (context) => ProfileProvider())
+        ChangeNotifierProvider(create: (context) => ProfileProvider()),
+        ChangeNotifierProvider(create: (context) => MatchingProfileProvider())
       ],
       child: MaterialApp(
         theme: ThemeData(
