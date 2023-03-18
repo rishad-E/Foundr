@@ -13,11 +13,14 @@ class ProfileProvider with ChangeNotifier {
   File? file;
   UserDetails? profileDatas;
 
-  //to get all user details 
+  //to get all user details
   Future<void> getUserDetailesProvider() async {
-    UserProfileService().getUserDetailes().then((value) => {
-          profileDatas = value,
-        });
+    UserProfileService().getUserDetailes().then(
+          (value) => {
+            profileDatas = value,
+            notifyListeners(),
+          },
+        );
   }
 
   //to update profile
@@ -39,14 +42,25 @@ class ProfileProvider with ChangeNotifier {
             if (value = true)
               {
                 SnackbarPopUps.popUpG("profile Upadated Sucessfully", context),
-               getUserDetailesProvider()
+                getUserDetailesProvider()
               }
             else if (value == false)
               {SnackbarPopUps.popUpB("Invalid User", context)}
           },
-        ); 
+        );
   }
+
+  
+  
 }
+
+
+
+
+
+
+
+
 
 
 // String format = pickedFile.path.split('.').last == 'png' ? 'png' : 'jpeg';

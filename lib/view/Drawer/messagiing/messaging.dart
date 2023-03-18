@@ -25,7 +25,7 @@ class MessagingScreen extends StatelessWidget {
           TextButton(
               onPressed: () {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) =>  HomeScreen()));
+                    builder: (context) =>const  HomeScreen()));
               },
               child: const Text("Home", style: textStyle)),
           IconButton(

@@ -47,6 +47,17 @@ InputDecoration decorTextfield([String? text1, IconButton? suffix]) {
   );
 }
 
+InputDecoration textfocus([String? text]) {
+  return InputDecoration(
+    hintText: text,
+    hintStyle: textStyle,
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10),
+      borderSide: const BorderSide(color: Color.fromARGB(255, 105, 153, 189)),
+    ),
+  );
+}
+
 // final buttonelevated = ButtonStyle(
 //   backgroundColor: MaterialStateProperty.all(
 //     Color.fromARGB(255, 26, 1, 40)

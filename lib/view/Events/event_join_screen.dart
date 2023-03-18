@@ -2,11 +2,12 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:founder_app/common/constants/constants.dart';
 import 'package:founder_app/common/widgets/widgethomescreen.dart';
 import 'package:founder_app/common/widgets/widgetswelcome.dart';
+import 'package:founder_app/controller/provider/event-payment-provider/event_payment.dart';
 import 'package:founder_app/view/home/homescreen/homescreen.dart';
+import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class EventJoin extends StatefulWidget {
@@ -19,6 +20,8 @@ class EventJoin extends StatefulWidget {
     required this.venue,
     required this.dateAndTime,
     required this.fee,
+    required this.eventId,
+    required this.joinLink,
   });
 
   final String title;
@@ -28,62 +31,34 @@ class EventJoin extends StatefulWidget {
   final String venue;
   final String dateAndTime;
   final int fee;
+  final String eventId;
+  final String joinLink;
 
   @override
   State<EventJoin> createState() => _EventJoinState();
 }
 
 class _EventJoinState extends State<EventJoin> {
-  Razorpay razorpay = Razorpay();
+  // Razorpay razorpay = Razorpay();
+  PaymentProvider paymentProvider = PaymentProvider();
   @override
   void initState() {
     super.initState();
-    razorpay = Razorpay();
-    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlerPaymentSuccess);
-    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlerPaymentError);
-    razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handlerExternalWallet);
+    final paymentProvider =
+        Provider.of<PaymentProvider>(context, listen: false);
+    final razorpay = paymentProvider.razorpay;
+    razorpay.on(
+        Razorpay.EVENT_PAYMENT_SUCCESS, paymentProvider.handlePaymentSuccess);
+    razorpay.on(
+        Razorpay.EVENT_PAYMENT_ERROR, paymentProvider.handlePaymentError);
+    razorpay.on(
+        Razorpay.EVENT_EXTERNAL_WALLET, paymentProvider.handleExternalWallet);
   }
 
   @override
   void dispose() {
+    paymentProvider.razorpay.clear();
     super.dispose();
-    razorpay.clear();
-    
-  }
-
-  void openCheckout() async {
-    var options = {
-      'key': 'rzp_test_boWotLKxahxvUM',
-      'amount': '1500' * 100,
-      'name': 'foundr',
-      'description': 'Join the Event',
-      'prefill': {'contact': '7034527959', 'email': 'Foundr@razorpay.com'},
-      'external': {
-        'wallets': ['paytm']
-      }
-    };
-
-    try {
-      razorpay.open(options);
-    } catch (e) {
-      log(e.toString());
-    }
-  }
-
-  void handlerPaymentSuccess() {
-       Fluttertoast.showToast(
-        msg: "SUCCESS: " , timeInSecForIosWeb: 4);
-    log("payment success");
-  }
-
-  void handlerPaymentError() {
-    Fluttertoast.showToast(msg: "payment error");
-    log("payment error");
-  }
-
-  void handlerExternalWallet() {
-    Fluttertoast.showToast(msg: "external wallet");
-    log("external wallet");
   }
 
   @override
@@ -195,7 +170,12 @@ class _EventJoinState extends State<EventJoin> {
                     ),
                     child: TextButton(
                         onPressed: () {
-                          openCheckout();
+                          double exchangeRate = 73;
+                          double rupeeAmount = widget.fee * exchangeRate;
+                          log(rupeeAmount.toString());
+                          Provider.of<PaymentProvider>(context, listen: false)
+                              .openCheckout(
+                                  rupeeAmount, widget.eventId, widget.joinLink,context);
                         },
                         child: const Text(
                           "PAY and JOIN",

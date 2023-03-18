@@ -168,15 +168,27 @@ class HomeScreen extends StatelessWidget {
                                       ? CircleAvatar(
                                           radius: 50,
                                           backgroundColor: Colors.transparent,
-                                          backgroundImage: NetworkImage(value
-                                              .matchingProfileDatas![index]
-                                              .profilePhoto!),
+                                          child: ClipOval(
+                                            child: FadeInImage.assetNetwork(
+                                              placeholder:
+                                                  'assets/images/event-image.png',
+                                              image: value
+                                                  .matchingProfileDatas![index]
+                                                  .profilePhoto!,
+                                              width: 160,
+                                              height: 160,
+                                              fit: BoxFit.cover,
+                                              fadeInDuration: const Duration(
+                                                  milliseconds: 500),
+                                            ),
+                                          ),
                                         )
                                       : const CircleAvatar(
                                           radius: 50,
                                           backgroundColor: Colors.transparent,
-                                          backgroundImage: AssetImage("assets/images/event-image.png"),
-                                          ),
+                                          backgroundImage: AssetImage(
+                                              "assets/images/event-image.png"),
+                                        ),
                                   Text(value
                                       .matchingProfileDatas![index].userName
                                       .toString()),
@@ -233,17 +245,32 @@ class HomeScreen extends StatelessWidget {
                     builder: ((context, snapshot) {
                       if (!snapshot.hasData) {
                         return const Center(child: CircularProgressIndicator());
-                      } else {
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            EventCard(
-                                mentorImage: snapshot.data![0].mentorImage!),
-                            wBox,
-                            EventCard(
-                                mentorImage: snapshot.data![1].mentorImage!),
-                          ],
+                      } else if (snapshot.data!.isEmpty) {
+                        return  Center(
+                          child: textNormalHeading("No Events"),
                         );
+                      } else {
+                        {
+                          return GestureDetector(
+                            onTap: () => Navigator.of(context).push(
+                                MaterialPageRoute(
+                                    builder: (context) => const EventScreen())),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                EventCard(
+                                  mentorName: snapshot.data![0].mentorName!,
+                                    mentorImage:
+                                        snapshot.data![0].mentorImage!),
+                                wBox,
+                                EventCard(
+                                  mentorName: snapshot.data![1].mentorName!,
+                                    mentorImage:
+                                        snapshot.data![1].mentorImage!),
+                              ],
+                            ),
+                          );
+                        }
                       }
                     }),
                   ),

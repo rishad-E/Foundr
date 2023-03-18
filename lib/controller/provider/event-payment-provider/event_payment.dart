@@ -5,7 +5,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:founder_app/services/event/event_join_service.dart';
 import 'package:founder_app/utils/error-popup/snackbar.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class PaymentProvider with ChangeNotifier {

@@ -37,56 +37,58 @@ class _CoFounderProfileState extends State<CoFounderProfile> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: backgroundColorConst,
-        body: Container(
-          padding: const EdgeInsets.all(15),
-          child: SingleChildScrollView(
+        body: Center(
+          child: Container(
+            padding: const EdgeInsets.all(15),
             child: Column(
               children: [
-                hBox,
-                Container(
-                  height: 300,
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(10),
-                  decoration: const BoxDecoration(
-                    color: Colors.white70,
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      textNormalHeading(" User Details"),
-                      // hBoxS,
-                      Row(
-                        children: [
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.075,
-                            width: MediaQuery.of(context).size.width * 0.45,
-                            child: TextFormField(
-                              decoration: decorTextfield("first name"),
-                            ),
-                          ),
-                          wBoxS,
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.075,
-                            width: MediaQuery.of(context).size.width * 0.39,
-                            // color: Colors.yellow,
-                            child: TextFormField(
-                              decoration: decorTextfield("last name"),
-                            ),
-                          )
-                        ],
-                      ),
-                      TextFormField(
-                        decoration: decorTextfield("email"),
-                      ),
-                      TextFormField(
-                        decoration: decorTextfield("linkedIn URL"),
-                      )
-                    ],
-                  ),
-                ),
-                hBox,
+                hBoxS,
+                textNormalHeading("co-foundr profile"),
+                // hBox,
+                // Container(
+                //   height: 300,
+                //   width: double.infinity,
+                //   padding: const EdgeInsets.all(10),
+                //   decoration: const BoxDecoration(
+                //     color: Colors.white70,
+                //     borderRadius: BorderRadius.all(Radius.circular(10)),
+                //   ),
+                //   child: Column(
+                //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: [
+                //       textNormalHeading(" User Details"),
+                //       // hBoxS,
+                //       Row(
+                //         children: [
+                //           SizedBox(
+                //             height: MediaQuery.of(context).size.height * 0.075,
+                //             width: MediaQuery.of(context).size.width * 0.45,
+                //             child: TextFormField(
+                //               decoration: decorTextfield("first name"),
+                //             ),
+                //           ),
+                //           wBoxS,
+                //           SizedBox(
+                //             height: MediaQuery.of(context).size.height * 0.075,
+                //             width: MediaQuery.of(context).size.width * 0.39,
+                //             // color: Colors.yellow,
+                //             child: TextFormField(
+                //               decoration: decorTextfield("last name"),
+                //             ),
+                //           )
+                //         ],
+                //       ),
+                //       TextFormField(
+                //         decoration: decorTextfield("email"),
+                //       ),
+                //       TextFormField(
+                //         decoration: decorTextfield("linkedIn URL"),
+                //       )
+                //     ],
+                //   ),
+                // ),
+                // hBox,
                 hBox,
                 Container(
                   height: 600,

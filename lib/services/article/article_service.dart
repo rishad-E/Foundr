@@ -17,11 +17,9 @@ class ArticleService {
           await dio.get(ApiConfig().baseUrl + ApiConfig().getArticleapi);
 
       if (response.statusCode == 200) {
-        log(response.data.toString());
-
         List<dynamic> data = response.data['articles'];
-        final res = data.map((e) => Article.fromJson(e)).toList();    
-        log(res.toString());
+        final res = data.map((e) => Article.fromJson(e)).toList();
+        log(res.toString(), name: 'article');
         return res;
       } else if (response.statusCode == 501) {
         SnackbarPopUps.popUpB("Could not Retrieve data", context);

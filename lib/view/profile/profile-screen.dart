@@ -1,4 +1,6 @@
 // ignore_for_file: file_names
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:founder_app/common/constants/constants.dart';
 import 'package:founder_app/common/widgets/widgetswelcome.dart';
@@ -12,7 +14,15 @@ import 'package:founder_app/view/profile/foundr-profile.dart';
 import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+  ProfileScreen({super.key});
+
+  final GlobalKey<FormState> formkey = GlobalKey();
+  final TextEditingController aboutController = TextEditingController();
+  final TextEditingController genderController = TextEditingController();
+  final TextEditingController ageController = TextEditingController();
+  final TextEditingController countryController = TextEditingController();
+  final TextEditingController stateController = TextEditingController();
+  final TextEditingController cityController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,13 +51,13 @@ class ProfileScreen extends StatelessWidget {
         ],
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        // mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           hBox,
           Center(
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.41,
-              width: MediaQuery.of(context).size.width * 0.76,
+              height: MediaQuery.of(context).size.height * 0.36,
+              width: MediaQuery.of(context).size.width * 0.85,
               decoration: const BoxDecoration(
                 color: Colors.white38,
                 borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -63,10 +73,20 @@ class ProfileScreen extends StatelessWidget {
                         },
                         child: value.profileDatas!.profilePhoto != null
                             ? CircleAvatar(
-                                foregroundImage: NetworkImage(
-                                    value.profileDatas!.profilePhoto!),
-                                backgroundColor: Colors.transparent,
                                 radius: 80,
+                                backgroundColor: Colors.transparent,
+                                child: ClipOval(
+                                  child: FadeInImage.assetNetwork(
+                                    placeholder:
+                                        'assets/images/event-image.png',
+                                    image: value.profileDatas!.profilePhoto!,
+                                    width: 160,
+                                    height: 160,
+                                    fit: BoxFit.cover,
+                                    fadeInDuration:
+                                        const Duration(milliseconds: 500),
+                                  ),
+                                ),
                               )
                             : const CircleAvatar(
                                 foregroundImage:
@@ -77,7 +97,6 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       textHeading(value.profileDatas!.userName),
                       descriptionText(value.profileDatas!.email),
-                      // textNormalHeading("185 connections")
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
@@ -131,95 +150,203 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
           hBox,
+          Container(
+            padding: const EdgeInsets.all(5),
+            height: MediaQuery.of(context).size.height * 0.3,
+            width: MediaQuery.of(context).size.width * 0.85,
+            decoration: const BoxDecoration(
+              color: Colors.white38,
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
+            child: Form(
+              key: formkey,
+              // autovalidateMode: AutovalidateMode.onUserInteraction,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  textNormalHeading("About You"),
+                  TextFormField(
+                    controller: aboutController,
+                    decoration: textfocus('about yourself'),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'pls enter';
+                      }
+                      return null;
+                    },
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.06,
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: TextFormField(
+                          controller: genderController,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'pls fill this field';
+                            }
+                            return null;
+                          },
+                          decoration:textfocus('gender')
+                        ),
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.06,
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: TextFormField(
+                          controller: ageController,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'pls fill this field';
+                            }
+                            return null;
+                          },
+                          decoration: textfocus('age')
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.06,
+                        width: MediaQuery.of(context).size.width * 0.25,
+                        child: TextFormField(
+                          controller: countryController,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'pls enter this field';
+                            }
+                            return null;
+                          },
+                          decoration: textfocus('country')
+                        ),
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.06,
+                        width: MediaQuery.of(context).size.width * 0.25,
+                        child: TextFormField(
+                          controller: stateController,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'pls fill this filed';
+                            }
+                            return null;
+                          },
+                          decoration: textfocus('state'),
+                        ),
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.06,
+                        width: MediaQuery.of(context).size.width * 0.25,
+                        child: TextFormField(
+                          controller: cityController,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'pls enter this field';
+                            }
+                            return null;
+                          },
+                          decoration: textfocus('city'),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Container(
+                      color: Colors.transparent,
+                      height: 40,
+                      child: ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                              const Color.fromARGB(255, 50, 103, 137),
+                            ),
+                            shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0)),
+                            ),
+                          ),
+                          onPressed: () {
+                            if (formkey.currentState!.validate()) {
+                              log("setttttt");
+                            }
+                          },
+                          child: const Text("save")),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.23,
-            width: MediaQuery.of(context).size.width * 0.76,
-            // color: Colors.teal[100],
+            // color: Colors.amber,
+            height: MediaQuery.of(context).size.height * 0.15,
+            width: MediaQuery.of(context).size.width * 0.85,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Container( 
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height * 0.08,
-                  decoration: const BoxDecoration(
-                    color: Colors.white38,
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const FounderProfile()));
-                    },
-                    child: Text.rich(
-                      TextSpan(
-                        text: "set up your",
-                        style: const TextStyle(
-                            color: Color.fromARGB(255, 105, 153, 189),
-                            fontSize: 16),
-                        children: <InlineSpan>[
-                          const TextSpan(
-                            text: " foundr",
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 50, 103, 137),
-                                fontSize: 18),
-                          ),
+                textNormalHeading("setup your profiles"),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      height: 60,
+                      width: 130,
+                      decoration: const BoxDecoration(
+                        color: Colors.white38,
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const FounderProfile()));
+                        },
+                        child: Text.rich(
                           TextSpan(
-                            text: ".",
-                            style:
-                                TextStyle(color: Colors.red[600], fontSize: 28),
-                          ),
-                          const TextSpan(
-                            text: "profile",
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 105, 153, 189),
-                                fontSize: 16),
-                          )
-                        ],
+                              text: "Foundr",
+                              style: const TextStyle(fontSize: 18),
+                              children: <InlineSpan>[
+                                TextSpan(
+                                  text: ".",
+                                  style: TextStyle(
+                                      color: Colors.red[600], fontSize: 24),
+                                ),
+                              ]),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                Container(
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height * 0.08,
-                  decoration: const BoxDecoration(
-                    color: Colors.white38,
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const CoFounderProfile()));
-                    },
-                    child: Text.rich(
-                      TextSpan(
-                        text: "set up your",
-                        style: const TextStyle(
-                            color: Color.fromARGB(255, 105, 153, 189),
-                            fontSize: 16),
-                        children: <InlineSpan>[
-                          const TextSpan(
-                            text: " co-foundr",
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 50, 103, 137),
-                                fontSize: 18),
-                          ),
-                          TextSpan(
-                            text: ".",
-                            style:
-                                TextStyle(color: Colors.red[600], fontSize: 28),
-                          ),
-                          const TextSpan(
-                            text: "profile",
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 105, 153, 189),
-                                fontSize: 16),
-                          )
-                        ],
+                    Container(
+                      height: 60,
+                      width: 130,
+                      decoration: const BoxDecoration(
+                        color: Colors.white38,
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
-                    ),
-                  ),
-                ),
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const CoFounderProfile()));
+                        },
+                        child: Text.rich(
+                          TextSpan(
+                              text: "co-Foundr",
+                              style: const TextStyle(fontSize: 18),
+                              children: <InlineSpan>[
+                                TextSpan(
+                                  text: ".",
+                                  style: TextStyle(
+                                      color: Colors.red[600], fontSize: 24),
+                                ),
+                              ]),
+                        ),
+                      ),
+                    )
+                  ],
+                )
               ],
             ),
           ),
@@ -228,3 +355,101 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+ // child: Column(
+            //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+            //   children: [
+            //     Container(
+            //       width: double.infinity,
+            //       height: MediaQuery.of(context).size.height * 0.08,
+            //       decoration: const BoxDecoration(
+            //         color: Colors.white38,
+            //         borderRadius: BorderRadius.all(Radius.circular(10)),
+            //       ),
+            //       child: TextButton(
+            //         onPressed: () {
+            //           Navigator.of(context).push(MaterialPageRoute(
+            //               builder: (context) => const FounderProfile()));
+            //         },
+            //         child: Text.rich(
+            //           TextSpan(
+            //             text: "set up your",
+            //             style: const TextStyle(
+            //                 color: Color.fromARGB(255, 105, 153, 189),
+            //                 fontSize: 16),
+            //             children: <InlineSpan>[
+            //               const TextSpan(
+            //                 text: " foundr",
+            //                 style: TextStyle(
+            //                     color: Color.fromARGB(255, 50, 103, 137),
+            //                     fontSize: 18),
+            //               ),
+            //               TextSpan(
+            //                 text: ".",
+            //                 style:
+            //                     TextStyle(color: Colors.red[600], fontSize: 28),
+            //               ),
+            //               const TextSpan(
+            //                 text: "profile",
+            //                 style: TextStyle(
+            //                     color: Color.fromARGB(255, 105, 153, 189),
+            //                     fontSize: 16),
+            //               )
+            //             ],
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //     Container(
+            //       width: double.infinity,
+            //       height: MediaQuery.of(context).size.height * 0.08,
+            //       decoration: const BoxDecoration(
+            //         color: Colors.white38,
+            //         borderRadius: BorderRadius.all(Radius.circular(10)),
+            //       ),
+            //       child: TextButton(
+            //         onPressed: () {
+            //           Navigator.of(context).push(MaterialPageRoute(
+            //               builder: (context) => const CoFounderProfile()));
+            //         },
+            //         child: Text.rich(
+            //           TextSpan(
+            //             text: "set up your",
+            //             style: const TextStyle(
+            //                 color: Color.fromARGB(255, 105, 153, 189),
+            //                 fontSize: 16),
+            //             children: <InlineSpan>[
+            //               const TextSpan(
+            //                 text: " co-foundr",
+            //                 style: TextStyle(
+            //                     color: Color.fromARGB(255, 50, 103, 137),
+            //                     fontSize: 18),
+            //               ),
+            //               TextSpan(
+            //                 text: ".",
+            //                 style:
+            //                     TextStyle(color: Colors.red[600], fontSize: 28),
+            //               ),
+            //               const TextSpan(
+            //                 text: "profile",
+            //                 style: TextStyle(
+            //                     color: Color.fromARGB(255, 105, 153, 189),
+            //                     fontSize: 16),
+            //               )
+            //             ],
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //   ],
+            // ),

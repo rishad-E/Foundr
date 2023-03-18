@@ -3,9 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:founder_app/common/constants/constants.dart';
 import 'package:founder_app/view/drawer/drawer_home.dart';
 
-class MessagingUser extends StatelessWidget {
+class MessagingUser extends StatefulWidget {
   const MessagingUser({super.key});
 
+  @override
+  State<MessagingUser> createState() => _MessagingUserState();
+}
+
+class _MessagingUserState extends State<MessagingUser> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

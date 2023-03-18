@@ -29,7 +29,7 @@ class HomeDrawer extends StatelessWidget {
                   DrawerTile(
                     ontap1: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const ProfileScreen(),
+                        builder: (context) => ProfileScreen(),
                       ));
                     },
                     icon1: Icons.account_circle_rounded,

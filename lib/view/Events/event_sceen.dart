@@ -72,7 +72,7 @@ class EventScreen extends StatelessWidget {
                         crossAxisCount: 2,
                         crossAxisSpacing: 3,
                         mainAxisSpacing: 5,
-                        childAspectRatio: 5/6,
+                        childAspectRatio: 5 / 7,
                       ),
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
@@ -81,6 +81,8 @@ class EventScreen extends StatelessWidget {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) => EventJoin(
+                                  eventId: snapshot.data![index].id!,
+                                  joinLink: snapshot.data![index].joinLink!,
                                   title: snapshot.data![index].title!,
                                   content: snapshot.data![index].description!,
                                   mentorImage:
@@ -120,14 +122,20 @@ class EventScreen extends StatelessWidget {
                                       fit: BoxFit.cover,
                                     ),
                                   ),
-                                  textNormalHeading(
-                                      snapshot.data![index].mentorName),
-                                  // Text(
-                                  //   dateChange(snapshot.data![index].dateAndTime.toString()),
-                                  //   style: const TextStyle(
-                                  //       color: Color.fromARGB(255, 50, 103, 137),
-                                  //       fontWeight: FontWeight.w600),
-                                  // ),
+                                  Align(
+                                    // alignment: Alignment.bottomLeft,
+                                    child: Text(
+                                        snapshot.data![index].mentorName!,style: const TextStyle(
+                                        color: Color.fromARGB(255, 50, 103, 137),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600),),
+                                  ),
+                                  Text(
+                                    dateChange(snapshot.data![index].dateAndTime.toString()),
+                                    style: const TextStyle(
+                                        color: Color.fromARGB(255, 50, 103, 137),
+                                        fontWeight: FontWeight.w200),
+                                  ),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: const [

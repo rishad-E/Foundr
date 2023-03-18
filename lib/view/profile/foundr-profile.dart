@@ -37,72 +37,73 @@ class _FounderProfileState extends State<FounderProfile> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                hBox,
-                Container(
-                  height: 350,
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(10),
-                  decoration: const BoxDecoration(
-                    color: Colors.white70,
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      textHeading(" User Details"),
-                      // hBoxS,
-                      Row(
-                        children: [
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.075,
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            child: TextFormField(
-                              decoration: decorTextfield("first name"),
-                            ),
-                          ),
-                          wBoxS,
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.075,
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            // color: Colors.yellow,
-                            child: TextFormField(
-                              decoration: decorTextfield("last name"),
-                            ),
-                          )
-                        ],
-                      ),
-                      TextFormField(
-                        decoration: decorTextfield("email"),
-                      ),
-                      TextFormField(
-                        decoration: decorTextfield("linkedIn URL"),
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Container(
-                          height: 40,
-                          width: 80,
-                          decoration: BoxDecoration(
-                            // color: Colors.amber,
-                            border: Border.all(
-                                color:
-                                    const Color.fromARGB(255, 105, 153, 189)),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(10)),
-                          ),
-                          child: TextButton(
-                              onPressed: () {},
-                              child: const Text(
-                                "SAVE",
-                                style: textStyle,
-                              )),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                hBox,
+                textNormalHeading("Foundr profile"),
+                // hBox,
+                // Container(
+                //   height: 350,
+                //   width: double.infinity,
+                //   padding: const EdgeInsets.all(10),
+                //   decoration: const BoxDecoration(
+                //     color: Colors.white70,
+                //     borderRadius: BorderRadius.all(Radius.circular(10)),
+                //   ),
+                //   child: Column(
+                //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: [
+                //       textHeading(" User Details"),
+                //       // hBoxS,
+                //       Row(
+                //         children: [
+                //           SizedBox(
+                //             height: MediaQuery.of(context).size.height * 0.075,
+                //             width: MediaQuery.of(context).size.width * 0.4,
+                //             child: TextFormField(
+                //               decoration: decorTextfield("first name"),
+                //             ),
+                //           ),
+                //           wBoxS,
+                //           SizedBox(
+                //             height: MediaQuery.of(context).size.height * 0.075,
+                //             width: MediaQuery.of(context).size.width * 0.4,
+                //             // color: Colors.yellow,
+                //             child: TextFormField(
+                //               decoration: decorTextfield(),
+                //             ),
+                //           )
+                //         ],
+                //       ),
+                //       TextFormField(
+                //         decoration: decorTextfield("email"),
+                //       ),
+                //       TextFormField(
+                //         decoration: decorTextfield("linkedIn URL"),
+                //       ),
+                //       Align(
+                //         alignment: Alignment.centerRight,
+                //         child: Container(
+                //           height: 40,
+                //           width: 80,
+                //           decoration: BoxDecoration(
+                //             // color: Colors.amber,
+                //             border: Border.all(
+                //                 color:
+                //                     const Color.fromARGB(255, 105, 153, 189)),
+                //             borderRadius:
+                //                 const BorderRadius.all(Radius.circular(10)),
+                //           ),
+                //           child: TextButton(
+                //               onPressed: () {},
+                //               child: const Text(
+                //                 "SAVE",
+                //                 style: textStyle,
+                //               )),
+                //         ),
+                //       )
+                //     ],
+                //   ),
+                // ),
+                // hBox,
                 hBox,
                 Container(
                   height: 950,
