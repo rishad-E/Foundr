@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:founder_app/common/constants/constants.dart';
 import 'package:founder_app/common/widgets/widgetswelcome.dart';
 import 'package:founder_app/controller/provider/profile-provider/profile_provider.dart';
-import 'package:founder_app/view/Notification_screen/notification_screen.dart';
+import 'package:founder_app/view/notification_screen/notification_screen.dart';
 import 'package:founder_app/view/drawer/drawer_home.dart';
 import 'package:founder_app/view/drawer/messagiing/messaging.dart';
 import 'package:founder_app/view/home/homescreen/homescreen.dart';
@@ -14,17 +14,15 @@ import 'package:founder_app/view/profile/foundr-profile.dart';
 import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
-  ProfileScreen({super.key});
+   ProfileScreen({super.key});
 
+ 
   final GlobalKey<FormState> formkey = GlobalKey();
-  final TextEditingController aboutController = TextEditingController();
-  final TextEditingController genderController = TextEditingController();
-  final TextEditingController ageController = TextEditingController();
-  final TextEditingController countryController = TextEditingController();
-  final TextEditingController stateController = TextEditingController();
-  final TextEditingController cityController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    final providerWOL = Provider.of<ProfileProvider>(context);
+
     return Scaffold(
       endDrawer: const HomeDrawer(),
       resizeToAvoidBottomInset: false,
@@ -139,7 +137,7 @@ class ProfileScreen extends StatelessWidget {
                                         const MessagingScreen(),
                                   ));
                                 },
-                                child: const Text("Messaging")),
+                                child: const Text("Messages")),
                           ),
                         ],
                       )
@@ -166,46 +164,53 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   textNormalHeading("About You"),
                   TextFormField(
-                    controller: aboutController,
+                    controller: providerWOL.aboutController,
                     decoration: textfocus('about yourself'),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'pls enter';
-                      }
-                      return null;
-                    },
+                    validator: (value) => providerWOL.aboutValidation(value),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SizedBox(
+                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.06,
                         width: MediaQuery.of(context).size.width * 0.4,
                         child: TextFormField(
-                          controller: genderController,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'pls fill this field';
-                            }
-                            return null;
-                          },
-                          decoration:textfocus('gender')
-                        ),
+                            keyboardType: TextInputType.number,
+                            controller: providerWOL.ageController,
+                            validator: (value) =>
+                                providerWOL.ageValidation(value),
+                            decoration: textfocus('age')),
                       ),
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.06,
                         width: MediaQuery.of(context).size.width * 0.4,
-                        child: TextFormField(
-                          controller: ageController,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'pls fill this field';
-                            }
-                            return null;
+                        child: DropdownButton<String>(
+                          isExpanded: true,
+                          items: providerWOL.questionitems
+                              .map((String dropdownVal) {
+                            return DropdownMenuItem<String>(
+                              value: dropdownVal,
+                              child: Text(dropdownVal,style: textStyle,),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            providerWOL.onchange(value!);
                           },
-                          decoration: textfocus('age')
+                          // (String? newVal) {
+                          //   setState(() {
+                          //    providerWOL. qSelected = newVal!;
+                          //   });
+                          // },
+                          value: providerWOL.qSelected,
                         ),
+                        //  TextFormField(
+                        //   controller: providerWOL.genderController,
+                        //   validator: (value) =>
+                        //       providerWOL.aboutValidation(value),
+                        //   decoration: textfocus('gender'),
+                        // ),
                       ),
+                     
                     ],
                   ),
                   Row(
@@ -215,27 +220,18 @@ class ProfileScreen extends StatelessWidget {
                         height: MediaQuery.of(context).size.height * 0.06,
                         width: MediaQuery.of(context).size.width * 0.25,
                         child: TextFormField(
-                          controller: countryController,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'pls enter this field';
-                            }
-                            return null;
-                          },
-                          decoration: textfocus('country')
-                        ),
+                            controller: providerWOL.countryController,
+                            validator: (value) =>
+                                providerWOL.aboutValidation(value),
+                            decoration: textfocus('country')),
                       ),
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.06,
                         width: MediaQuery.of(context).size.width * 0.25,
                         child: TextFormField(
-                          controller: stateController,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'pls fill this filed';
-                            }
-                            return null;
-                          },
+                          controller: providerWOL.stateController,
+                          validator: (value) =>
+                              providerWOL.aboutValidation(value),
                           decoration: textfocus('state'),
                         ),
                       ),
@@ -243,13 +239,9 @@ class ProfileScreen extends StatelessWidget {
                         height: MediaQuery.of(context).size.height * 0.06,
                         width: MediaQuery.of(context).size.width * 0.25,
                         child: TextFormField(
-                          controller: cityController,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'pls enter this field';
-                            }
-                            return null;
-                          },
+                          controller: providerWOL.cityController,
+                          validator: (value) =>
+                              providerWOL.aboutValidation(value),
                           decoration: textfocus('city'),
                         ),
                       ),
@@ -273,6 +265,7 @@ class ProfileScreen extends StatelessWidget {
                           onPressed: () {
                             if (formkey.currentState!.validate()) {
                               log("setttttt");
+                              providerWOL.updateAboutProvider(context);
                             }
                           },
                           child: const Text("save")),
@@ -356,17 +349,7 @@ class ProfileScreen extends StatelessWidget {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
- // child: Column(
+// child: Column(
             //   mainAxisAlignment: MainAxisAlignment.spaceAround,
             //   children: [
             //     Container(

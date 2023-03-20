@@ -10,6 +10,12 @@ class CoFounderProfile extends StatefulWidget {
 }
 
 class _CoFounderProfileState extends State<CoFounderProfile> {
+  var question0items = [
+    'select one',
+    'Yes',
+    'No',
+  ];
+  String q0Selected = 'select one';
   var question1items = [
     'select one',
     'Technical',
@@ -91,7 +97,7 @@ class _CoFounderProfileState extends State<CoFounderProfile> {
                 // hBox,
                 hBox,
                 Container(
-                  height: 600,
+                  height: 650,
                   width: 350,
                   padding: const EdgeInsets.all(10),
                   decoration: const BoxDecoration(
@@ -119,6 +125,21 @@ class _CoFounderProfileState extends State<CoFounderProfile> {
                             color: Color.fromARGB(255, 105, 153, 189)),
                       ),
                       hBoxS,
+                      DropdownButton<String>(
+                        isExpanded: true,
+                        items: question0items.map((String dropdownVal) {
+                          return DropdownMenuItem<String>(
+                            value: dropdownVal,
+                            child: Text(dropdownVal),
+                          );
+                        }).toList(),
+                        onChanged: (String? newVal) {
+                          setState(() {
+                            q0Selected = newVal!;
+                          });
+                        },
+                        value: q0Selected,
+                      ),
                       const Text(
                         "Do You prefer either technical or non-technical profiles..?",
                         style: TextStyle(

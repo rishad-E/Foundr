@@ -10,7 +10,7 @@ import 'package:founder_app/services/event/event_service.dart';
 import 'package:founder_app/view/article/articlehome/article_home.dart';
 import 'package:founder_app/view/drawer/drawer_home.dart';
 import 'package:founder_app/view/events/event_sceen.dart';
-import 'package:founder_app/view/Notification_screen/notification_screen.dart';
+import 'package:founder_app/view/notification_screen/notification_screen.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -246,7 +246,7 @@ class HomeScreen extends StatelessWidget {
                       if (!snapshot.hasData) {
                         return const Center(child: CircularProgressIndicator());
                       } else if (snapshot.data!.isEmpty) {
-                        return  Center(
+                        return Center(
                           child: textNormalHeading("No Events"),
                         );
                       } else {
@@ -259,12 +259,12 @@ class HomeScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 EventCard(
-                                  mentorName: snapshot.data![0].mentorName!,
+                                    mentorName: snapshot.data![0].mentorName!,
                                     mentorImage:
                                         snapshot.data![0].mentorImage!),
                                 wBox,
                                 EventCard(
-                                  mentorName: snapshot.data![1].mentorName!,
+                                    mentorName: snapshot.data![1].mentorName!,
                                     mentorImage:
                                         snapshot.data![1].mentorImage!),
                               ],

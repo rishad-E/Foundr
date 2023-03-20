@@ -1,15 +1,15 @@
 // To parse this JSON data, do
 //
-//     final updateUserabout = updateUseraboutFromJson(jsonString);
+//     final updateUseraboutModel = updateUseraboutModelFromJson(jsonString);
 
 // import 'dart:convert';
 
-// UpdateUserabout updateUseraboutFromJson(String str) => UpdateUserabout.fromJson(json.decode(str));
+// UpdateUseraboutModel updateUseraboutModelFromJson(String str) => UpdateUseraboutModel.fromJson(json.decode(str));
 
-// String updateUseraboutToJson(UpdateUserabout data) => json.encode(data.toJson());
+// String updateUseraboutModelToJson(UpdateUseraboutModel data) => json.encode(data.toJson());
 
-class UpdateUserabout {
-    UpdateUserabout({
+class UpdateUseraboutModel {
+    UpdateUseraboutModel({
         this.intro,
         this.gender,
         this.age,
@@ -25,7 +25,7 @@ class UpdateUserabout {
     final String? state;
     final String? city;
 
-    factory UpdateUserabout.fromJson(Map<String, dynamic> json) => UpdateUserabout(
+    factory UpdateUseraboutModel.fromJson(Map<String, dynamic> json) => UpdateUseraboutModel(
         intro: json["intro"],
         gender: json["gender"],
         age: json["age"],
