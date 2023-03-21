@@ -47,9 +47,10 @@ InputDecoration decorTextfield([String? text1, IconButton? suffix]) {
   );
 }
 
-InputDecoration textfocus([String? text]) {
+InputDecoration textfocus([String? text,String? text2]) {
   return InputDecoration(
     hintText: text,
+    labelText: text2,
     hintStyle: textStyle,
     enabledBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(10),

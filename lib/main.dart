@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:founder_app/controller/provider/connection-provider/connection_provider.dart';
 import 'package:founder_app/controller/provider/event-payment-provider/event_payment.dart';
 import 'package:founder_app/controller/provider/matching-profile-provider/matching_profile_provider.dart';
 import 'package:founder_app/controller/provider/otp_provider/otp_provider.dart';
@@ -26,7 +27,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => OtpProvider()),
         ChangeNotifierProvider(create: (context) => ProfileProvider()),
         ChangeNotifierProvider(create: (context) => MatchingProfileProvider()),
-        ChangeNotifierProvider(create: (context) => PaymentProvider())
+        ChangeNotifierProvider(create: (context) => PaymentProvider()),
+        ChangeNotifierProvider(create: (context) => ConnectionProvider())
       ],
       child: MaterialApp(
         theme: ThemeData(

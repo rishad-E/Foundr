@@ -64,7 +64,7 @@ class UserProfileService {
   /*-------------------service to updateabout user-------------------*/
 
   Future<bool?> updateAboutService(UpdateUseraboutModel model) async {
-    String path = ApiConfig().baseUrl + ApiConfig().updateAboutUser;
+    String path = ApiConfig().baseUrl + ApiConfig().updateAboutUserapi;
     String? token = await storage.read(key: 'token');
     try {
       Response response = await dio.post(path,

@@ -1,5 +1,5 @@
 class ApiConfig {
-  final String baseUrl = "http://10.0.12.97:8080";
+  final String baseUrl = "http://10.4.2.144:8080";
 
   //end points
   final String signInapi = "/api/user/signin";
@@ -13,5 +13,7 @@ class ApiConfig {
   final String getUserDetailesapi = "/api/user/getUser";
   final String profileUpdateapi = "/api/user/profilePhoto";
   final String joinEventapi = "/api/user/joinEvent";
-  final String updateAboutUser='/api/user/updateUserProfile';
+  final String updateAboutUserapi='/api/user/updateUserProfile';
+  final String sendConnectionreqapi= '/api/user/connectionRequest';
+  final String getConnetionapi='/api/user/connectionRequest';
 }

@@ -11,6 +11,7 @@ import 'package:founder_app/view/article/articlehome/article_home.dart';
 import 'package:founder_app/view/drawer/drawer_home.dart';
 import 'package:founder_app/view/events/event_sceen.dart';
 import 'package:founder_app/view/notification_screen/notification_screen.dart';
+import 'package:founder_app/view/profile-matching_profile/profile_matching.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -204,7 +205,28 @@ class HomeScreen extends StatelessWidget {
                                                 BorderRadius.circular(8.0)),
                                       ),
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (builder) =>
+                                               ProfileMatched(
+                                                profileImage: value.matchingProfileDatas![index].profilePhoto!,
+                                            id: value.matchingProfileDatas![index].id!,
+                                            userName:  value.matchingProfileDatas![index].userName!,
+                                            location:  value.matchingProfileDatas![index].email!,
+                                            email:  value.matchingProfileDatas![index].email!,
+                                            about:  value.matchingProfileDatas![index].userName!,
+                                            accomplishment:  value.matchingProfileDatas![index].userName!,
+                                            education:  value.matchingProfileDatas![index].age.toString(),
+                                            technical:  value.matchingProfileDatas![index].userName!,
+                                            idea:  value.matchingProfileDatas![index].userName!,
+                                            interests:  value.matchingProfileDatas![index].interests!,
+                                            responsibilities:  value.matchingProfileDatas![index].responsibilities!,
+                                          ),
+                                        ),
+                                      );
+                                    },
                                     child: const Text(
                                       'Show profile',
                                       style: TextStyle(

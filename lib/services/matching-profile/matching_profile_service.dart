@@ -22,7 +22,7 @@ class MatchingProfilesService {
             },
           ));
       if (response.statusCode == 200) {
-        log(response.data.toString());
+        log(response.data.toString(),name: 'MatchingProfile');
         List<dynamic> data = response.data['matchingProfiles'];
         final res = data.map((e) => MatchingProfile.fromJson(e)).toList();
 

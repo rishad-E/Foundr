@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:founder_app/model/profile/profle_model.dart';
@@ -20,8 +19,35 @@ class ProfileProvider with ChangeNotifier {
   final TextEditingController countryController = TextEditingController();
   final TextEditingController stateController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
+
+  /*-------selection question---------*/
+  String? seeked = 'hhey';
   var questionitems = ['gender', 'Male', 'Female', 'Other'];
   String qSelected = 'gender';
+  var question0items = ['select one', 'Yes', 'No'];
+  String q0Selected = 'select one';
+  var question1items = [
+    'select one',
+    'Technical',
+    'Non-Technical',
+    'No-preference',
+  ];
+  String q1Selected = 'select one';
+  var question2items = [
+    'select one',
+    'I want a co-founder who already has a specific idea',
+    'I want a co-founder who can workd on a specific idea',
+    'No preferences',
+  ];
+  String q2Selected = 'select one';
+  var question3items = [
+    'select one',
+    'Within a certain distance of me',
+    'In My country',
+    'No preferences',
+  ];
+  String q3Selected = 'select one';
+  /*-------selection question---------*/
 
   /*-------------------to get userdetails-------------------*/
   Future<void> getUserDetailesProvider() async {
@@ -83,17 +109,22 @@ class ProfileProvider with ChangeNotifier {
         });
   }
 
+  /*-------------------to update co-foundr profile-------------------*/
+  Future<void> updateCofounder() async {}
+
   String? aboutValidation(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Please enter the username';
+      return 'field required';
     } else {
       return null;
     }
   }
 
+  /*-------------validation-------------*/
+
   String? ageValidation(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Please enter your age';
+      return 'age required';
     }
     int? ageCheck = int.tryParse(value);
     if (ageCheck == null) {
@@ -105,9 +136,56 @@ class ProfileProvider with ChangeNotifier {
     }
   }
 
-  onchange(String val) {
-    qSelected = val;
-    notifyListeners();
+  onchangeGeder(String val) {
+    if (val == 'gender') {
+      return 'gender not selected';
+    } else {
+      qSelected = val;
+      notifyListeners();
+    }
+  }
+
+  onchangeSeeking(String val) {
+    if (val == 'select one') {
+      return 'select field';
+    } else {
+      q0Selected = val;
+      notifyListeners();
+      // if (q0Selected == 'Yes') {
+      //   seeked = q0Selected;
+      //   notifyListeners();
+      // } else if (q0Selected == 'No') {
+      //   seeked = q0Selected;
+      //   notifyListeners();
+      // }
+    }
+  }
+
+  onchangeTechnical(String val) {
+    if (val == 'select one') {
+      return 'select filed';
+    } else {
+      q1Selected = val;
+      notifyListeners();
+    }
+  }
+
+  onchangeIdea(String val) {
+    if (val == 'select one') {
+      return 'select field';
+    } else {
+      q2Selected = val;
+      notifyListeners();
+    }
+  }
+
+  onchangeLocation(String val) {
+    if (val == 'select one') {
+      return 'select field';
+    } else {
+      q3Selected = val;
+      notifyListeners();
+    }
   }
 }
 
