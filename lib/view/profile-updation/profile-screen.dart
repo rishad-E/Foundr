@@ -6,7 +6,6 @@ import 'package:founder_app/common/constants/constants.dart';
 import 'package:founder_app/common/widgets/widgetswelcome.dart';
 import 'package:founder_app/controller/provider/profile-provider/profile_provider.dart';
 import 'package:founder_app/view/notification_screen/notification_screen.dart';
-import 'package:founder_app/view/drawer/drawer_home.dart';
 import 'package:founder_app/view/drawer/messagiing/messaging.dart';
 import 'package:founder_app/view/home/homescreen/homescreen.dart';
 import 'package:founder_app/view/profile-updation/co_foundr_profile.dart';
@@ -268,7 +267,7 @@ class ProfileScreen extends StatelessWidget {
                                 },
                                 validator: (value) =>
                                     data.onchangeGeder(value!),
-                                value: data.profileDatas!.gender,
+                                value: data.profileDatas!.gender ?? data.qSelected,
                               ),
                             ),
                           ],
@@ -285,8 +284,10 @@ class ProfileScreen extends StatelessWidget {
                                   validator: (value) =>
                                       data.aboutValidation(value),
                                   decoration: textfocus(
-                                      data.profileDatas!.location!.country ??
-                                          'country')),
+                                      data.profileDatas!.location == null
+                                          ? 'country'
+                                          : data.profileDatas!.location!
+                                              .country)),
                             ),
                             SizedBox(
                               height:
@@ -297,8 +298,9 @@ class ProfileScreen extends StatelessWidget {
                                 validator: (value) =>
                                     data.aboutValidation(value),
                                 decoration: textfocus(
-                                    data.profileDatas!.location!.state ??
-                                        'state'),
+                                    data.profileDatas!.location == null
+                                        ? 'state'
+                                        : data.profileDatas!.location!.state),
                               ),
                             ),
                             SizedBox(
@@ -310,8 +312,9 @@ class ProfileScreen extends StatelessWidget {
                                 validator: (value) =>
                                     data.aboutValidation(value),
                                 decoration: textfocus(
-                                    data.profileDatas!.location!.city ??
-                                        'city'),
+                                    data.profileDatas!.location == null
+                                        ? 'city'
+                                        : data.profileDatas!.location!.city),
                               ),
                             ),
                           ],
@@ -367,7 +370,7 @@ class ProfileScreen extends StatelessWidget {
                         child: TextButton(
                           onPressed: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => const FounderProfile()));
+                                builder: (context) => FounderProfile()));
                           },
                           child: Text.rich(
                             TextSpan(

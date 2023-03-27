@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:founder_app/common/constants/constants.dart';
 import 'package:founder_app/common/widgets/widgetswelcome.dart';
@@ -8,11 +6,11 @@ import 'package:provider/provider.dart';
 
 class CoFounderProfile extends StatelessWidget {
   CoFounderProfile({super.key});
+
   final GlobalKey<FormState> formkey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ProfileProvider>(context, listen: false);
     return SafeArea(
       child: Scaffold(
         backgroundColor: backgroundColorConst,
@@ -21,7 +19,7 @@ class CoFounderProfile extends StatelessWidget {
             onPressed: () {
               Navigator.pop(context);
             },
-            icon:const Icon(Icons.arrow_back_ios_new),
+            icon: const Icon(Icons.arrow_back_ios_new),
             color: Colors.black,
           ),
           backgroundColor: Colors.white,
@@ -29,23 +27,22 @@ class CoFounderProfile extends StatelessWidget {
         ),
         body: Center(
           child: Container(
-            padding: const EdgeInsets.only(bottom: 15),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  hBox,
-                  Container(
-                    height: 750,
-                    width: 350,
-                    padding: const EdgeInsets.all(10),
-                    decoration: const BoxDecoration(
-                      color: Colors.white70,
-                      // color: Colors.yellow,
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                    ),
-                    child: Form(
-                      key: formkey,
-                      child: Column(
+            padding: const EdgeInsets.only(bottom: 15, top: 10),
+            child: Container(
+              height: 750,
+              width: 350,
+              padding: const EdgeInsets.all(10),
+              decoration: const BoxDecoration(
+                color: Colors.white70,
+                // color: Colors.yellow,
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
+              child: Form(
+                key: formkey,
+                child: SingleChildScrollView(
+                  child: Consumer<ProfileProvider>(
+                    builder: (context, data, child) {
+                      return Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -69,9 +66,10 @@ class CoFounderProfile extends StatelessWidget {
                           ),
                           hBoxS,
                           DropdownButtonFormField<String>(
+                            iconSize: 30,
                             isExpanded: true,
-                            items: provider.question0items
-                                .map((String dropdownVal) {
+                            items:
+                                data.question0items.map((String dropdownVal) {
                               return DropdownMenuItem<String>(
                                 value: dropdownVal,
                                 child: Text(
@@ -81,11 +79,10 @@ class CoFounderProfile extends StatelessWidget {
                               );
                             }).toList(),
                             onChanged: (String? value) {
-                              provider.onchangeSeeking(value!);
+                              data.onchangeSeeking(value!);
                             },
-                            value: provider.q0Selected,
-                            validator: (value) =>
-                                provider.onchangeSeeking(value!),
+                            value: data.q0Selected,
+                            validator: (value) => data.onchangeSeeking(value!),
                           ),
                           hBoxS,
                           const Text(
@@ -96,8 +93,9 @@ class CoFounderProfile extends StatelessWidget {
                           hBoxS,
                           DropdownButtonFormField<String>(
                             isExpanded: true,
-                            items: provider.question1items
-                                .map((String dropdownVal) {
+                            iconSize: 30,
+                            items:
+                                data.question1items.map((String dropdownVal) {
                               return DropdownMenuItem<String>(
                                 value: dropdownVal,
                                 child: Text(
@@ -107,11 +105,11 @@ class CoFounderProfile extends StatelessWidget {
                               );
                             }).toList(),
                             onChanged: (String? value) {
-                              provider.onchangeTechnical(value!);
+                              data.onchangeTechnical(value!);
                             },
-                            value: provider.q1Selected,
+                            value: data.q1Selected,
                             validator: (value) =>
-                                provider.onchangeTechnical(value!),
+                                data.onchangeTechnical(value!),
                           ),
                           hBoxS,
                           const Text(
@@ -122,8 +120,9 @@ class CoFounderProfile extends StatelessWidget {
                           hBoxS,
                           DropdownButtonFormField<String>(
                             isExpanded: true,
-                            items: provider.question2items
-                                .map((String dropdownVal) {
+                            iconSize: 30,
+                            items:
+                                data.question2items.map((String dropdownVal) {
                               return DropdownMenuItem<String>(
                                 value: dropdownVal,
                                 child: Text(
@@ -133,10 +132,10 @@ class CoFounderProfile extends StatelessWidget {
                               );
                             }).toList(),
                             onChanged: (String? value) {
-                              provider.onchangeIdea(value!);
+                              data.onchangeIdea(value!);
                             },
-                            value: provider.q2Selected,
-                            validator: (value) => provider.onchangeIdea(value!),
+                            value: data.q2Selected,
+                            validator: (value) => data.onchangeIdea(value!),
                           ),
                           hBox,
                           const Text(
@@ -145,9 +144,10 @@ class CoFounderProfile extends StatelessWidget {
                                 fontSize: 15, fontWeight: FontWeight.w600),
                           ),
                           DropdownButtonFormField<String>(
+                            iconSize: 30,
                             isExpanded: true,
-                            items: provider.question3items
-                                .map((String dropdownVal) {
+                            items:
+                                data.question3items.map((String dropdownVal) {
                               return DropdownMenuItem<String>(
                                 value: dropdownVal,
                                 child: Text(
@@ -157,11 +157,10 @@ class CoFounderProfile extends StatelessWidget {
                               );
                             }).toList(),
                             onChanged: (String? value) {
-                              provider.onchangeLocation(value!);
+                              data.onchangeLocation(value!);
                             },
-                            value: provider.q3Selected,
-                            validator: (value) =>
-                                provider.onchangeGeder(value!),
+                            value: data.q3Selected,
+                            validator: (value) => data.onchangeLocation(value!),
                           ),
                           hBox,
                           const Text(
@@ -176,26 +175,54 @@ class CoFounderProfile extends StatelessWidget {
                                 color: Color.fromARGB(255, 105, 153, 189)),
                           ),
                           hBoxS,
-                          SizedBox(
+                          Container(
+                            padding: const EdgeInsets.all(10),
                             height: 50,
-                            // decoration: BoxDecoration(
-                            //   // color: Colors.amber,
-                            //   border: Border.all(
-                            //       color:
-                            //           const Color.fromARGB(255, 105, 153, 189)),
-                            //   borderRadius:
-                            //       const BorderRadius.all(Radius.circular(10)),
-                            // ),
-                            child: TextFormField(
-                              decoration: decorTextfield(),
-                              validator: (value) {
-                                if (value == null) {
-                                  return 'tpe';
-                                } else {
-                                  return null;
-                                }
-                              },
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color:
+                                      const Color.fromARGB(255, 105, 153, 189)),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10)),
                             ),
+                            child: ListView.separated(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: data.responsibilitySelected!.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  padding: const EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                    color: const Color.fromARGB(
+                                        255, 163, 184, 201),
+                                    border: Border.all(
+                                        color: const Color.fromARGB(
+                                            255, 105, 153, 189)),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(8)),
+                                  ),
+                                  child:
+                                      Text(data.responsibilitySelected![index]),
+                                );
+                              },
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(width: 5),
+                            ),
+                          ),
+                          hBoxS,
+                          DropdownButtonFormField(
+                            items: data.responsibilityItems.map((String items) {
+                              return DropdownMenuItem(
+                                value: items,
+                                child: Text(
+                                  items,
+                                  style: const TextStyle(fontSize: 13),
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: (newvalue) {
+                              data.onchangeResponsibility(newvalue!);
+                            },
+                            value: data.respo,
                           ),
                           hBoxS,
                           Align(
@@ -213,13 +240,8 @@ class CoFounderProfile extends StatelessWidget {
                               ),
                               child: TextButton(
                                   onPressed: () {
-                                    log(provider.q0Selected);
-                                    log(provider.q1Selected);
-                                    log(provider.q2Selected);
-                                    log(provider.q3Selected);
-                                    log(provider.seeked.toString(),name: 'see');
                                     if (formkey.currentState!.validate()) {
-                                      log('settttttttttttttte');
+                                      data.updateCofounderProvider(context);
                                     }
                                   },
                                   child: const Text(
@@ -229,10 +251,10 @@ class CoFounderProfile extends StatelessWidget {
                             ),
                           )
                         ],
-                      ),
-                    ),
+                      );
+                    },
                   ),
-                ],
+                ),
               ),
             ),
           ),
@@ -241,3 +263,30 @@ class CoFounderProfile extends StatelessWidget {
     );
   }
 }
+
+
+                                    // log(data.seeked.toString(), name: 'see');
+                                    // log(data.technical.toString(),
+                                    //     name: 'tech');
+                                    // log(data.hasIdea.toString(),
+                                    //     name: 'idea');
+                                    // log(data.location.toString(),
+                                    //     name: 'loca');
+                                    // log(data.responsibilitySelected
+                                    //     .toString());
+ 
+// style: const TextStyle(color: Colors.white),
+                          // decoration: InputDecoration(
+                          //   contentPadding: const EdgeInsets.all(20),
+                          //   // border: OutlineInputBorder(
+                          //   //   borderRadius: BorderRadius.circular(10),
+                          //   //   // borderSide: BorderSide.none,
+                          //   // ),
+                          //   // floatingLabelBehavior:
+                          //   //     FloatingLabelBehavior.never,
+                          //   // labelStyle: const TextStyle(
+                          //   //     fontSize: 14,
+                          //   //     color: Color.fromARGB(255, 190, 190, 190)),
+                          //   // filled: true,
+                          //   // fillColor: const Color.fromARGB(255, 38, 38, 38),
+                          // ),

@@ -71,10 +71,8 @@ class ArticleWelcome extends StatelessWidget {
                           child: ArticleWidget(
                               avatar: snapshot.data![index].coverImage!,
                               title: snapshot.data![index].title!,
-                              subtitle: snapshot.data![index].content!,
                               dateTime: dateChange(
                                   snapshot.data![index].createdAt.toString())
-                              // snapshot.data![index].createdAt.toString(),
                               ),
                         );
                       },

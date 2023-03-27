@@ -52,3 +52,41 @@ Future<String> getImageBase64() async {
 
   return base64Image;
 }
+
+
+
+
+
+//to show error msg when connection timed out
+
+
+[log] DioError [DioErrorType.connectTimeout]: Connecting timed out [0ms] how can i give a pop up message when this happens
+
+To display a pop-up message when a DioError with a DioErrorType.connectTimeout occurs, you can wrap your Dio request in a try-catch block and catch the DioError exception. Then, you can check the type of the error and show a pop-up message accordingly.
+
+Here's an example code snippet using Flutter's fluttertoast package to display a pop-up message:
+
+php
+Copy code
+import 'package:fluttertoast/fluttertoast.dart';
+
+try {
+  // make Dio request here
+} catch (error) {
+  if (error is DioError) {
+    if (error.type == DioErrorType.connectTimeout) {
+      Fluttertoast.showToast(
+        msg: "Connection timed out. Please check your internet connection.",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
+  }
+}
+In this code, the try block contains your Dio request code, and the catch block catches any errors that occur. 
+If the error is a DioError with a DioErrorType.connectTimeout, the code inside the if block is executed.
+ This code displays a pop-up message using the Fluttertoast.showToast method.

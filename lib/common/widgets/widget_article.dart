@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 class ArticleWidget extends StatelessWidget {
   final String avatar;
   final String title;
-  final String subtitle;
+  // final String subtitle;
   final String dateTime;
   const ArticleWidget(
       {super.key,
       required this.avatar,
       required this.title,
-      required this.subtitle,
+      // required this.subtitle,
       required this.dateTime});
 
   @override
@@ -26,12 +26,14 @@ class ArticleWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Container(
-            height: 70,
-            width: 80,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(8)),
+            height: 100,
+            // width: 100,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: Image.network(avatar).image, fit: BoxFit.fill),
+              borderRadius: const BorderRadius.all(Radius.circular(5)),
             ),
-            child: Image.network(avatar),
+            // child: Image.network(avatar),
           ),
           Text(
             title,
@@ -43,14 +45,14 @@ class ArticleWidget extends StatelessWidget {
               fontWeight: FontWeight.w400,
             ),
           ),
-          Text(
-            subtitle,
-            maxLines: 2,
-            style: const TextStyle(
-                overflow: TextOverflow.ellipsis,
-                fontSize: 13,
-                color: Color.fromARGB(255, 105, 153, 189)),
-          ),
+          // Text(
+          //   subtitle,
+          //   maxLines: 2,
+          //   style: const TextStyle(
+          //       overflow: TextOverflow.ellipsis,
+          //       fontSize: 13,
+          //       color: Color.fromARGB(255, 105, 153, 189)),
+          // ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [

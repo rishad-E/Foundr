@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:founder_app/common/constants/constants.dart';
@@ -84,7 +83,7 @@ class SignInScreen extends StatelessWidget {
                             builder: (context, value, child) {
                               return TextButton(
                                 onPressed: () {
-                                  log("sign in button in sign in page pressed");
+                                  // log("sign in button in sign in page pressed");
                                   if (formkey.currentState!.validate()) {
                                     value.signinCheck(context);
                                    

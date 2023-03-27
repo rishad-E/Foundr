@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:founder_app/common/constants/constants.dart';
 import 'package:founder_app/common/widgets/widgetswelcome.dart';
+import 'package:founder_app/controller/provider/notification-provider/notification_provider.dart';
 import 'package:founder_app/view/drawer/drawer_home.dart';
 import 'package:founder_app/view/home/homescreen/homescreen.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
@@ -23,7 +26,7 @@ class NotificationScreen extends StatelessWidget {
           TextButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) =>HomeScreen()));
+                    builder: (context) => const HomeScreen()));
               },
               child: const Text("Home", style: textStyle)),
           IconButton(
@@ -50,7 +53,6 @@ class NotificationScreen extends StatelessWidget {
               hBox,
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
-
                 children: [
                   const Icon(
                     Icons.notifications_active,
@@ -63,50 +65,72 @@ class NotificationScreen extends StatelessWidget {
               hBox,
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.78,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: 20,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      color: backgroundColorConst,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      child: const ListTile(
-                        contentPadding: EdgeInsets.only(top: 10, bottom: 5),
-                        // leading: Image(
-                        //   height: 100,
-                        //   fit: BoxFit.cover,
-                        //   image: AssetImage("assets/images/img.png"),
-                        // ),
-                        leading: Padding(
-                          padding: EdgeInsets.only(left: 15),
-                          child: CircleAvatar(
-                            radius: 20,
-                            backgroundColor: Color.fromARGB(255, 51, 125, 170),
-                            child: Icon(
-                              Icons.person,
-                              color: Colors.black,
-                              // size:25,
+                child: Consumer<NotificationProvider>(
+                  builder: (context, value, child) {
+                    if (value.notificationData == null) {
+                      return const Center(
+                        child: Text('No Notification'),
+                      );
+                    } else {
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: value.notificationData!.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            color: backgroundColorConst,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12)),
+                            child: ListTile(
+                              contentPadding:
+                                  const EdgeInsets.only(top: 10, bottom: 5),
+                              // leading: Image(
+                              //   height: 100,
+                              //   fit: BoxFit.cover,
+                              //   image: AssetImage("assets/images/img.png"),
+                              // ),
+                              leading: Padding(
+                                padding: const EdgeInsets.only(left: 13),
+                                child: CircleAvatar(
+                                  radius: 25,
+                                  backgroundColor: Colors.transparent,
+                                  backgroundImage: value
+                                              .notificationData![index]
+                                              .sender
+                                              ?.profilePhoto !=
+                                          null
+                                      ? Image.network(
+                                          value.notificationData![index].sender!
+                                              .profilePhoto!,
+                                        ).image
+                                      : Image.asset(
+                                          'assets/images/event-image.png',
+                                        ).image,
+                                ),
+                              ),
+                              title: Text(
+                                value.notificationData![index].sender!
+                                        .userName ??
+                                    '',
+                                style: textStyle,
+                              ),
+                              subtitle: Text(
+                                value.notificationData![index].message ?? '',
+                                style: textStyle,
+                              ),
+                              trailing: Padding(
+                                padding: const EdgeInsets.only(right: 10),
+                                child: Text(
+                                  dateChange(value
+                                      .notificationData![index].createdAt
+                                      .toString()),
+                                  style: textStyle,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        title: Text(
-                          "Notification",
-                          style: textStyle,
-                        ),
-                        subtitle: Text(
-                          "notification description",
-                          style: textStyle,
-                        ),
-                        trailing: Padding(
-                          padding: EdgeInsets.only(right:10),
-                          child: Text(
-                            "9:23",
-                            style: textStyle,
-                          ),
-                        ),
-                      ),
-                    );
+                          );
+                        },
+                      );
+                    }
                   },
                 ),
               ),
@@ -115,5 +139,17 @@ class NotificationScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  dateChange(String date) {
+    DateTime dateTime = DateTime.parse(date);
+    // String formatteddate = DateFormat('dd-MMMM-yyyy', 'en_US').format(dateTime);
+    String time = DateFormat('h:mm a').format(dateTime);
+    // formatteddate = formatteddate.toLowerCase();
+    // String formattedDate = formatteddate.replaceFirst(
+    //     formatteddate.substring(3, 4),
+    //     formatteddate.substring(3, 4).toUpperCase());
+    // String timeDate =  time;
+    return time;
   }
 }

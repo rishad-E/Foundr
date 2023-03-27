@@ -43,7 +43,9 @@ class ConnectionRequestService {
       if (response.statusCode == 200) {
         List<dynamic> data= response.data['connectionRequests'];
         final result = data.map((e) => ConnectionRequest.fromJson(e)).toList();
+        log(data.toString(),name: 'getConnection');
         return result;
+        
       }
     } catch (e) {
       log(e.toString(),name: 'getconnectionError');

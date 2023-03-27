@@ -1,12 +1,4 @@
-// To parse this JSON data, do
-//
-//     final connectionReqModel = connectionReqModelFromJson(jsonString);
 
-// import 'dart:convert';
-
-// ConnectionReqModel connectionReqModelFromJson(String str) => ConnectionReqModel.fromJson(json.decode(str));
-
-// String connectionReqModelToJson(ConnectionReqModel data) => json.encode(data.toJson());
 
 class ConnectionReqModel {
   ConnectionReqModel({

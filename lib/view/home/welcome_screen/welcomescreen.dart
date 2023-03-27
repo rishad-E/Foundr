@@ -24,7 +24,6 @@ class WelcomeScreen extends StatelessWidget {
         actions: [
           TextButton(
               onPressed: () {
-                // Navigator.of(context).push(MaterialPageRoute(builder: (context) =>const HomeScreen(),));
               },
               child: const Text("Home ")),
           TextButton(
@@ -43,7 +42,6 @@ class WelcomeScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               hBox,
-              // Center(child: textHeading("Connecting Better.")),
               textHeading("Connecting Better."),
               const SizedBox(height: 20),
               descriptionText(

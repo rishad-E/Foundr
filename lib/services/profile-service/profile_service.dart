@@ -4,6 +4,8 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:founder_app/common/constants/api/apiconfig.dart';
+import 'package:founder_app/model/profile/co_founder_update_model.dart';
+import 'package:founder_app/model/profile/founder_profile_update_mode.dart';
 import 'package:founder_app/model/profile/profle_model.dart';
 import 'package:founder_app/model/profile/updateaboutuser.dart';
 
@@ -49,7 +51,7 @@ class UserProfileService {
         ),
         data: {"file": imagepath},
       );
-      log(response.data.toString());
+      log(response.data.toString(), name: 'updateprofile');
       if (response.statusCode == 201) {
         return true;
       } else if (response.statusCode == 401) {
@@ -73,11 +75,52 @@ class UserProfileService {
       if (response.statusCode == 201) {
         log(response.data.toString(), name: 'about update');
         return true;
-      }else if(response.statusCode == 401 ||response.statusCode == 500 ){
+      } else if (response.statusCode == 401 || response.statusCode == 500) {
         return false;
       }
     } catch (e) {
       log(e.toString());
+    }
+    return null;
+  }
+
+  /*-------------------service to update co-founder profile-------------------*/
+  Future<bool?> updateCofounderService(ReqCoFounderUpdateModel model) async {
+    String path = ApiConfig().baseUrl + ApiConfig().updateCofounderapi;
+    String? token = await storage.read(key: 'token');
+    try {
+      Response response = await dio.post(path,
+          options: Options(headers: {'Authorization': 'Bearer $token'}),
+          data: jsonEncode(model.toJson()));
+      if (response.statusCode == 201) {
+        log(response.data.toString(), name: 'cofounder update');
+        return true;
+      }
+    } catch (e) {
+      log(e.toString(), name: 'cofounder error');
+    }
+    return null;
+  }
+
+  /*-------------------service to update founder profile-------------------*/
+
+  Future<bool?> updateFounderService(ReqFounderUpdateModel model) async {
+    String path = ApiConfig().baseUrl + ApiConfig().updateFounderapi;
+    String? token = await storage.read(key: 'token');
+
+    try {
+      Response response = await dio.post(
+        path,
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+        data:  jsonEncode(model.toJson())
+      );
+      if (response.statusCode == 201) {
+        log(response.data.toString(),name: 'founderUpdate');
+        return true;
+      }
+
+    } catch (e) {
+      log(e.toString(),name: 'updaFouError');
     }
     return null;
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:founder_app/common/constants/constants.dart';
 import 'package:founder_app/common/widgets/widgethomescreen.dart';
 import 'package:founder_app/common/widgets/widgetswelcome.dart';
@@ -32,7 +33,7 @@ class ArticleHomeScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
-                      builder: (context) =>  HomeScreen(),
+                      builder: (context) => const HomeScreen(),
                     ),
                     (route) => false);
               },
@@ -41,32 +42,51 @@ class ArticleHomeScreen extends StatelessWidget {
           wBox
         ],
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            // mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              hBox,
-              textHeading(name),
-              hBox,
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.25,
-                width: MediaQuery.of(context).size.height * 0.3,
-                // color: Colors.grey,
-                child: Center(child: Image.network(image)),
-              ),
-              hBox,
-              hBox,
-              descriptionText(content),
-              hBox,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  descriptionText(date),
-                ],
-              )
-            ],
+      body: Container(
+        decoration: BoxDecoration(
+          color: backgroundColorConst,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        width: double.infinity,
+        padding: const EdgeInsets.all(20),
+        child: SingleChildScrollView(
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white60,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
+              // mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                hBox,
+                textHeading(name),
+                hBox,
+                Container(
+                  decoration: BoxDecoration(
+                    color: backgroundColorConst,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  height: MediaQuery.of(context).size.height * 0.25,
+                  width: MediaQuery.of(context).size.height * 0.35,
+                  // color: Colors.grey,
+                  child: Image.network(
+                    image,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                // hBox,
+                hBox,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    descriptionText(date),
+                  ],
+                ),
+                hBox,
+                // descriptionText(content),
+                Html(data: content),
+              ],
+            ),
           ),
         ),
       ),

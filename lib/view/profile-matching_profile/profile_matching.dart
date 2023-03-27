@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:founder_app/common/constants/constants.dart';
@@ -81,41 +83,54 @@ class ProfileMatched extends StatelessWidget {
                               ),
                             ),
                           ),
-                           Positioned(
-                            top: 30,
-                            child: CircleAvatar(
-                              foregroundImage:
-                                  NetworkImage(profileImage),
-                              backgroundColor: Colors.transparent,
-                              radius: 60,
-                            ),
-                          ),
+                          Positioned(
+                              top: 30,
+                              child: profileImage == 'null'
+                                  ? const CircleAvatar(
+                                      backgroundColor: Colors.transparent,
+                                      radius: 75,
+                                      foregroundImage: AssetImage(
+                                          'assets/images/event-image.png'),
+                                    )
+                                  : CircleAvatar(
+                                      radius: 60,
+                                      foregroundImage:
+                                          NetworkImage(profileImage),
+                                    )),
                         ],
                       ),
                       textHeading(userName),
                       descriptionText(email),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.3,
-                          color: Colors.transparent,
-                          height: 45,
-                          child: ElevatedButton.icon(
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                  const Color.fromARGB(255, 50, 103, 137),
-                                ),
-                                shape: MaterialStateProperty.all(
-                                  RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8.0)),
-                                ),
-                              ),
-                              onPressed: () {
-                               Provider.of<ConnectionProvider>(context,listen: false).sendConnection(id, context);
-                              },
-                              icon: const Icon(Icons.person_add_alt_1),
-                              label: const Text("connect")),
-                        ),
+                      Consumer<ConnectionProvider>(
+                        builder: (context, value, child) {
+                          return Align(
+                            alignment: Alignment.centerRight,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.3,
+                              color: Colors.transparent,
+                              height: 45,
+                              child: ElevatedButton.icon(
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                      const Color.fromARGB(255, 50, 103, 137),
+                                    ),
+                                    shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8.0)),
+                                    ),
+                                  ),
+                                  onPressed: () async {
+                                    // value.getalltConnections();
+                                   await value.buttonFuction(id);
+                                   log(value.variable.toString());
+                                    
+                                  },
+                                  icon: const Icon(Icons.person_add_alt_1),
+                                  label: Text("connect")),
+                            ),
+                          );
+                        },
                       )
                     ],
                   ),
@@ -135,7 +150,7 @@ class ProfileMatched extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       textNormalHeading("About"),
-                      descriptionText("description given as about"),
+                      descriptionText(about),
                       textNormalHeading("Impressive Accomplishment"),
                       descriptionText("description given as about"),
                       textNormalHeading("Education"),
@@ -143,11 +158,11 @@ class ProfileMatched extends StatelessWidget {
                       textNormalHeading("Is Technical"),
                       descriptionText("description given as about"),
                       textNormalHeading("Has Idea"),
-                      descriptionText("description given as about"),
+                      descriptionText(idea),
                       textNormalHeading("Interestes"),
                       descriptionText("description given as about"),
                       textNormalHeading("Responsibilities"),
-                      descriptionText("description given as about"),
+                      descriptionText(responsibilities.toString()),
                     ],
                   ),
                 ),

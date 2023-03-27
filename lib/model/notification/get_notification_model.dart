@@ -1,39 +1,79 @@
 // To parse this JSON data, do
 //
-//     final matchingProfileModel = matchingProfileModelFromJson(jsonString);
+//     final notificationResponseModel = notificationResponseModelFromJson(jsonString);
 
-// import 'dart:convert';
+import 'dart:convert';
 
-// MatchingProfileModel matchingProfileModelFromJson(String str) => MatchingProfileModel.fromJson(json.decode(str));
+NotificationResponseModel notificationResponseModelFromJson(String str) => NotificationResponseModel.fromJson(json.decode(str));
 
-// String matchingProfileModelToJson(MatchingProfileModel data) => json.encode(data.toJson());
+String notificationResponseModelToJson(NotificationResponseModel data) => json.encode(data.toJson());
 
-class MatchingProfileModel {
-    MatchingProfileModel({
-        this.matchingProfiles,
-        this.page,
-        this.totalPages,
+class NotificationResponseModel {
+    NotificationResponseModel({
+        this.notificationElement,
     });
 
-    final List<MatchingProfile>? matchingProfiles;
-    final String? page;
-    final int? totalPages;
+    final List<NotificationElement>? notificationElement;
 
-    factory MatchingProfileModel.fromJson(Map<String, dynamic> json) => MatchingProfileModel(
-        matchingProfiles: json["matchingProfiles"] == null ? [] : List<MatchingProfile>.from(json["matchingProfiles"]!.map((x) => MatchingProfile.fromJson(x))),
-        page: json["page"],
-        totalPages: json["totalPages"],
+    factory NotificationResponseModel.fromJson(Map<String, dynamic> json) => NotificationResponseModel(
+        notificationElement: json["notificationElement"] == null ? [] : List<NotificationElement>.from(json["notificationElement"]!.map((x) => NotificationElement.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
-        "matchingProfiles": matchingProfiles == null ? [] : List<dynamic>.from(matchingProfiles!.map((x) => x.toJson())),
-        "page": page,
-        "totalPages": totalPages,
+        "notificationElement": notificationElement == null ? [] : List<dynamic>.from(notificationElement!.map((x) => x.toJson())),
     };
 }
 
-class MatchingProfile {
-    MatchingProfile({
+class NotificationElement {
+    NotificationElement({
+        this.id,
+        this.type,
+        this.sender,
+        this.receiver,
+        this.message,
+        this.isRead,
+        this.createdAt,
+        this.updatedAt,
+        this.v,
+    });
+
+    final String? id;
+    final String? type;
+    final Sender? sender;
+    final String? receiver;
+    final String? message;
+    final bool? isRead;
+    final DateTime? createdAt;
+    final DateTime? updatedAt;
+    final int? v;
+
+    factory NotificationElement.fromJson(Map<String, dynamic> json) => NotificationElement(
+        id: json["_id"],
+        type: json["type"],
+        sender: json["sender"] == null ? null : Sender.fromJson(json["sender"]),
+        receiver: json["receiver"],
+        message: json["message"],
+        isRead: json["isRead"],
+        createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
+        updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
+        v: json["__v"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "_id": id,
+        "type": type,
+        "sender": sender?.toJson(),
+        "receiver": receiver,
+        "message": message,
+        "isRead": isRead,
+        "createdAt": createdAt?.toIso8601String(),
+        "updatedAt": updatedAt?.toIso8601String(),
+        "__v": v,
+    };
+}
+
+class Sender {
+    Sender({
         this.location,
         this.id,
         this.userName,
@@ -55,6 +95,11 @@ class MatchingProfile {
         this.cofounderHasIdea,
         this.cofounderTechnical,
         this.locationPreference,
+        this.accomplishments,
+        this.education,
+        this.employment,
+        this.haveIdea,
+        this.isTechnical,
     });
 
     final Location? location;
@@ -63,8 +108,8 @@ class MatchingProfile {
     final String? email;
     final String? password;
     final String? status;
-    final List<dynamic>? responsibilities;
-    final List<dynamic>? interests;
+    final List<String>? responsibilities;
+    final List<String>? interests;
     final List<String>? cofounderResponsibilities;
     final List<dynamic>? connections;
     final DateTime? createdAt;
@@ -78,16 +123,21 @@ class MatchingProfile {
     final int? cofounderHasIdea;
     final int? cofounderTechnical;
     final int? locationPreference;
+    final String? accomplishments;
+    final String? education;
+    final String? employment;
+    final String? haveIdea;
+    final int? isTechnical;
 
-    factory MatchingProfile.fromJson(Map<String, dynamic> json) => MatchingProfile(
+    factory Sender.fromJson(Map<String, dynamic> json) => Sender(
         location: json["location"] == null ? null : Location.fromJson(json["location"]),
         id: json["_id"],
         userName: json["userName"],
         email: json["email"],
         password: json["password"],
         status: json["status"],
-        responsibilities: json["responsibilities"] == null ? [] : List<dynamic>.from(json["responsibilities"]!.map((x) => x)),
-        interests: json["interests"] == null ? [] : List<dynamic>.from(json["interests"]!.map((x) => x)),
+        responsibilities: json["responsibilities"] == null ? [] : List<String>.from(json["responsibilities"]!.map((x) => x)),
+        interests: json["interests"] == null ? [] : List<String>.from(json["interests"]!.map((x) => x)),
         cofounderResponsibilities: json["cofounderResponsibilities"] == null ? [] : List<String>.from(json["cofounderResponsibilities"]!.map((x) => x)),
         connections: json["connections"] == null ? [] : List<dynamic>.from(json["connections"]!.map((x) => x)),
         createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
@@ -101,6 +151,11 @@ class MatchingProfile {
         cofounderHasIdea: json["cofounderHasIdea"],
         cofounderTechnical: json["cofounderTechnical"],
         locationPreference: json["locationPreference"],
+        accomplishments: json["accomplishments"],
+        education: json["education"],
+        employment: json["employment"],
+        haveIdea: json["haveIdea"],
+        isTechnical: json["isTechnical"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -125,6 +180,11 @@ class MatchingProfile {
         "cofounderHasIdea": cofounderHasIdea,
         "cofounderTechnical": cofounderTechnical,
         "locationPreference": locationPreference,
+        "accomplishments": accomplishments,
+        "education": education,
+        "employment": employment,
+        "haveIdea": haveIdea,
+        "isTechnical": isTechnical,
     };
 }
 

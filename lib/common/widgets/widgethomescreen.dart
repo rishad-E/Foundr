@@ -19,7 +19,7 @@ Widget appBarHome(BuildContext context) {
   return TextButton(
       onPressed: () {
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) =>  HomeScreen(),
+          builder: (context) => const HomeScreen(),
         ));
       },
       child: const Text("Home "));
@@ -34,5 +34,3 @@ Widget appBarArticleHome(BuildContext context) {
       },
       child: const Text("Article "));
 }
-
-

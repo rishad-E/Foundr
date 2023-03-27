@@ -4,6 +4,7 @@ import 'package:founder_app/common/constants/constants.dart';
 import 'package:founder_app/common/widgets/widget_event.dart';
 import 'package:founder_app/common/widgets/widgethomescreen.dart';
 import 'package:founder_app/common/widgets/widgetswelcome.dart';
+import 'package:founder_app/controller/provider/connection-provider/connection_provider.dart';
 import 'package:founder_app/controller/provider/matching-profile-provider/matching_profile_provider.dart';
 import 'package:founder_app/model/event/event_model.dart';
 import 'package:founder_app/services/event/event_service.dart';
@@ -156,6 +157,7 @@ class HomeScreen extends StatelessWidget {
                       return ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
+                          var data = value.matchingProfileDatas![index];
                           return SizedBox(
                             width: MediaQuery.of(context).size.width * 0.4,
                             child: Card(
@@ -206,24 +208,28 @@ class HomeScreen extends StatelessWidget {
                                       ),
                                     ),
                                     onPressed: () {
+                                      // Provider.of<ConnectionProvider>(context,listen: false).getalltConnections();
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (builder) =>
-                                               ProfileMatched(
-                                                profileImage: value.matchingProfileDatas![index].profilePhoto!,
-                                            id: value.matchingProfileDatas![index].id!,
-                                            userName:  value.matchingProfileDatas![index].userName!,
-                                            location:  value.matchingProfileDatas![index].email!,
-                                            email:  value.matchingProfileDatas![index].email!,
-                                            about:  value.matchingProfileDatas![index].userName!,
-                                            accomplishment:  value.matchingProfileDatas![index].userName!,
-                                            education:  value.matchingProfileDatas![index].age.toString(),
-                                            technical:  value.matchingProfileDatas![index].userName!,
-                                            idea:  value.matchingProfileDatas![index].userName!,
-                                            interests:  value.matchingProfileDatas![index].interests!,
-                                            responsibilities:  value.matchingProfileDatas![index].responsibilities!,
-                                          ),
+                                          builder: (builder) {
+                                            return ProfileMatched(
+                                              profileImage:
+                                                  data.profilePhoto ?? 'null',
+                                              id: data.id!,
+                                              userName: data.userName!,
+                                              location: data.email!,
+                                              email: data.email!,
+                                              about: data.userName!,
+                                              accomplishment: data.userName!,
+                                              education: data.age.toString(),
+                                              technical: data.userName!,
+                                              idea:data.userName!,
+                                              interests: data.interests!,
+                                              responsibilities:
+                                                  data.responsibilities!,
+                                            );
+                                          },
                                         ),
                                       );
                                     },

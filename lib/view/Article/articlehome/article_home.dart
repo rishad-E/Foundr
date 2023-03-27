@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:founder_app/common/constants/constants.dart';
@@ -47,6 +48,9 @@ class ArticleHome extends StatelessWidget {
                       return const Center(
                         child: CircularProgressIndicator(),
                       );
+                    } else if (snapshot.data!.isEmpty) {
+                      return Center(
+                          child: textNormalHeading("No Article Published"));
                     } else {
                       return GridView.builder(
                         gridDelegate:
@@ -66,16 +70,14 @@ class ArticleHome extends StatelessWidget {
                                     name: snapshot.data![index].title!,
                                     content: snapshot.data![index].content!,
                                     image: snapshot.data![index].coverImage!,
-                                    date: dateChange(
-                                    snapshot.data![index].createdAt.toString()),
+                                    date: dateChange(snapshot
+                                        .data![index].createdAt
+                                        .toString()),
                                   ),
                                 ),
                               );
                             },
                             child: Container(
-                              // padding: const EdgeInsets.all(5),
-                              // height: MediaQuery.of(context).size.height * 0.4,
-                              // width: MediaQuery.of(context).size.width * 0.5,
                               decoration: const BoxDecoration(
                                 color: Colors.white60,
                                 borderRadius:
@@ -84,7 +86,6 @@ class ArticleHome extends StatelessWidget {
                               child: ArticleWidget(
                                 avatar: snapshot.data![index].coverImage!,
                                 title: snapshot.data![index].title!,
-                                subtitle: snapshot.data![index].content!,
                                 dateTime: dateChange(
                                     snapshot.data![index].createdAt.toString()),
                               ),

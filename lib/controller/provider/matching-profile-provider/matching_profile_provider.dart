@@ -1,7 +1,3 @@
-
-
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:founder_app/model/matching-profile/matching_profiles_model.dart';
@@ -12,12 +8,11 @@ class MatchingProfileProvider with ChangeNotifier {
   List<MatchingProfile>? matchingProfileDatas;
   Future<void> getAllMatchingProfile() async {
     String? token = await storage.read(key: 'token');
-  log('this is token: $token');
+    // log('this is token: $token');
     await MatchingProfilesService().getAllMatchingProfileService(token!).then(
-          (value) {
-            matchingProfileDatas = value;
-          },
-        );
+      (value) {
+        matchingProfileDatas = value;
+      },
+    );
   }
 }
- 
