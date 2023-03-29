@@ -218,13 +218,23 @@ class HomeScreen extends StatelessWidget {
                                                   data.profilePhoto ?? 'null',
                                               profileId: data.id!,
                                               userName: data.userName!,
-                                              location: data.email!,
+                                              location:
+                                                  '${data.location!.country!},${data.location!.city!}',
                                               email: data.email!,
                                               about: data.userName!,
-                                              accomplishment: data.userName!,
-                                              education: data.age.toString(),
-                                              technical: data.userName!,
-                                              idea: data.userName!,
+                                              accomplishment:
+                                                  data.accomplishments!,
+                                              education: data.education!,
+                                              technical: data.isTechnical == 1
+                                                  ? 'Yes'
+                                                  : 'no',
+                                              idea: data.haveIdea ==
+                                                      'definiteIdea'
+                                                  ? 'Yes'
+                                                  : data.haveIdea ==
+                                                          'readyToExplore'
+                                                      ? 'No'
+                                                      : 'don\'t have any idea',
                                               interests: data.interests!,
                                               responsibilities:
                                                   data.responsibilities!,
@@ -234,7 +244,6 @@ class HomeScreen extends StatelessWidget {
                                       );
                                       await provider.buttonFuction(data.id!);
                                       await provider.getallConnectionReq();
-                                      
                                     },
                                     child: const Text(
                                       'Show profile',

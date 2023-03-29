@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:founder_app/common/constants/constants.dart';
 import 'package:founder_app/common/widgets/widgetswelcome.dart';
 import 'package:founder_app/controller/provider/connection-provider/connection_provider.dart';
+import 'package:founder_app/view/messagiing/messaging.dart';
 import 'package:provider/provider.dart';
 
 class ProfileMatched extends StatelessWidget {
@@ -44,6 +45,18 @@ class ProfileMatched extends StatelessWidget {
         toolbarHeight: 70,
         backgroundColor: Colors.white,
         elevation: 0,
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              color: Colors.black,
+            ),
+          ),
+          wBox
+        ],
         // title: appBarLogo(context, 0.3),
       ),
       body: SafeArea(
@@ -58,7 +71,7 @@ class ProfileMatched extends StatelessWidget {
                   height: MediaQuery.of(context).size.height * 0.36,
                   width: MediaQuery.of(context).size.width * 0.85,
                   decoration: const BoxDecoration(
-                    color: Colors.white38,
+                    color: Colors.white60,
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                   ),
                   child: Column(
@@ -98,7 +111,7 @@ class ProfileMatched extends StatelessWidget {
                         ],
                       ),
                       textHeading(userName),
-                      descriptionText(email),
+                      descriptionText(location),
                       Consumer<ConnectionProvider>(
                         builder: (context, value, child) {
                           if (value.connectionCheck == 'No' ||
@@ -168,7 +181,13 @@ class ProfileMatched extends StatelessWidget {
                                           width1: 130,
                                           icons: Icons.chat_rounded,
                                           text: 'message',
-                                          onpress: () {},
+                                          onpress: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const MessagingScreen()));
+                                          },
                                         ),
                             );
                           }
@@ -179,11 +198,11 @@ class ProfileMatched extends StatelessWidget {
                 ),
                 hBoxS,
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.5,
+                  height: MediaQuery.of(context).size.height * 0.6,
                   width: MediaQuery.of(context).size.width * 0.85,
                   padding: const EdgeInsets.all(10),
                   decoration: const BoxDecoration(
-                    color: Colors.white38,
+                    color: Colors.white70,
                     // color: Colors.amberAccent,
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                   ),
@@ -194,17 +213,63 @@ class ProfileMatched extends StatelessWidget {
                       textNormalHeading("About"),
                       descriptionText(about),
                       textNormalHeading("Impressive Accomplishment"),
-                      descriptionText("description given as about"),
+                      descriptionText(accomplishment),
                       textNormalHeading("Education"),
-                      descriptionText("description given as about"),
+                      descriptionText(education),
                       textNormalHeading("Is Technical"),
-                      descriptionText("description given as about"),
+                      descriptionText(technical),
                       textNormalHeading("Has Idea"),
-                      descriptionText("idea"),
+                      descriptionText(idea),
                       textNormalHeading("Interestes"),
-                      descriptionText("description given as about"),
+                      SizedBox(
+                        height: 45,
+                        child: ListView.separated(
+                          itemCount: interests.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              padding: const EdgeInsets.only(left: 5, right: 5),
+                              decoration: BoxDecoration(
+                                color: backgroundColorConst,
+                                // color: Color.fromARGB(255, 220, 223, 226),
+                                border: Border.all(
+                                    color: const Color.fromARGB(
+                                        255, 195, 212, 225)),
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(8)),
+                              ),
+                              child: Center(child: Text(interests[index])),
+                            );
+                          },
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(width: 5),
+                        ),
+                      ),
                       textNormalHeading("Responsibilities"),
-                      descriptionText(responsibilities.toString()),
+                      SizedBox(
+                        height: 45,
+                        child: ListView.separated(
+                          itemCount: responsibilities.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              padding: const EdgeInsets.only(left: 5, right: 5),
+                              decoration: BoxDecoration(
+                                color: backgroundColorConst,
+                                border: Border.all(
+                                    color: const Color.fromARGB(
+                                        255, 195, 212, 225)),
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(8)),
+                              ),
+                              child:
+                                  Center(child: Text(responsibilities[index])),
+                            );
+                          },
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(width: 8),
+                        ),
+                      ),
                     ],
                   ),
                 ),

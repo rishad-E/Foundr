@@ -4,29 +4,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:founder_app/model/connection/connection_response-model.dart';
 import 'package:founder_app/model/connection/connectionreqmodel.dart';
+import 'package:founder_app/model/connection/getall_connection-model.dart';
 import 'package:founder_app/model/connection/getconnectionresmodel.dart';
 import 'package:founder_app/services/connection/connection_service.dart';
 import 'package:founder_app/utils/error-popup/snackbar.dart';
 
 class ConnectionProvider with ChangeNotifier {
   FlutterSecureStorage storage = const FlutterSecureStorage();
-  List<ConnectionRequest>? allConnection;
+  List<ConnectionRequest>? allConnectionReq;
   String? connectionCheck;
-
+  List<Connection>? alltheConnection;
+  int? listLength;
   /* -------------provider to get all connection request -----------*/
 
   Future<void> getallConnectionReq() async {
     String? token = await storage.read(key: 'token');
-    ConnectionRequestService()
-        .getConnetionReqService(token!)
-        .then((value) => {allConnection = value, notifyListeners()});
+    ConnectionRequestService().getConnetionReqService(token!).then((value) => {
+          allConnectionReq = value,
+          notifyListeners(),
+        });
   }
 
   /* ----------fuction to set the button-----------*/
 
   Future buttonFuction(String profileId) async {
-    for (ConnectionRequest value in allConnection!) {
-      if (allConnection == null) {
+    for (ConnectionRequest value in allConnectionReq!) {
+      if (allConnectionReq == null) {
         connectionCheck = null;
         connectionCheck = 'No';
         notifyListeners();
@@ -114,9 +117,12 @@ class ConnectionProvider with ChangeNotifier {
   }
 
   /* -------------provider to get all connections-----------*/
-  Future<void>getalltheConnections()async{
-
-    
+  Future<void> getalltheConnections() async {
+    String? token = await storage.read(key: 'token');
+    ConnectionRequestService().getallConnectionService(token!).then((value) => {
+          alltheConnection = value,
+          listLength= alltheConnection!.length,
+          notifyListeners(),
+        });
   }
-
 }

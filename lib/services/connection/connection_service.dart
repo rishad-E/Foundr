@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:founder_app/common/constants/api/apiconfig.dart';
 import 'package:founder_app/model/connection/connection_response-model.dart';
 import 'package:founder_app/model/connection/connectionreqmodel.dart';
+import 'package:founder_app/model/connection/getall_connection-model.dart';
 import 'package:founder_app/model/connection/getconnectionresmodel.dart';
 
 class ConnectionRequestService {
@@ -35,7 +36,7 @@ class ConnectionRequestService {
 /*------------get all connection request---------*/
 
   Future<List<ConnectionRequest>?> getConnetionReqService(String token) async {
-    String path = ApiConfig().baseUrl + ApiConfig().getConnetionapi;
+    String path = ApiConfig().baseUrl + ApiConfig().getConnetionreqapi;
     try {
       Response response = await dio.get(
         path,
@@ -76,4 +77,22 @@ class ConnectionRequestService {
   }
 
   /* -------------to get all the connections-----------*/
+  Future<List<Connection>?> getallConnectionService(String token) async {
+    String path = ApiConfig().baseUrl + ApiConfig().getallConnectionapi;
+    try {
+      Response response = await dio.get(
+        path,
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+      );
+      log(response.data.toString(), name: 'allconnection');
+      if (response.statusCode == 200) {
+        List<dynamic> data = response.data['connections'];
+        final result = data.map((e) => Connection.fromJson(e)).toList();
+        return result;
+      }
+    } catch (e) {
+      log(e.toString(), name: 'getallconnectionError');
+    }
+    return null;
+  }
 }

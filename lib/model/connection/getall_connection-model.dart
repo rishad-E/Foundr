@@ -1,41 +1,33 @@
+// ignore_for_file: file_names
 // To parse this JSON data, do
 //
-//     final matchingProfileResModel = matchingProfileResModelFromJson(jsonString);
+//     final connectionResModel = connectionResModelFromJson(jsonString);
 
 // import 'dart:convert';
 
-// MatchingProfileResModel matchingProfileResModelFromJson(String str) => MatchingProfileResModel.fromJson(json.decode(str));
+// ConnectionResModel connectionResModelFromJson(String str) => ConnectionResModel.fromJson(json.decode(str));
 
-// String matchingProfileResModelToJson(MatchingProfileResModel data) => json.encode(data.toJson());
+// String connectionResModelToJson(ConnectionResModel data) => json.encode(data.toJson());
 
-class MatchingProfileResModel {
-    MatchingProfileResModel({
-        this.matchingProfiles,
-        this.page,
-        this.totalPages,
+class ConnectionResModel {
+    ConnectionResModel({
+        this.connections,
     });
 
-    final List<MatchingProfile>? matchingProfiles;
-    final String? page;
-    final int? totalPages;
+    final List<Connection>? connections;
 
-    factory MatchingProfileResModel.fromJson(Map<String, dynamic> json) => MatchingProfileResModel(
-        matchingProfiles: json["matchingProfiles"] == null ? [] : List<MatchingProfile>.from(json["matchingProfiles"]!.map((x) => MatchingProfile.fromJson(x))),
-        page: json["page"],
-        totalPages: json["totalPages"],
+    factory ConnectionResModel.fromJson(Map<String, dynamic> json) => ConnectionResModel(
+        connections: json["connections"] == null ? [] : List<Connection>.from(json["connections"]!.map((x) => Connection.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
-        "matchingProfiles": matchingProfiles == null ? [] : List<dynamic>.from(matchingProfiles!.map((x) => x.toJson())),
-        "page": page,
-        "totalPages": totalPages,
+        "connections": connections == null ? [] : List<dynamic>.from(connections!.map((x) => x.toJson())),
     };
 }
 
-class MatchingProfile {
-    MatchingProfile({
+class Connection {
+    Connection({
         this.location,
-        this.connections,
         this.id,
         this.userName,
         this.email,
@@ -48,6 +40,7 @@ class MatchingProfile {
         this.updatedAt,
         this.v,
         this.profilePhoto,
+        this.connections,
         this.age,
         this.gender,
         this.intro,
@@ -63,7 +56,6 @@ class MatchingProfile {
     });
 
     final Location? location;
-    final List<dynamic>? connections;
     final String? id;
     final String? userName;
     final String? email;
@@ -76,6 +68,7 @@ class MatchingProfile {
     final DateTime? updatedAt;
     final int? v;
     final String? profilePhoto;
+    final List<String>? connections;
     final int? age;
     final String? gender;
     final String? intro;
@@ -89,9 +82,8 @@ class MatchingProfile {
     final String? haveIdea;
     final int? isTechnical;
 
-    factory MatchingProfile.fromJson(Map<String, dynamic> json) => MatchingProfile(
+    factory Connection.fromJson(Map<String, dynamic> json) => Connection(
         location: json["location"] == null ? null : Location.fromJson(json["location"]),
-        connections: json["connections"] == null ? [] : List<dynamic>.from(json["connections"]!.map((x) => x)),
         id: json["_id"],
         userName: json["userName"],
         email: json["email"],
@@ -104,6 +96,7 @@ class MatchingProfile {
         updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
         v: json["__v"],
         profilePhoto: json["profilePhoto"],
+        connections: json["connections"] == null ? [] : List<String>.from(json["connections"]!.map((x) => x)),
         age: json["age"],
         gender: json["gender"],
         intro: json["intro"],
@@ -120,7 +113,6 @@ class MatchingProfile {
 
     Map<String, dynamic> toJson() => {
         "location": location?.toJson(),
-        "connections": connections == null ? [] : List<dynamic>.from(connections!.map((x) => x)),
         "_id": id,
         "userName": userName,
         "email": email,
@@ -133,6 +125,7 @@ class MatchingProfile {
         "updatedAt": updatedAt?.toIso8601String(),
         "__v": v,
         "profilePhoto": profilePhoto,
+        "connections": connections == null ? [] : List<dynamic>.from(connections!.map((x) => x)),
         "age": age,
         "gender": gender,
         "intro": intro,

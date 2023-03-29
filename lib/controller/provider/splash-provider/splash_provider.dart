@@ -23,7 +23,7 @@ class SplashscreenProvider with ChangeNotifier {
     if (checkLogin != null) {
       isExpired = JwtDecoder.isExpired(checkLogin.toString());
       notifyListeners();
-      log(isExpired.toString(),name: 'isExpired');
+      log(isExpired.toString(), name: 'isExpired');
 
       // Map<String, dynamic> decodedtoken = JwtDecoder.decode(checkLogin.toString());
       // log(decodedtoken.toString());
@@ -46,8 +46,12 @@ class SplashscreenProvider with ChangeNotifier {
             .getAllMatchingProfile();
         Provider.of<ProfileProvider>(context, listen: false)
             .getUserDetailesProvider();
-        Provider.of<NotificationProvider>(context,listen: false).getallNotificationProvider(context);
-        Provider.of<ConnectionProvider>(context,listen: false).getallConnectionReq();
+        Provider.of<NotificationProvider>(context, listen: false)
+            .getallNotificationProvider(context);
+        Provider.of<ConnectionProvider>(context, listen: false)
+            .getallConnectionReq();
+        Provider.of<ConnectionProvider>(context, listen: false)
+            .getalltheConnections();
       }
     });
   }

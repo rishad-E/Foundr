@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:founder_app/common/constants/constants.dart';
 import 'package:founder_app/common/widgets/widgetswelcome.dart';
-import 'package:founder_app/view/drawer/drawer_home.dart';
+import 'package:founder_app/controller/provider/connection-provider/connection_provider.dart';
 import 'package:founder_app/view/home/homescreen/homescreen.dart';
-import 'package:founder_app/view/notification_screen/notification_screen.dart';
+import 'package:founder_app/view/profile-matching_profile/profile_matching.dart';
 import 'package:provider/provider.dart';
 
 class ConnectionScreen extends StatelessWidget {
@@ -44,77 +44,91 @@ class ConnectionScreen extends StatelessWidget {
               hBox,
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.78,
-                child: Consumer(
+                child: Consumer<ConnectionProvider>(
                   builder: (context, value, child) {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: 5,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          color: backgroundColorConst,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)),
-                          child: ListTile(
-                            contentPadding:
-                                const EdgeInsets.only(top: 10, bottom: 5),
-                            // leading: Image(
-                            //   height: 100,
-                            //   fit: BoxFit.cover,
-                            //   image: AssetImage("assets/images/img.png"),
-                            // ),
-                            leading: const Padding(
-                              padding: EdgeInsets.only(left: 15),
-                              child: CircleAvatar(
-                                radius: 20,
-                                backgroundColor:
-                                    Color.fromARGB(255, 51, 125, 170),
-                                child: Icon(
-                                  Icons.person,
-                                  color: Colors.black,
-                                  // size:25,
-                                ),
+                    if (value.alltheConnection == null ||
+                        value.alltheConnection!.isEmpty) {
+                      return const Center(
+                        child: Text(
+                          "You dont have any connections",
+                          style: textStyle,
+                        ),
+                      );
+                    } else {
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: value.alltheConnection!.length,
+                        itemBuilder: (context, index) {
+                          final data = value.alltheConnection![index];
+                          return Card(
+                            color: backgroundColorConst,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            child: ListTile(
+                              contentPadding:
+                                  const EdgeInsets.only(top: 10, bottom: 5),
+                              leading: Padding(
+                                padding: const EdgeInsets.only(left: 15),
+                                child: CircleAvatar(
+                                    radius: 25,
+                                    backgroundColor:
+                                        const Color.fromARGB(255, 51, 125, 170),
+                                    backgroundImage: data.profilePhoto == null
+                                        ? Image.asset(
+                                                'assets/images/event-image.png')
+                                            .image
+                                        : Image.network(data.profilePhoto!)
+                                            .image),
                               ),
-                              // CircleAvatar(
-                              //     radius: 25,
-                              //     backgroundColor: Colors.transparent,
-                              //     backgroundImage: value
-                              //                 .notificationData![index]
-                              //                 .sender
-                              //                 ?.profilePhoto !=
-                              //             null
-                              //         ? Image.network(
-                              //             value.notificationData![index].sender!
-                              //                 .profilePhoto!,
-                              //           ).image
-                              //         : Image.asset(
-                              //             'assets/images/event-image.png',
-                              //           ).image,
-                              //   ),
-                            ),
-                            title: const Text(
-                              "Rishad",
-                              style: textStyle,
-                            ),
-                            subtitle: const Text(
-                              "place",
-                              style: textStyle,
-                            ),
-                            trailing: const Padding(
-                              padding: EdgeInsets.only(right: 15),
-                              child: Text(
-                                "view profile",
+                              title: Text(
+                                data.userName ?? 'username',
                                 style: textStyle,
                               ),
+                              subtitle: Text(
+                                data.location == null
+                                    ? 'country'
+                                    : 'Country:${data.location!.country}',
+                                style: textStyle,
+                              ),
+                              trailing: const Padding(
+                                padding: EdgeInsets.only(right: 15),
+                                child: Text(
+                                  "view profile",
+                                  style: textStyle,
+                                ),
+                              ),
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => ProfileMatched(
+                                          profileId: data.id!,
+                                          userName: data.userName!,
+                                          location: '${data.location!.country!}'
+                                              '${data.location!.state}',
+                                          email: data.email!,
+                                          about: data.intro!,
+                                          accomplishment: data.accomplishments!,
+                                          education: data.education!,
+                                          technical: data.isTechnical == 1
+                                              ? 'yes'
+                                              : 'no',
+                                          idea: data.haveIdea == 'definiteIdea'
+                                              ? 'Yes'
+                                              : data.haveIdea ==
+                                                      'readyToExplore'
+                                                  ? 'No'
+                                                  : 'don\'t have any idea',
+                                          interests: data.interests!,
+                                          responsibilities:
+                                              data.responsibilities!,
+                                          profileImage: data.profilePhoto!,
+                                        )));
+                                value.buttonFuction(data.id!);
+                              },
                             ),
-                            onTap: () {
-                              // Navigator.of(context).push(MaterialPageRoute(
-                              //   builder: (context) => const MessagingUser(),
-                              // ));
-                            },
-                          ),
-                        );
-                      },
-                    );
+                          );
+                        },
+                      );
+                    }
                   },
                 ),
               ),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:founder_app/common/constants/constants.dart';
 import 'package:founder_app/common/widgets/widgetswelcome.dart';
+import 'package:founder_app/controller/provider/connection-provider/connection_provider.dart';
 import 'package:founder_app/controller/provider/profile-provider/profile_provider.dart';
 import 'package:founder_app/view/connection/connection_screen.dart';
 import 'package:founder_app/view/messagiing/messaging.dart';
@@ -21,6 +22,7 @@ class ProfileScreen extends StatelessWidget {
   final FlutterSecureStorage storage = const FlutterSecureStorage();
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<ConnectionProvider>(context, listen: false);
     return Scaffold(
       // resizeToAvoidBottomInset: false,
       backgroundColor: backgroundColorConst,
@@ -163,7 +165,7 @@ class ProfileScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Container(
-                              width: 120,
+                              width: 130,
                               color: Colors.transparent,
                               height: 40,
                               child: ElevatedButton(
@@ -187,10 +189,10 @@ class ProfileScreen extends StatelessWidget {
                                   child: const Text("Messages")),
                             ),
                             Container(
-                              width: 120,
-                              color: Colors.transparent,
-                              height: 40,
-                              child: ElevatedButton(
+                                width: 130,
+                                color: Colors.transparent,
+                                height: 40,
+                                child: ElevatedButton(
                                   style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all(
                                       const Color.fromARGB(255, 50, 103, 137),
@@ -201,14 +203,19 @@ class ProfileScreen extends StatelessWidget {
                                               BorderRadius.circular(8.0)),
                                     ),
                                   ),
-                                  onPressed: () {
+                                  onPressed: () async {
                                     Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const ConnectionScreen()));
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ConnectionScreen()),
+                                    );
+                                    await provider.getalltheConnections();
                                   },
-                                  child: const Text("Connections")),
-                            ),
+                                  child: provider.listLength == 0
+                                      ? const Text("connections")
+                                      : Text(
+                                          '${provider.listLength} connections'),
+                                )),
                           ],
                         )
                       ],
