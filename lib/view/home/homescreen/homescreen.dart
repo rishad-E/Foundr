@@ -20,6 +20,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<ConnectionProvider>(context, listen: false);
     return Scaffold(
       endDrawer: const HomeDrawer(),
       backgroundColor: backgroundColorConst,
@@ -207,8 +208,7 @@ class HomeScreen extends StatelessWidget {
                                                 BorderRadius.circular(8.0)),
                                       ),
                                     ),
-                                    onPressed: () {
-                                      // Provider.of<ConnectionProvider>(context,listen: false).getalltConnections();
+                                    onPressed: () async {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -216,7 +216,7 @@ class HomeScreen extends StatelessWidget {
                                             return ProfileMatched(
                                               profileImage:
                                                   data.profilePhoto ?? 'null',
-                                              id: data.id!,
+                                              profileId: data.id!,
                                               userName: data.userName!,
                                               location: data.email!,
                                               email: data.email!,
@@ -224,7 +224,7 @@ class HomeScreen extends StatelessWidget {
                                               accomplishment: data.userName!,
                                               education: data.age.toString(),
                                               technical: data.userName!,
-                                              idea:data.userName!,
+                                              idea: data.userName!,
                                               interests: data.interests!,
                                               responsibilities:
                                                   data.responsibilities!,
@@ -232,6 +232,9 @@ class HomeScreen extends StatelessWidget {
                                           },
                                         ),
                                       );
+                                      await provider.buttonFuction(data.id!);
+                                      await provider.getallConnectionReq();
+                                      
                                     },
                                     child: const Text(
                                       'Show profile',
@@ -245,14 +248,6 @@ class HomeScreen extends StatelessWidget {
                               ),
                             ),
                           );
-                          // SizedBox(
-                          //   // color: Colors.yellow,
-                          //   width: MediaQuery.of(context).size.width * 0.4,
-                          //   child: MatchingProfilesHome(
-                          //     userImage: value.matchingProfileDatas![index].profilePhoto! ,
-                          //     name: value.matchingProfileDatas![index].userName!,
-                          //   ),
-                          // );
                         },
                         itemCount: value.matchingProfileDatas!.length,
                       );

@@ -83,11 +83,7 @@ class NotificationScreen extends StatelessWidget {
                             child: ListTile(
                               contentPadding:
                                   const EdgeInsets.only(top: 10, bottom: 5),
-                              // leading: Image(
-                              //   height: 100,
-                              //   fit: BoxFit.cover,
-                              //   image: AssetImage("assets/images/img.png"),
-                              // ),
+                              
                               leading: Padding(
                                 padding: const EdgeInsets.only(left: 13),
                                 child: CircleAvatar(

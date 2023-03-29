@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:founder_app/common/constants/constants.dart';
@@ -10,7 +8,7 @@ import 'package:provider/provider.dart';
 class ProfileMatched extends StatelessWidget {
   const ProfileMatched({
     super.key,
-    required this.id,
+    required this.profileId,
     required this.userName,
     required this.location,
     required this.email,
@@ -23,7 +21,7 @@ class ProfileMatched extends StatelessWidget {
     required this.responsibilities,
     required this.profileImage,
   });
-  final String id;
+  final String profileId;
   final String profileImage;
   final String userName;
   final String location;
@@ -103,33 +101,77 @@ class ProfileMatched extends StatelessWidget {
                       descriptionText(email),
                       Consumer<ConnectionProvider>(
                         builder: (context, value, child) {
-                          return Align(
-                            alignment: Alignment.centerRight,
-                            child: Container(
-                              width: MediaQuery.of(context).size.width * 0.3,
-                              color: Colors.transparent,
-                              height: 45,
-                              child: ElevatedButton.icon(
-                                  style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                      const Color.fromARGB(255, 50, 103, 137),
-                                    ),
-                                    shape: MaterialStateProperty.all(
-                                      RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8.0)),
-                                    ),
-                                  ),
-                                  onPressed: () async {
-                                    // value.getalltConnections();
-                                   await value.buttonFuction(id);
-                                   log(value.variable.toString());
-                                    
-                                  },
-                                  icon: const Icon(Icons.person_add_alt_1),
-                                  label: Text("connect")),
-                            ),
-                          );
+                          if (value.connectionCheck == 'No' ||
+                              value.connectionCheck == null) {
+                            return Align(
+                              alignment: Alignment.topRight,
+                              child: connectContainer(
+                                height1: 45,
+                                width1: 130,
+                                text: 'connect',
+                                icons: Icons.person_add_alt_sharp,
+                                onpress: () async {
+                                  value.sendConnection(profileId, context);
+                                  await value.buttonFuction(profileId);
+                                },
+                              ),
+                            );
+                          } else {
+                            return Align(
+                              alignment: Alignment.topRight,
+                              child: value.connectionCheck == 'true'
+                                  ? connectContainer(
+                                      height1: 45,
+                                      width1: 130,
+                                      text: 'requested',
+                                      icons: Icons.person_add_alt_sharp,
+                                      onpress: () {},
+                                    )
+                                  : value.connectionCheck == 'false'
+                                      ? SizedBox(
+                                          width: 180,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              acceptionContainer(
+                                                height1: 40,
+                                                width1: 80,
+                                                text: "Accept",
+                                                onpress: () {
+                                                  value
+                                                      .updateConnectionProvider(
+                                                    "true",
+                                                    profileId,
+                                                    context,
+                                                  );
+                                                },
+                                              ),
+                                              acceptionContainer(
+                                                height1: 40,
+                                                width1: 80,
+                                                text: "Reject",
+                                                onpress: () {
+                                                  value
+                                                      .updateConnectionProvider(
+                                                    "false",
+                                                    profileId,
+                                                    context,
+                                                  );
+                                                },
+                                              )
+                                            ],
+                                          ),
+                                        )
+                                      : connectContainer(
+                                          height1: 45,
+                                          width1: 130,
+                                          icons: Icons.chat_rounded,
+                                          text: 'message',
+                                          onpress: () {},
+                                        ),
+                            );
+                          }
                         },
                       )
                     ],
@@ -158,7 +200,7 @@ class ProfileMatched extends StatelessWidget {
                       textNormalHeading("Is Technical"),
                       descriptionText("description given as about"),
                       textNormalHeading("Has Idea"),
-                      descriptionText(idea),
+                      descriptionText("idea"),
                       textNormalHeading("Interestes"),
                       descriptionText("description given as about"),
                       textNormalHeading("Responsibilities"),

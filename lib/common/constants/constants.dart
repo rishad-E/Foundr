@@ -47,7 +47,7 @@ InputDecoration decorTextfield([String? text1, IconButton? suffix]) {
   );
 }
 
-InputDecoration textfocus([String? text,String? text2]) {
+InputDecoration textfocus([String? text, String? text2]) {
   return InputDecoration(
     hintText: text,
     labelText: text2,
@@ -67,3 +67,50 @@ InputDecoration textfocus([String? text,String? text2]) {
 //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
 //   ),
 // );
+
+acceptionContainer(
+    {double? height1, double? width1, text, void Function()? onpress}) {
+  return SizedBox(
+    height: height1,
+    width: width1,
+    child: ElevatedButton(
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(
+          const Color.fromARGB(255, 50, 103, 137),
+        ),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+        ),
+      ),
+      onPressed: onpress,
+      child: Text(
+        text,
+        style: const TextStyle(color: Colors.white),
+      ),
+    ),
+  );
+}
+
+connectContainer(
+    {double? height1, double? width1, text, void Function()? onpress,IconData? icons}) {
+  return SizedBox(
+    width: width1,
+    // color: Colors.blueAccent,
+    height: height1,
+    child: ElevatedButton.icon(
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(
+          const Color.fromARGB(255, 50, 103, 137),
+        ),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+        ),
+      ),
+      onPressed: onpress,
+      icon: Icon(icons),
+      label:Text(text),
+    ),
+  );
+}

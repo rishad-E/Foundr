@@ -20,10 +20,9 @@ class NotificationService {
       );
 
       if (response.statusCode == 200) { 
-        // log(response.data.toString(),name: 'skjdhfkajsfhkjdshfkjhdskjasdkj');
       List<dynamic> data = response.data["notifications"];
         final res = data.map((e) => NotificationElement.fromJson(e)).toList();
-        log(data.toString(),name: 'notification');
+        log(res.toString(),name: 'notification');
         return res;
 
       }

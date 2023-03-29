@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:founder_app/common/constants/constants.dart';
-import 'package:founder_app/view/drawer/messagiing/messaging.dart';
 import 'package:founder_app/view/events/event_sceen.dart';
+import 'package:founder_app/view/messagiing/messaging.dart';
 import 'package:founder_app/view/profile-updation/profile-screen.dart';
 import 'package:founder_app/view/splash/splashscreen.dart';
 

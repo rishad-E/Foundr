@@ -5,8 +5,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:founder_app/common/constants/constants.dart';
 import 'package:founder_app/common/widgets/widgetswelcome.dart';
 import 'package:founder_app/controller/provider/profile-provider/profile_provider.dart';
+import 'package:founder_app/view/connection/connection_screen.dart';
+import 'package:founder_app/view/messagiing/messaging.dart';
 import 'package:founder_app/view/notification_screen/notification_screen.dart';
-import 'package:founder_app/view/drawer/messagiing/messaging.dart';
 import 'package:founder_app/view/home/homescreen/homescreen.dart';
 import 'package:founder_app/view/profile-updation/co_foundr_profile.dart';
 import 'package:founder_app/view/profile-updation/foundr-profile.dart';
@@ -125,56 +126,42 @@ class ProfileScreen extends StatelessWidget {
                               icon: const Icon(Icons.logout)),
                         ),
                         InkWell(
-                          onTap: () {
-                            value.pickImage(context);
-                          },
-                          child: value.profileDatas!.profilePhoto != null
-                              ? CircleAvatar(
-                                  radius: 75,
-                                  backgroundColor: Colors.transparent,
-                                  child: ClipOval(
-                                    child: FadeInImage.assetNetwork(
-                                      placeholder:
-                                          'assets/images/event-image.png',
-                                      image: value.profileDatas!.profilePhoto!,
-                                      width: 160,
-                                      height: 160,
-                                      fit: BoxFit.cover,
-                                      fadeInDuration:
-                                          const Duration(milliseconds: 500),
+                            onTap: () {
+                              value.pickImage(context);
+                            },
+                            child: value.profileDatas!.profilePhoto == null
+                                ? const CircleAvatar(
+                                    foregroundImage: AssetImage(
+                                        "assets/images/event-image.png"),
+                                    backgroundColor: Colors.transparent,
+                                    radius: 75,
+                                  )
+                                : CircleAvatar(
+                                    radius: 75,
+                                    backgroundColor: Colors.transparent,
+                                    child: ClipOval(
+                                      child: FadeInImage.assetNetwork(
+                                        placeholder:
+                                            'assets/images/event-image.png',
+                                        image:
+                                            value.profileDatas!.profilePhoto!,
+                                        width: 160,
+                                        height: 160,
+                                        fit: BoxFit.cover,
+                                        fadeInDuration:
+                                            const Duration(milliseconds: 500),
+                                      ),
                                     ),
-                                  ),
-                                )
-                              : const CircleAvatar(
-                                  foregroundImage: AssetImage(
-                                      "assets/images/event-image.png"),
-                                  backgroundColor: Colors.transparent,
-                                  radius: 75,
-                                ),
-                        ),
-                        textNormalHeading(value.profileDatas!.userName),
-                        descriptionText(value.profileDatas!.email),
+                                  )),
+                        textNormalHeading(value.profileDatas == null
+                            ? 'username'
+                            : value.profileDatas!.userName),
+                        descriptionText(value.profileDatas == null
+                            ? 'email'
+                            : value.profileDatas!.email),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Container(
-                              width: 120,
-                              color: Colors.transparent,
-                              height: 40,
-                              child: ElevatedButton(
-                                  style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                      const Color.fromARGB(255, 50, 103, 137),
-                                    ),
-                                    shape: MaterialStateProperty.all(
-                                      RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8.0)),
-                                    ),
-                                  ),
-                                  onPressed: () {},
-                                  child: const Text("Connections")),
-                            ),
                             Container(
                               width: 120,
                               color: Colors.transparent,
@@ -198,6 +185,29 @@ class ProfileScreen extends StatelessWidget {
                                     ));
                                   },
                                   child: const Text("Messages")),
+                            ),
+                            Container(
+                              width: 120,
+                              color: Colors.transparent,
+                              height: 40,
+                              child: ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                      const Color.fromARGB(255, 50, 103, 137),
+                                    ),
+                                    shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8.0)),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const ConnectionScreen()));
+                                  },
+                                  child: const Text("Connections")),
                             ),
                           ],
                         )
@@ -267,7 +277,8 @@ class ProfileScreen extends StatelessWidget {
                                 },
                                 validator: (value) =>
                                     data.onchangeGeder(value!),
-                                value: data.profileDatas!.gender ?? data.qSelected,
+                                value:
+                                    data.profileDatas!.gender ?? data.qSelected,
                               ),
                             ),
                           ],
@@ -423,91 +434,3 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 }
-
-// child: Column(
-            //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //   children: [
-            //     Container(
-            //       width: double.infinity,
-            //       height: MediaQuery.of(context).size.height * 0.08,
-            //       decoration: const BoxDecoration(
-            //         color: Colors.white38,
-            //         borderRadius: BorderRadius.all(Radius.circular(10)),
-            //       ),
-            //       child: TextButton(
-            //         onPressed: () {
-            //           Navigator.of(context).push(MaterialPageRoute(
-            //               builder: (context) => const FounderProfile()));
-            //         },
-            //         child: Text.rich(
-            //           TextSpan(
-            //             text: "set up your",
-            //             style: const TextStyle(
-            //                 color: Color.fromARGB(255, 105, 153, 189),
-            //                 fontSize: 16),
-            //             children: <InlineSpan>[
-            //               const TextSpan(
-            //                 text: " foundr",
-            //                 style: TextStyle(
-            //                     color: Color.fromARGB(255, 50, 103, 137),
-            //                     fontSize: 18),
-            //               ),
-            //               TextSpan(
-            //                 text: ".",
-            //                 style:
-            //                     TextStyle(color: Colors.red[600], fontSize: 28),
-            //               ),
-            //               const TextSpan(
-            //                 text: "profile",
-            //                 style: TextStyle(
-            //                     color: Color.fromARGB(255, 105, 153, 189),
-            //                     fontSize: 16),
-            //               )
-            //             ],
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //     Container(
-            //       width: double.infinity,
-            //       height: MediaQuery.of(context).size.height * 0.08,
-            //       decoration: const BoxDecoration(
-            //         color: Colors.white38,
-            //         borderRadius: BorderRadius.all(Radius.circular(10)),
-            //       ),
-            //       child: TextButton(
-            //         onPressed: () {
-            //           Navigator.of(context).push(MaterialPageRoute(
-            //               builder: (context) => const CoFounderProfile()));
-            //         },
-            //         child: Text.rich(
-            //           TextSpan(
-            //             text: "set up your",
-            //             style: const TextStyle(
-            //                 color: Color.fromARGB(255, 105, 153, 189),
-            //                 fontSize: 16),
-            //             children: <InlineSpan>[
-            //               const TextSpan(
-            //                 text: " co-foundr",
-            //                 style: TextStyle(
-            //                     color: Color.fromARGB(255, 50, 103, 137),
-            //                     fontSize: 18),
-            //               ),
-            //               TextSpan(
-            //                 text: ".",
-            //                 style:
-            //                     TextStyle(color: Colors.red[600], fontSize: 28),
-            //               ),
-            //               const TextSpan(
-            //                 text: "profile",
-            //                 style: TextStyle(
-            //                     color: Color.fromARGB(255, 105, 153, 189),
-            //                     fontSize: 16),
-            //               )
-            //             ],
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //   ],
-            // ),

@@ -6,7 +6,7 @@ import 'package:founder_app/model/sign-up/sign_up_request.dart';
 import 'package:founder_app/services/otp-service/otp-service.dart';
 import 'package:founder_app/services/sign-up-service/sign_up_service.dart';
 import 'package:founder_app/utils/error-popup/snackbar.dart';
-import 'package:founder_app/view/home/homescreen/homescreen.dart';
+import 'package:founder_app/view/splash/splashscreen.dart';
 import 'package:provider/provider.dart';
 
 class OtpProvider with ChangeNotifier {
@@ -41,7 +41,7 @@ class OtpProvider with ChangeNotifier {
                           storage.write(key: "token", value:jsonEncode( value!.token)),
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
-                                builder: (context) => const HomeScreen(),
+                                builder: (context) => const SplashScreen(),
                               ),
                               (route) => false),
                           disposeTextfield(context)

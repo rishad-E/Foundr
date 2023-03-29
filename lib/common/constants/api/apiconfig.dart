@@ -19,4 +19,5 @@ class ApiConfig {
   final String updateCofounderapi='/api/user/updateCofounderPreference';
   final String updateFounderapi = '/api/user/updateAbout';
   final String getallNotificationapi ='/api/user/getNotifications';
+  final String updateConnectionapi= '/api/user/connectionRequest';
 }

@@ -3,9 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:founder_app/common/constants/constants.dart';
 import 'package:founder_app/common/widgets/widgetswelcome.dart';
 import 'package:founder_app/view/drawer/drawer_home.dart';
-import 'package:founder_app/view/drawer/messagiing/messaging_screen.dart';
+import 'package:founder_app/view/messagiing/messaging_screen.dart';
 import 'package:founder_app/view/notification_screen/notification_screen.dart';
 import 'package:founder_app/view/home/homescreen/homescreen.dart';
+import 'package:provider/provider.dart';
 
 class MessagingScreen extends StatelessWidget {
   const MessagingScreen({super.key});
@@ -25,7 +26,7 @@ class MessagingScreen extends StatelessWidget {
           TextButton(
               onPressed: () {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) =>const  HomeScreen()));
+                    builder: (context) => const HomeScreen()));
               },
               child: const Text("Home", style: textStyle)),
           IconButton(
@@ -67,55 +68,60 @@ class MessagingScreen extends StatelessWidget {
               hBox,
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.78,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: 20,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      color: backgroundColorConst,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      child: ListTile(
-                        contentPadding:
-                            const EdgeInsets.only(top: 10, bottom: 5),
-                        // leading: Image(
-                        //   height: 100,
-                        //   fit: BoxFit.cover,
-                        //   image: AssetImage("assets/images/img.png"),
-                        // ),
-                        leading: const Padding(
-                          padding: EdgeInsets.only(left: 15),
-                          child: CircleAvatar(
-                            radius: 20,
-                            backgroundColor: Color.fromARGB(255, 51, 125, 170),
-                            child: Icon(
-                              Icons.person,
-                              color: Colors.black,
-                              // size:25,
+                child: Consumer(
+                  builder: (context, value, child) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: 5,
+                      itemBuilder: (context, index) {
+                        return Card(
+                          color: backgroundColorConst,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          child: ListTile(
+                            contentPadding:
+                                const EdgeInsets.only(top: 10, bottom: 5),
+                            // leading: Image(
+                            //   height: 100,
+                            //   fit: BoxFit.cover,
+                            //   image: AssetImage("assets/images/img.png"),
+                            // ),
+                            leading: const Padding(
+                              padding: EdgeInsets.only(left: 15),
+                              child: CircleAvatar(
+                                radius: 20,
+                                backgroundColor:
+                                    Color.fromARGB(255, 51, 125, 170),
+                                child: Icon(
+                                  Icons.person,
+                                  color: Colors.black,
+                                  // size:25,
+                                ),
+                              ),
                             ),
+                            title: const Text(
+                              "Rishad",
+                              style: textStyle,
+                            ),
+                            subtitle: const Text(
+                              "message description",
+                              style: textStyle,
+                            ),
+                            trailing: const Padding(
+                              padding: EdgeInsets.only(right: 10),
+                              child: Text(
+                                "9:23",
+                                style: textStyle,
+                              ),
+                            ),
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const MessagingUser(),
+                              ));
+                            },
                           ),
-                        ),
-                        title: const Text(
-                          "Rishad",
-                          style: textStyle,
-                        ),
-                        subtitle: const Text(
-                          "message description",
-                          style: textStyle,
-                        ),
-                        trailing: const Padding(
-                          padding: EdgeInsets.only(right: 10),
-                          child: Text(
-                            "9:23",
-                            style: textStyle,
-                          ),
-                        ),
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) =>const MessagingUser(),
-                          ));
-                        },
-                      ),
+                        );
+                      },
                     );
                   },
                 ),
