@@ -21,4 +21,6 @@ class ApiConfig {
   final String getallNotificationapi ='/api/user/getNotifications';
   final String updateConnectionapi= '/api/user/connectionRequest';
   final String getallConnectionapi = '/api/user/getConnections';
+  final String messageApi = '/api/user/message';
+  
 }

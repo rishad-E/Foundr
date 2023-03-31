@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:founder_app/common/constants/constants.dart';
+import 'package:founder_app/common/widgets/shimmereffect.dart';
 import 'package:founder_app/common/widgets/widget_article.dart';
 import 'package:founder_app/common/widgets/widgethomescreen.dart';
 import 'package:founder_app/common/widgets/widgetswelcome.dart';
@@ -45,9 +46,7 @@ class ArticleHome extends StatelessWidget {
                   future: ArticleService().getArticleService(context),
                   builder: ((context, snapshot) {
                     if (!snapshot.hasData) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
+                      return ShimmerEffect();
                     } else if (snapshot.data!.isEmpty) {
                       return Center(
                           child: textNormalHeading("No Article Published"));

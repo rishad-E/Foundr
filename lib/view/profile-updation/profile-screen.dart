@@ -5,9 +5,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:founder_app/common/constants/constants.dart';
 import 'package:founder_app/common/widgets/widgetswelcome.dart';
 import 'package:founder_app/controller/provider/connection-provider/connection_provider.dart';
+import 'package:founder_app/controller/provider/matching-profile-provider/matching_profile_provider.dart';
 import 'package:founder_app/controller/provider/profile-provider/profile_provider.dart';
 import 'package:founder_app/view/connection/connection_screen.dart';
-import 'package:founder_app/view/messagiing/messaging.dart';
 import 'package:founder_app/view/notification_screen/notification_screen.dart';
 import 'package:founder_app/view/home/homescreen/homescreen.dart';
 import 'package:founder_app/view/profile-updation/co_foundr_profile.dart';
@@ -23,6 +23,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<ConnectionProvider>(context, listen: false);
+    Provider.of<MatchingProfileProvider>(context,listen: false).getAllMatchingProfile();
     return Scaffold(
       // resizeToAvoidBottomInset: false,
       backgroundColor: backgroundColorConst,
@@ -162,32 +163,9 @@ class ProfileScreen extends StatelessWidget {
                             ? 'email'
                             : value.profileDatas!.email),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Container(
-                              width: 130,
-                              color: Colors.transparent,
-                              height: 40,
-                              child: ElevatedButton(
-                                  style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                      const Color.fromARGB(255, 50, 103, 137),
-                                    ),
-                                    shape: MaterialStateProperty.all(
-                                      RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8.0)),
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          const MessagingScreen(),
-                                    ));
-                                  },
-                                  child: const Text("Messages")),
-                            ),
+                           
                             Container(
                                 width: 130,
                                 color: Colors.transparent,
@@ -207,7 +185,7 @@ class ProfileScreen extends StatelessWidget {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const ConnectionScreen()),
+                                               ConnectionScreen()),
                                     );
                                     await provider.getalltheConnections();
                                   },

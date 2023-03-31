@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:founder_app/common/constants/constants.dart';
+import 'package:founder_app/common/widgets/shimmereffect.dart';
 import 'package:founder_app/common/widgets/widgetswelcome.dart';
 import 'package:founder_app/model/event/event_model.dart';
 import 'package:founder_app/services/event/event_service.dart';
@@ -65,6 +66,9 @@ class EventScreen extends StatelessWidget {
                     return const Center(
                       child: CircularProgressIndicator(),
                     );
+                  } else if (snapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    return const ShimmerEffect();
                   } else {
                     return GridView.builder(
                       gridDelegate:
@@ -125,15 +129,20 @@ class EventScreen extends StatelessWidget {
                                   Align(
                                     // alignment: Alignment.bottomLeft,
                                     child: Text(
-                                        snapshot.data![index].mentorName!,style: const TextStyle(
-                                        color: Color.fromARGB(255, 50, 103, 137),
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600),),
+                                      snapshot.data![index].mentorName!,
+                                      style: const TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 50, 103, 137),
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600),
+                                    ),
                                   ),
                                   Text(
-                                    dateChange(snapshot.data![index].dateAndTime.toString()),
+                                    dateChange(snapshot.data![index].dateAndTime
+                                        .toString()),
                                     style: const TextStyle(
-                                        color: Color.fromARGB(255, 50, 103, 137),
+                                        color:
+                                            Color.fromARGB(255, 50, 103, 137),
                                         fontWeight: FontWeight.w200),
                                   ),
                                   Row(

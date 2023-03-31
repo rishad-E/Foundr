@@ -1,19 +1,79 @@
+// ignore_for_file: must_be_immutable, library_prefixes
+
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:founder_app/common/constants/constants.dart';
+import 'package:founder_app/model/messegemodel/get_message_model.dart';
+import 'package:founder_app/model/messegemodel/send_message_model.dart';
+import 'package:founder_app/services/message_service/message_service.dart';
 import 'package:founder_app/view/drawer/drawer_home.dart';
+import 'package:founder_app/view/messagiing/replycard.dart';
+import 'package:founder_app/view/messagiing/sendcard.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class MessagingUser extends StatefulWidget {
-  const MessagingUser({super.key});
+  MessagingUser({super.key, this.selectedId, this.userId});
 
+  String? selectedId;
+  String? userId;
+  List<GetMessgRes>? msgs = [];
   @override
   State<MessagingUser> createState() => _MessagingUserState();
 }
 
 class _MessagingUserState extends State<MessagingUser> {
+  TextEditingController msgController = TextEditingController();
+  late IO.Socket socket;
+
+@override
+  void dispose() {
+    super.dispose();
+   socket.disconnect();
+   socket.emit('disconnect',widget.userId);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    log(widget.userId.toString(), name: 'kjjjjjjjjjjjj');
+    log(widget.selectedId.toString(), name: 'llllll');
+    connect();
+    getMessage();
+  }
+
+  void connect() {
+    socket = IO.io('http://10.4.2.144:8080', <String, dynamic>{
+      "transports": ["websocket"],
+      "autoConnect": false,
+    });
+    socket.connect();
+    log("connected");
+    socket.emit("addUser", widget.userId);
+    socket.on("msg-receive", (data) {
+      GetMessgRes model = GetMessgRes(
+          myself: false, message: data, time: DateTime.now().toString());
+      log("emmited");
+      setState(() {
+        widget.msgs!.add(model);
+      });
+      setState(() {});
+    });
+  }
+
+  getMessage() async {
+    await MessageService().getMessageService(widget.selectedId!).then((value) => {
+              setState(() {
+                widget.msgs = value;
+              }),
+            });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundColorConst,
       endDrawer: const HomeDrawer(),
       appBar: AppBar(
         // automaticallyImplyLeading: false,
@@ -40,13 +100,29 @@ class _MessagingUserState extends State<MessagingUser> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: ListView(
+        child: Column(
           children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.79,
-              width: MediaQuery.of(context).size.width,
+            Expanded(
+              child: widget.msgs!.isEmpty
+                  ? const Center(child: Text("No messages"))
+                  : Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ListView.builder(
+                        itemCount: widget.msgs!.length,
+                        itemBuilder: (context, index) {
+                          if (widget.msgs![index].myself == true) {
+                            return sendcard(
+                                context, widget.msgs![index].message!);
+                          } else {
+                            return replaycard(
+                                context, widget.msgs![index].message!);
+                          }
+                        },
+                      ),
+                    ),
             ),
             TextField(
+              controller: msgController,
               // cursorColor: color1(),
               keyboardType: TextInputType.multiline,
               style: const TextStyle(color: Colors.white),
@@ -59,13 +135,18 @@ class _MessagingUserState extends State<MessagingUser> {
                   labelText: 'message',
                   floatingLabelBehavior: FloatingLabelBehavior.never,
                   labelStyle: const TextStyle(
-                      fontSize: 14,color: Color.fromARGB(255, 50, 103, 137), ),
+                    fontSize: 14,
+                    color: Color.fromARGB(255, 50, 103, 137),
+                  ),
                   filled: true,
-                  fillColor:const Color.fromARGB(255, 121, 161, 191),
+                  fillColor: const Color.fromARGB(255, 121, 161, 191),
                   suffixIcon: Padding(
                     padding: const EdgeInsets.only(right: 8.0),
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        sendMessage(msgController.text);
+                        msgController.clear();
+                      },
                       icon: const Icon(
                         Icons.send,
                         size: 25,
@@ -79,5 +160,18 @@ class _MessagingUserState extends State<MessagingUser> {
         ),
       ),
     );
+  }
+
+  void sendMessage(String msg) async {
+    GetMessgRes model = GetMessgRes(myself: true, message: msg);
+    SendMessageModel sendModel =
+        SendMessageModel(to: widget.selectedId, message: msg);
+    setState(() {
+      widget.msgs!.add(model);
+    });
+    socket.emit("send-msg", {"to": widget.selectedId, "message": msg});
+    log("send messaged");
+
+    await MessageService().sendMessageService(sendModel);
   }
 }

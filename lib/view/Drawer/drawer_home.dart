@@ -47,14 +47,14 @@ class HomeDrawer extends StatelessWidget {
                     icon1: Icons.event,
                     text1: "Events",
                   ),
-                  DrawerTile(
-                    ontap1: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const MessagingScreen()));
-                    },
-                    icon1: Icons.chat_rounded,
-                    text1: "Messages",
-                  ),
+                  // DrawerTile(
+                  //   ontap1: () {
+                  //     Navigator.of(context).push(MaterialPageRoute(
+                  //         builder: (context) => MessagingScreen()));
+                  //   },
+                  //   icon1: Icons.chat_rounded,
+                  //   text1: "Messages",
+                  // ),
                   DrawerTile(
                     ontap1: () {
                       showDialog(

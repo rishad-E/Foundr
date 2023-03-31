@@ -15,7 +15,7 @@ import 'package:provider/provider.dart';
 class SplashscreenProvider with ChangeNotifier {
   FlutterSecureStorage storage = const FlutterSecureStorage();
   bool? isExpired;
-  String? nameUser;
+  // String? idUser;
 
   splashTimer(BuildContext context) async {
     String? checkLogin = await storage.read(key: "token");
@@ -24,10 +24,9 @@ class SplashscreenProvider with ChangeNotifier {
       isExpired = JwtDecoder.isExpired(checkLogin.toString());
       notifyListeners();
       log(isExpired.toString(), name: 'isExpired');
+     
 
-      // Map<String, dynamic> decodedtoken = JwtDecoder.decode(checkLogin.toString());
       // log(decodedtoken.toString());
-      // // nameUser = decodedtoken["userName"];
       // notifyListeners();
       // log(nameUser.toString());
     }

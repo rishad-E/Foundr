@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:founder_app/common/constants/constants.dart';
 import 'package:founder_app/common/widgets/widgetswelcome.dart';
 import 'package:founder_app/controller/provider/connection-provider/connection_provider.dart';
 import 'package:founder_app/view/home/homescreen/homescreen.dart';
 import 'package:founder_app/view/profile-matching_profile/profile_matching.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
 
 class ConnectionScreen extends StatelessWidget {
-  const ConnectionScreen({super.key});
-
+   ConnectionScreen({super.key});
+  String? userId;
   @override
   Widget build(BuildContext context) {
+    getId();
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -70,9 +73,9 @@ class ConnectionScreen extends StatelessWidget {
                               leading: Padding(
                                 padding: const EdgeInsets.only(left: 15),
                                 child: CircleAvatar(
-                                    radius: 25,
+                                    radius: 30,
                                     backgroundColor:
-                                        const Color.fromARGB(255, 51, 125, 170),
+                                       Colors.transparent,
                                     backgroundImage: data.profilePhoto == null
                                         ? Image.asset(
                                                 'assets/images/event-image.png')
@@ -102,8 +105,7 @@ class ConnectionScreen extends StatelessWidget {
                                     builder: (context) => ProfileMatched(
                                           profileId: data.id!,
                                           userName: data.userName!,
-                                          location: '${data.location!.country!}'
-                                              '${data.location!.state}',
+                                          location: "${data.location!.country!}, ${data.location!.state!}",
                                           email: data.email!,
                                           about: data.intro!,
                                           accomplishment: data.accomplishments!,
@@ -120,7 +122,8 @@ class ConnectionScreen extends StatelessWidget {
                                           interests: data.interests!,
                                           responsibilities:
                                               data.responsibilities!,
-                                          profileImage: data.profilePhoto!,
+                                          profileImage: data.profilePhoto?? 'null',
+                                          userId: userId,
                                         )));
                                 value.buttonFuction(data.id!);
                               },
@@ -137,5 +140,14 @@ class ConnectionScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+   void getId() async {
+    FlutterSecureStorage storage = const FlutterSecureStorage();
+
+    String? checkLogin = await storage.read(key: "token");
+    Map<String, dynamic> decodedtoken =
+        JwtDecoder.decode(checkLogin.toString());
+    final idUser = decodedtoken["userId"];
+    userId = idUser;
   }
 }

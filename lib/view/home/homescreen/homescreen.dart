@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:founder_app/common/constants/constants.dart';
+import 'package:founder_app/common/widgets/shimmereffect.dart';
 import 'package:founder_app/common/widgets/widget_event.dart';
 import 'package:founder_app/common/widgets/widgethomescreen.dart';
 import 'package:founder_app/common/widgets/widgetswelcome.dart';
@@ -153,7 +154,11 @@ class HomeScreen extends StatelessWidget {
                 child: Consumer<MatchingProfileProvider>(
                   builder: (context, value, child) {
                     if (value.matchingProfileDatas == null) {
-                      return const Center(child: CircularProgressIndicator());
+                      return const Center(child: ShimmerEffect());
+                    } else if (value.matchingProfileDatas!.isEmpty) {
+                      return const Center(
+                        child: Text("No Matched Profiles",style: textStyle,),
+                      );
                     } else {
                       return ListView.builder(
                         scrollDirection: Axis.horizontal,
@@ -219,7 +224,7 @@ class HomeScreen extends StatelessWidget {
                                               profileId: data.id!,
                                               userName: data.userName!,
                                               location:
-                                                  '${data.location!.country!},${data.location!.city!}',
+                                                 '${data.location!.country!},${data.location!.city!}',
                                               email: data.email!,
                                               about: data.userName!,
                                               accomplishment:
@@ -238,6 +243,7 @@ class HomeScreen extends StatelessWidget {
                                               interests: data.interests!,
                                               responsibilities:
                                                   data.responsibilities!,
+                                                  
                                             );
                                           },
                                         ),

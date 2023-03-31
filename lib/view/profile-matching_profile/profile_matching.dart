@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:founder_app/common/constants/constants.dart';
 import 'package:founder_app/common/widgets/widgetswelcome.dart';
 import 'package:founder_app/controller/provider/connection-provider/connection_provider.dart';
-import 'package:founder_app/view/messagiing/messaging.dart';
+import 'package:founder_app/view/messagiing/messaging_screen.dart';
 import 'package:provider/provider.dart';
 
 class ProfileMatched extends StatelessWidget {
@@ -21,6 +21,7 @@ class ProfileMatched extends StatelessWidget {
     required this.interests,
     required this.responsibilities,
     required this.profileImage,
+    this.userId
   });
   final String profileId;
   final String profileImage;
@@ -34,6 +35,7 @@ class ProfileMatched extends StatelessWidget {
   final String idea;
   final List<dynamic> interests;
   final List<dynamic> responsibilities;
+  final String? userId;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -183,10 +185,11 @@ class ProfileMatched extends StatelessWidget {
                                           text: 'message',
                                           onpress: () {
                                             Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const MessagingScreen()));
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      MessagingUser(selectedId: profileId,userId: userId,)),
+                                            );
                                           },
                                         ),
                             );
