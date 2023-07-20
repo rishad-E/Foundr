@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:founder_app/common/constants/constants.dart';
 import 'package:founder_app/common/widgets/widgetswelcome.dart';
 import 'package:founder_app/controller/provider/profile-provider/profile_provider.dart';
+import 'package:founder_app/view/profile-updation/profile-screen.dart';
 import 'package:provider/provider.dart';
 
 class FounderProfile extends StatelessWidget {
@@ -301,6 +302,10 @@ class FounderProfile extends StatelessWidget {
                                 onPressed: () {
                                   if (formkey.currentState!.validate()) {
                                     data.updateFounderProvider(context);
+                                   Navigator.of(context)
+                                          .pushReplacement(MaterialPageRoute(
+                                        builder: (context) => ProfileScreen(),
+                                      ));
                                   }
                                 },
                                 child: const Text(

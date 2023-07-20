@@ -67,7 +67,7 @@ class PaymentProvider with ChangeNotifier {
   }
 
   void handleExternalWallet(ExternalWalletResponse response) {
-    Fluttertoast.showToast(msg: "Payment made using ${response.walletName}");
+    // Fluttertoast.showToast(msg: "Payment made using ${response.walletName}");
     log("External wallet used: ${response.walletName}", name: 'wallet');
   }
 }

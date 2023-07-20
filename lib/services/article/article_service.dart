@@ -25,8 +25,8 @@ class ArticleService {
         SnackbarPopUps.popUpB("Could not Retrieve data", context);
         // return false;
       }
-    } on DioError catch (e) {
-      DioException().dioError(e, context);
+    } on DioException catch (e) {
+      DioExceptionClass().dioError(e, context);
       log(e.toString());
     }
     log("null");

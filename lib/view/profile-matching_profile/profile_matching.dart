@@ -18,8 +18,8 @@ class ProfileMatched extends StatelessWidget {
     required this.education,
     required this.technical,
     required this.idea,
-    required this.interests,
-    required this.responsibilities,
+   this.interests,
+   this.responsibilities,
     required this.profileImage,
     this.userId
   });
@@ -33,8 +33,8 @@ class ProfileMatched extends StatelessWidget {
   final String education;
   final String technical;
   final String idea;
-  final List<dynamic> interests;
-  final List<dynamic> responsibilities;
+  final List<dynamic>? interests;
+  final List<dynamic>? responsibilities;
   final String? userId;
   @override
   Widget build(BuildContext context) {
@@ -227,7 +227,7 @@ class ProfileMatched extends StatelessWidget {
                       SizedBox(
                         height: 45,
                         child: ListView.separated(
-                          itemCount: interests.length,
+                          itemCount: interests!.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
                             return Container(
@@ -241,7 +241,7 @@ class ProfileMatched extends StatelessWidget {
                                 borderRadius:
                                     const BorderRadius.all(Radius.circular(8)),
                               ),
-                              child: Center(child: Text(interests[index])),
+                              child: Center(child: Text(interests![index])),
                             );
                           },
                           separatorBuilder: (context, index) =>
@@ -252,7 +252,7 @@ class ProfileMatched extends StatelessWidget {
                       SizedBox(
                         height: 45,
                         child: ListView.separated(
-                          itemCount: responsibilities.length,
+                          itemCount: responsibilities!.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
                             return Container(
@@ -266,7 +266,7 @@ class ProfileMatched extends StatelessWidget {
                                     const BorderRadius.all(Radius.circular(8)),
                               ),
                               child:
-                                  Center(child: Text(responsibilities[index])),
+                                  Center(child: Text(responsibilities![index])),
                             );
                           },
                           separatorBuilder: (context, index) =>

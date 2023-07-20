@@ -37,8 +37,6 @@ class _MessagingUserState extends State<MessagingUser> {
   @override
   void initState() {
     super.initState();
-    log(widget.userId.toString(), name: 'kjjjjjjjjjjjj');
-    log(widget.selectedId.toString(), name: 'llllll');
     connect();
     getMessage();
   }

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:founder_app/common/constants/constants.dart';
@@ -46,10 +45,10 @@ class ArticleHome extends StatelessWidget {
                   future: ArticleService().getArticleService(context),
                   builder: ((context, snapshot) {
                     if (!snapshot.hasData) {
-                      return ShimmerEffect();
-                    } else if (snapshot.data!.isEmpty) {
-                      return Center(
-                          child: textNormalHeading("No Article Published"));
+                      return const ShimmerEffectEvent();
+                    } else if (snapshot.connectionState ==
+                        ConnectionState.waiting) {
+                      return const ShimmerEffectEvent();
                     } else {
                       return GridView.builder(
                         gridDelegate:

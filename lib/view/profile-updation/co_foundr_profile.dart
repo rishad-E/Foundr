@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:founder_app/common/constants/constants.dart';
 import 'package:founder_app/common/widgets/widgetswelcome.dart';
 import 'package:founder_app/controller/provider/profile-provider/profile_provider.dart';
+import 'package:founder_app/view/profile-updation/profile-screen.dart';
 import 'package:provider/provider.dart';
 
 class CoFounderProfile extends StatelessWidget {
@@ -242,6 +243,10 @@ class CoFounderProfile extends StatelessWidget {
                                   onPressed: () {
                                     if (formkey.currentState!.validate()) {
                                       data.updateCofounderProvider(context);
+                                      Navigator.of(context)
+                                          .pushReplacement(MaterialPageRoute(
+                                        builder: (context) => ProfileScreen(),
+                                      ));
                                     }
                                   },
                                   child: const Text(
@@ -263,30 +268,3 @@ class CoFounderProfile extends StatelessWidget {
     );
   }
 }
-
-
-                                    // log(data.seeked.toString(), name: 'see');
-                                    // log(data.technical.toString(),
-                                    //     name: 'tech');
-                                    // log(data.hasIdea.toString(),
-                                    //     name: 'idea');
-                                    // log(data.location.toString(),
-                                    //     name: 'loca');
-                                    // log(data.responsibilitySelected
-                                    //     .toString());
- 
-// style: const TextStyle(color: Colors.white),
-                          // decoration: InputDecoration(
-                          //   contentPadding: const EdgeInsets.all(20),
-                          //   // border: OutlineInputBorder(
-                          //   //   borderRadius: BorderRadius.circular(10),
-                          //   //   // borderSide: BorderSide.none,
-                          //   // ),
-                          //   // floatingLabelBehavior:
-                          //   //     FloatingLabelBehavior.never,
-                          //   // labelStyle: const TextStyle(
-                          //   //     fontSize: 14,
-                          //   //     color: Color.fromARGB(255, 190, 190, 190)),
-                          //   // filled: true,
-                          //   // fillColor: const Color.fromARGB(255, 38, 38, 38),
-                          // ),

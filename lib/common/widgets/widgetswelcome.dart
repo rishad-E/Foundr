@@ -24,7 +24,15 @@ Widget textHeading(text) {
         fontWeight: FontWeight.w600),
   );
 }
-
+Widget mediumHeading(text) {
+  return Text(
+    text,
+    style: const TextStyle(
+        color: Color.fromARGB(255, 50, 103, 137),
+        fontSize: 20,
+        fontWeight: FontWeight.w600),
+  );
+}
 Widget textNormalHeading(text1) {
   return Text(
     text1,

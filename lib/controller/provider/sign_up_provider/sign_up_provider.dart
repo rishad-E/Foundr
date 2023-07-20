@@ -6,51 +6,45 @@ import 'package:founder_app/view/otpscreen/otpscreen.dart';
 import 'package:provider/provider.dart';
 
 class SignupProvider with ChangeNotifier {
-
+  bool isLoading = false;
   Future<void> verifyUserProvider(BuildContext context) async {
+    isLoading = true;
+    notifyListeners();
     final provider = Provider.of<OtpProvider>(context, listen: false);
     final email = provider.emailController.text;
     final userName = provider.usernameController.text;
-
-    await ApiServiceSignUp().verifyUserandGenerateService(email, context).then(
-          (value) => {
-            if (value == "Email Already Exists")
-              {SnackbarPopUps.popUpG("Email Already Exists", context)}
-            else if (value != null)
-              {
-                ApiServiceSignUp()
-                    .sendMail(email, context, value, userName)
-                    .then(
-                      (value) => {
-                        if (value == true)
-                          {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => OtpScreen(),
+    await ApiServiceSignUp()
+        .verifyUserandGenerateService(email, context)
+        .then((value) => {
+              if (value == "Email Already Exists")
+                {SnackbarPopUps.popUpG("Email Already Exists", context)}
+              else if (value != null)
+                {
+                  ApiServiceSignUp()
+                      .sendMail(email, context, value, userName)
+                      .then(
+                        (value) => {
+                          if (value == true)
+                            {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => OtpScreen(),
+                                ),
                               ),
-                            ),
-                            
-                          }
-                        else
-                          {
-                            SnackbarPopUps.popUpB(
-                                "Something Went Wrong", context)
-                          }
-                      },
-                    )
-              }
-          },
-        );
+                              provider.otpController.clear(),
+                              isLoading = false,
+                              notifyListeners()
+                            }
+                          else
+                            {
+                              SnackbarPopUps.popUpB(
+                                  "Something Went Wrong", context)
+                            }
+                        },
+                      )
+                }
+            });
   }
-
-  // void disposeTextfield(context) {
-  //   final provider = Provider.of<OtpProvider>(context, listen: false);
-
-  //   provider.usernameController.clear();
-  //   provider.emailController.clear();
-  //   provider.passwordController.clear();
-  //   provider.confirmPasswordController.clear();
-  // }
 
   String? nameValidation(String? value) {
     if (value == null || value.isEmpty) {

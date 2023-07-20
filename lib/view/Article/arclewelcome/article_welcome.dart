@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:founder_app/common/constants/constants.dart';
+import 'package:founder_app/common/widgets/shimmereffect.dart';
 import 'package:founder_app/common/widgets/widget_article.dart';
 import 'package:founder_app/common/widgets/widgetswelcome.dart';
 import 'package:founder_app/model/article/article_model.dart';
@@ -42,7 +43,8 @@ class ArticleWelcome extends StatelessWidget {
                 future: ArticleService().getArticleService(context),
                 builder: ((context, snapshot) {
                   if (!snapshot.hasData) {
-                    return const Center(child: CircularProgressIndicator());
+                    return const ShimmerEffectEvent();
+                    // return const Center(child: CircularProgressIndicator());
                   } else {
                     return GridView.builder(
                       gridDelegate:

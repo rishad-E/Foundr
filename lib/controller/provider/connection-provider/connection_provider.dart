@@ -74,6 +74,7 @@ class ConnectionProvider with ChangeNotifier {
             if (value == true)
               {
                 SnackbarPopUps.popUpG("connection Send Suceesfully", context),
+                
               }
             else if (value == false)
               {

@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:founder_app/common/constants/constants.dart';
 import 'package:founder_app/controller/provider/connection-provider/connection_provider.dart';
+import 'package:founder_app/view/drawer/aboutapp.dart';
+import 'package:founder_app/view/drawer/privacypolicy.dart';
 import 'package:founder_app/view/events/event_sceen.dart';
-import 'package:founder_app/view/messagiing/messaging.dart';
 import 'package:founder_app/view/profile-updation/profile-screen.dart';
 import 'package:founder_app/view/splash/splashscreen.dart';
 import 'package:provider/provider.dart';
@@ -47,14 +48,22 @@ class HomeDrawer extends StatelessWidget {
                     icon1: Icons.event,
                     text1: "Events",
                   ),
-                  // DrawerTile(
-                  //   ontap1: () {
-                  //     Navigator.of(context).push(MaterialPageRoute(
-                  //         builder: (context) => MessagingScreen()));
-                  //   },
-                  //   icon1: Icons.chat_rounded,
-                  //   text1: "Messages",
-                  // ),
+                  DrawerTile(
+                    ontap1: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const AboutApp()));
+                    },
+                    icon1: Icons.report_gmailerrorred,
+                    text1: "About Application",
+                  ),
+                  DrawerTile(
+                    ontap1: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const PrivacyPolicy()));
+                    },
+                    icon1: Icons.event,
+                    text1: "Privacy and Security",
+                  ),
                   DrawerTile(
                     ontap1: () {
                       showDialog(
@@ -112,12 +121,6 @@ class HomeDrawer extends StatelessWidget {
                 ],
               ),
             ),
-            // SizedBox(height: MediaQuery.of(context).size.height * 0.32),
-            // const Text(
-            //   "V.1.0.0",
-            //   textAlign: TextAlign.center,
-            //   style: TextStyle(color: Colors.grey),
-            // ),
           ],
         ),
       ),

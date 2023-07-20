@@ -8,7 +8,7 @@ class MatchingProfileProvider with ChangeNotifier {
   List<MatchingProfile>? matchingProfileDatas;
   Future<void> getAllMatchingProfile() async {
     String? token = await storage.read(key: 'token');
-    // log('this is token: $token');
+   
     await MatchingProfilesService().getAllMatchingProfileService(token.toString()).then(
       (value) {
         matchingProfileDatas = value;

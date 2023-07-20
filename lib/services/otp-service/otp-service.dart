@@ -30,8 +30,8 @@ class ApiServiceOTP {
         log(response.data.toString());
         return false;
       }
-    } on DioError catch (e) {
-      log(e.message);
+    } on DioException catch (e) {
+      log(e.message.toString());
     }
     return null;
   }

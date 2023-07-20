@@ -23,7 +23,8 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<ConnectionProvider>(context, listen: false);
-    Provider.of<MatchingProfileProvider>(context,listen: false).getAllMatchingProfile();
+    Provider.of<MatchingProfileProvider>(context, listen: false)
+        .getAllMatchingProfile();
     return Scaffold(
       // resizeToAvoidBottomInset: false,
       backgroundColor: backgroundColorConst,
@@ -165,7 +166,6 @@ class ProfileScreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                           
                             Container(
                                 width: 130,
                                 color: Colors.transparent,
@@ -185,7 +185,7 @@ class ProfileScreen extends StatelessWidget {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                               ConnectionScreen()),
+                                              ConnectionScreen()),
                                     );
                                     await provider.getalltheConnections();
                                   },
@@ -194,6 +194,7 @@ class ProfileScreen extends StatelessWidget {
                                       : Text(
                                           '${provider.listLength} connections'),
                                 )),
+                                wBoxS
                           ],
                         )
                       ],

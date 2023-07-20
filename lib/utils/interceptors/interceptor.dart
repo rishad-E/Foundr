@@ -30,7 +30,7 @@ class AuthInterceptor extends InterceptorsWrapper {
   }
 
   @override
-  Future onError(DioError err, ErrorInterceptorHandler handler) async {
+  Future onError(DioException err, ErrorInterceptorHandler handler) async {
     log('Error message: ${err.message}', name: 'error');
     log('Error status code: ${err.response?.statusCode}');
     log('Error response data: ${err.response?.data}');

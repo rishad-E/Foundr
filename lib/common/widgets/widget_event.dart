@@ -41,9 +41,9 @@ class EventCard extends StatelessWidget {
                     fontWeight: FontWeight.w500),
               ),
             ),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.end,
-              children: const [
+              children: [
                 Icon(
                   Icons.bookmark,
                   color: Color.fromARGB(255, 105, 153, 189),

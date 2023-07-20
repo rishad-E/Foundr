@@ -24,9 +24,9 @@ class ApiServiceSignIn {
             SigninRespModel.fromJson(response.data);
         return signinmodel1;
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       log(e.message.toString());
-      DioException().dioError(e, context);
+      DioExceptionClass().dioError(e, context);
     }
     return null;
   }

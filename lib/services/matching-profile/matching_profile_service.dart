@@ -13,7 +13,7 @@ class MatchingProfilesService {
     try {
       Response response = await dio.get(path,
           options: Options(
-            followRedirects: false,
+            followRedirects: false, 
             headers: {
               'Authorization': 'Bearer $token',
             },

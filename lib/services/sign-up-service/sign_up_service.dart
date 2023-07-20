@@ -32,7 +32,7 @@ class ApiServiceSignUp {
       }
     } on DioException catch (e) {
       log(e.toString());
-      DioException().dioError(e, context);
+      DioExceptionClass().dioError(e, context);
     }
     return null;
   }
@@ -62,9 +62,9 @@ class ApiServiceSignUp {
         // false means message send failed
         return false;
       }
-    } on DioError catch (e) {
-      log(e.message);
-      DioException().dioError(e, context);
+    } on DioException catch (e) {
+      log(e.message.toString());
+      DioExceptionClass().dioError(e, context);
     }
     return null;
   }
@@ -95,10 +95,10 @@ class ApiServiceSignUp {
         log(response.data.toString());
         log(response.statusCode.toString());
       }
-    } on DioError catch (e) {
-      log(e.message);
+    } on DioException catch (e) {
+      log(e.message.toString());
       log("error part in sign up");
-      DioException().dioError(e, context);
+      DioExceptionClass().dioError(e, context);
     }
     return null;
   }

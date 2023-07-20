@@ -194,7 +194,7 @@ class ProfileProvider with ChangeNotifier {
         });
   }
 
-  /*-------------------to update co-foundr profile-------------------*/
+  /*-------------------to update foundr profile-------------------*/
   Future<void> updateFounderProvider(BuildContext context)async {
     final accomplishment = accomplishController.text;
     final education = educationContoller.text;

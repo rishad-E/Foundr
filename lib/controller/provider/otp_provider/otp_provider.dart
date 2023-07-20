@@ -50,6 +50,7 @@ class OtpProvider with ChangeNotifier {
                         {
                           SnackbarPopUps.popUpB(
                               "Something Went Wrong", context),
+                              disposeTextfield(context)
                         }
                     },
                   ),

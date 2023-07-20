@@ -67,9 +67,9 @@ class NotificationScreen extends StatelessWidget {
                 height: MediaQuery.of(context).size.height * 0.78,
                 child: Consumer<NotificationProvider>(
                   builder: (context, value, child) {
-                    if (value.notificationData == null) {
-                      return const Center(
-                        child: Text('No Notification'),
+                    if (value.notificationData == null || value.notificationData!.isEmpty) {
+                      return  Center(
+                        child: descriptionText('No Notification'),
                       );
                     } else {
                       return ListView.builder(

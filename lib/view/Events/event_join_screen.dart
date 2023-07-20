@@ -115,7 +115,7 @@ class _EventJoinState extends State<EventJoin> {
                     ),
                   ),
                   hBox,
-                  textHeading(widget.title),
+                  mediumHeading(widget.title),
                   hBoxS,
                   descriptionText(widget.content),
                   hBox,
@@ -174,30 +174,14 @@ class _EventJoinState extends State<EventJoin> {
                           double rupeeAmount = widget.fee * exchangeRate;
                           log(rupeeAmount.toString());
                           Provider.of<PaymentProvider>(context, listen: false)
-                              .openCheckout(
-                                  rupeeAmount, widget.eventId, widget.joinLink,context);
+                              .openCheckout(rupeeAmount, widget.eventId,
+                                  widget.joinLink, context);
                         },
                         child: const Text(
                           "PAY and JOIN",
                           style: TextStyle(color: Colors.white),
                         )),
                   ),
-                  // Container(
-                  //   height: MediaQuery.of(context).size.height * 0.055,
-                  //   width: MediaQuery.of(context).size.width * 0.8,
-                  //   decoration: BoxDecoration(
-                  //     color: const Color.fromARGB(255, 50, 103, 137),
-                  //     border: Border.all(
-                  //         color: const Color.fromARGB(255, 105, 153, 189)),
-                  //     borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  //   ),
-                  //   child: TextButton(
-                  //       onPressed: () {},
-                  //       child: Text(
-                  //         "Join The Event For $fee dollers",
-                  //         style: const TextStyle(color: Colors.white),
-                  //       )),
-                  // )
                 ],
               ),
             ),

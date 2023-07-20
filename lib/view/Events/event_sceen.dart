@@ -62,13 +62,13 @@ class EventScreen extends StatelessWidget {
               child: FutureBuilder<List<Event>?>(
                 future: EventService().getEventService(context),
                 builder: ((context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
+                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                     return Center(
+                          child: textNormalHeading("No Events"),
+                        );
                   } else if (snapshot.connectionState ==
                       ConnectionState.waiting) {
-                    return const ShimmerEffect();
+                    return const ShimmerEffectEvent();
                   } else {
                     return GridView.builder(
                       gridDelegate:
@@ -145,9 +145,9 @@ class EventScreen extends StatelessWidget {
                                             Color.fromARGB(255, 50, 103, 137),
                                         fontWeight: FontWeight.w200),
                                   ),
-                                  Row(
+                                  const Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
-                                    children: const [
+                                    children:  [
                                       Icon(
                                         Icons.bookmark,
                                         color:

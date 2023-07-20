@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:founder_app/common/constants/constants.dart';
-import 'package:founder_app/common/widgets/shimmereffect.dart';
+import 'package:founder_app/common/widgets/shimmereffectprofile.dart';
 import 'package:founder_app/common/widgets/widget_event.dart';
 import 'package:founder_app/common/widgets/widgethomescreen.dart';
 import 'package:founder_app/common/widgets/widgetswelcome.dart';
@@ -22,6 +22,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<ConnectionProvider>(context, listen: false);
+    // List<String> ha = ['Not added'];
     return Scaffold(
       endDrawer: const HomeDrawer(),
       backgroundColor: backgroundColorConst,
@@ -154,10 +155,13 @@ class HomeScreen extends StatelessWidget {
                 child: Consumer<MatchingProfileProvider>(
                   builder: (context, value, child) {
                     if (value.matchingProfileDatas == null) {
-                      return const Center(child: ShimmerEffect());
+                      return const Center(child: ShimmerEffectProfile());
                     } else if (value.matchingProfileDatas!.isEmpty) {
                       return const Center(
-                        child: Text("No Matched Profiles",style: textStyle,),
+                        child: Text(
+                          "No Matched Profiles",
+                          style: textStyle,
+                        ),
                       );
                     } else {
                       return ListView.builder(
@@ -223,27 +227,34 @@ class HomeScreen extends StatelessWidget {
                                                   data.profilePhoto ?? 'null',
                                               profileId: data.id!,
                                               userName: data.userName!,
-                                              location:
-                                                 '${data.location!.country!},${data.location!.city!}',
-                                              email: data.email!,
-                                              about: data.userName!,
+                                              location: data.location == null
+                                                  ? data.email!
+                                                  : '${data.location!.country!},${data.location!.city!}',
+                                              email: data.email ?? data.email!,
+                                              about:
+                                                  data.userName ?? data.email!,
                                               accomplishment:
-                                                  data.accomplishments!,
-                                              education: data.education!,
+                                                  data.accomplishments == null
+                                                      ? 'Not added'
+                                                      : data.accomplishments!,
+                                              education: data.education == null
+                                                  ? 'Not added'
+                                                  : data.education!,
                                               technical: data.isTechnical == 1
                                                   ? 'Yes'
                                                   : 'no',
-                                              idea: data.haveIdea ==
-                                                      'definiteIdea'
-                                                  ? 'Yes'
+                                              idea: data.haveIdea == null
+                                                  ? 'Not added'
                                                   : data.haveIdea ==
-                                                          'readyToExplore'
-                                                      ? 'No'
-                                                      : 'don\'t have any idea',
+                                                          'definiteIdea'
+                                                      ? 'Yes'
+                                                      : data.haveIdea ==
+                                                              'readyToExplore'
+                                                          ? 'No'
+                                                          : 'don\'t have any idea',
                                               interests: data.interests!,
                                               responsibilities:
                                                   data.responsibilities!,
-                                                  
                                             );
                                           },
                                         ),
@@ -281,12 +292,11 @@ class HomeScreen extends StatelessWidget {
                   FutureBuilder<List<Event>?>(
                     future: EventService().getEventService(context),
                     builder: ((context, snapshot) {
-                      if (!snapshot.hasData) {
-                        return const Center(child: CircularProgressIndicator());
-                      } else if (snapshot.data!.isEmpty) {
-                        return Center(
+                      if (!snapshot.hasData|| snapshot.data!.isEmpty) {
+                       return Center(
                           child: textNormalHeading("No Events"),
                         );
+                        // return textHeading('text');
                       } else {
                         {
                           return GestureDetector(

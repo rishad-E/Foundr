@@ -91,8 +91,8 @@ class SignUpScreen extends StatelessWidget {
                                   },
                                   icon: value.icon)),
                           controller: providerWOLOTP.confirmPasswordController,
-                          validator: (passwordData) =>
-                              value.confirmpasswordValdation(passwordData,context),
+                          validator: (passwordData) => value
+                              .confirmpasswordValdation(passwordData, context),
                           obscureText: value.obscureText,
                           keyboardType: TextInputType.visiblePassword,
                         );
@@ -115,8 +115,20 @@ class SignUpScreen extends StatelessWidget {
                                 providerWOL.verifyUserProvider(context);
                               }
                             },
-                            child: const Text("SIGN UP",
-                                style: TextStyle(color: Colors.white)),
+                            child: Consumer<SignupProvider>(
+                              builder: (context, value, child) {
+                                return value.isLoading
+                                    ? const Center(
+                                      child:  CircularProgressIndicator(
+                                        strokeWidth: 3,
+                                        color: Colors.white,
+                                        backgroundColor: Colors.grey,
+                                      ),
+                                    )
+                                    : const Text("SIGN UP",
+                                        style: TextStyle(color: Colors.white));
+                              },
+                            ),
                           ),
                         )
                       ],
@@ -129,12 +141,12 @@ class SignUpScreen extends StatelessWidget {
               children: [
                 TextButton(
                     onPressed: () {
+                      
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => SignInScreen()));
                     },
                     child: const Text("Already have an account?..",
                         style: textStyle)),
-                // TextButton(onPressed: (){}, child:const Text("Terms and conditions.", style: textStyle))
               ],
             )
           ],
